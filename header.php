@@ -47,4 +47,3 @@
 	</nav>
 </header>
 <div id="content">
-	<main role="main">
