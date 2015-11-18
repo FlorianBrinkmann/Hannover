@@ -42,6 +42,20 @@ function hannover_register_menus() {
 
 add_action( 'init', 'hannover_register_menus' );
 
+function hannover_register_sidebars() {
+	register_sidebar( array(
+		'name'          => __( 'Main Sidebar', 'textdomain' ),
+		'id'            => 'sidebar-1',
+		'description'   => __( 'Widgets in this area will be shown on all normal posts and pages.', 'textdomain' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	) );
+}
+
+add_action( 'widgets_init', 'hannover_register_sidebars' );
+
 /**
  * Displays date and time of a post
  */
