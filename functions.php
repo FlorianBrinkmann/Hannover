@@ -83,7 +83,7 @@ function hannover_the_content() {
 /**
  * Displays the author, categories, tags and number for comments and trackbacks
  */
-function bornholm_entry_meta() { ?>
+function hannover_entry_meta() { ?>
 	<span class="author"><?php printf( _x(
 			'Author %s',
 			'name of the author in entry footer. s=author name',
@@ -96,7 +96,9 @@ function bornholm_entry_meta() { ?>
 				count( get_the_category() ),
 				'Label for category list in entry footer. s=categories',
 				'hannover'
-			), '<span>' . get_the_category_list( _x( ', ', 'term delimiter', 'hannover' ) ) . '</span>' ) ?></span>
+			), '<span>' . get_the_category_list(
+					_x( ', ', 'term delimiter', 'hannover' )
+				) . '</span>' ) ?></span>
 	<?php }
 	if ( get_the_tags() ) { ?>
 		<span class="tags"><?php printf( _nx(
@@ -105,7 +107,9 @@ function bornholm_entry_meta() { ?>
 				count( get_the_tags() ),
 				'Label for tag list in entry footer. s=tags',
 				'hannover'
-			), '<span>' . get_the_tag_list( '', _x( ', ', 'term delimiter', 'hannover' ) ) . '</span>' ) ?></span>
+			), '<span>' . get_the_tag_list( '',
+					_x( ', ', 'term delimiter', 'hannover' )
+				) . '</span>' ) ?></span>
 	<?php }
 	if ( hannover_get_comment_count() > 0 ) { ?>
 		<span class="comments"><?php printf( _nx(

@@ -10,6 +10,6 @@
 		<?php hannover_the_content(); ?>
 	</div>
 	<footer>
-		<p><?php bornholm_entry_meta() ?></p>
+		<p><?php hannover_entry_meta() ?></p>
 	</footer>
 </article>
