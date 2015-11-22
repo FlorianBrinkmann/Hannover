@@ -70,13 +70,20 @@ function hannover_the_date() {
 /**
  * Displays the title of a post
  *
- * @param $heading
+ * @param $heading , $link
  */
-function hannover_the_title( $heading ) {
-	the_title( sprintf(
-		'<%1$s class="entry-title"><a href="%2$s" rel="bookmark">',
-		$heading, esc_url( get_permalink() )
-	), sprintf( '</a></%s>', $heading ) );
+function hannover_the_title( $heading, $link ) {
+	if ( $link ) {
+		the_title( sprintf(
+			'<%1$s class="entry-title"><a href="%2$s" rel="bookmark">',
+			$heading, esc_url( get_permalink() )
+		), sprintf( '</a></%s>', $heading ) );
+	} else {
+		the_title( sprintf(
+			'<%1$s class="entry-title">',
+			$heading, esc_url( get_permalink() )
+		), sprintf( '</%s>', $heading ) );
+	}
 }
 
 /**
