@@ -1,7 +1,7 @@
 <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 	<header class="entry-header">
 		<?php the_post_thumbnail( 'large' );
-		hannover_the_title( 'h2' ); ?>
+		hannover_the_title( 'h2', true ); ?>
 		<a href="<?php the_permalink(); ?>" class="entry-date">
 			<?php hannover_the_date(); ?>
 		</a>
