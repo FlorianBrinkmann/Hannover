@@ -177,3 +177,5 @@ AND comment_post_ID = %d AND comment_approved = %d", ' ', $the_post_id, 1 ) );
 
 	return $tb_number;
 }
+
+require get_template_directory() . '/inc/customizer.php';
