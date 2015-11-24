@@ -39,9 +39,16 @@ function hannover_customize_register( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_panel(
+		'theme_options', array(
+			'title' => __( 'Theme Options', 'hannover' ),
+		)
+	);
+
 	$wp_customize->add_section(
 		'portfolio', array(
 			'title' => __( 'Portfolio', 'hannover' ),
+			'panel' => 'theme_options'
 		)
 	);
 }
