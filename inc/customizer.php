@@ -10,7 +10,7 @@ function hannover_customize_register( $wp_customize ) {
 		'portfolio_from_category', array(
 			'label'    => __( 'Use a category instead of all gallery and image posts for portfolio elements', 'hannover' ),
 			'type'     => 'checkbox',
-			'section'  => 'portfolio',
+			'section'  => 'portfolio_elements',
 			'settings' => 'portfolio_from_category'
 		)
 	);
@@ -31,11 +31,12 @@ function hannover_customize_register( $wp_customize ) {
 
 	$wp_customize->add_control(
 		'portfolio_category', array(
-			'label'    => __( 'Portfolio category', 'hannover' ),
-			'type'     => 'select',
-			'section'  => 'portfolio',
-			'settings' => 'portfolio_category',
-			'choices'  => $category_array
+			'label'           => __( 'Portfolio category', 'hannover' ),
+			'type'            => 'select',
+			'section'         => 'portfolio_elements',
+			'settings'        => 'portfolio_category',
+			'choices'         => $category_array,
+			'active_callback' => 'hannover_use_portfolio_category_callback'
 		)
 	);
 
@@ -49,7 +50,7 @@ function hannover_customize_register( $wp_customize ) {
 		'exclude_portfolio_elements_from_blog', array(
 			'label'    => __( 'Exclude the portfolio elements from the blog', 'hannover' ),
 			'type'     => 'checkbox',
-			'section'  => 'portfolio',
+			'section'  => 'portfolio_elements',
 			'settings' => 'exclude_portfolio_elements_from_blog'
 		)
 	);
@@ -61,14 +62,22 @@ function hannover_customize_register( $wp_customize ) {
 	);
 
 	$wp_customize->add_section(
-		'portfolio', array(
-			'title' => __( 'Portfolio', 'hannover' ),
+		'portfolio_elements', array(
+			'title' => __( 'Portfolio elements', 'hannover' ),
 			'panel' => 'theme_options'
 		)
 	);
 }
 
 add_action( 'customize_register', 'hannover_customize_register' );
+
+function hannover_use_portfolio_category_callback( $control ) {
+	if ( $control->manager->get_setting( 'portfolio_from_category' )->value() == 'checked' ) {
+		return true;
+	} else {
+		return false;
+	}
+}
 
 function hannover_sanitize_select( $input, $setting ) {
 	$input   = sanitize_key( $input );
