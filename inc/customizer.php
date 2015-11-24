@@ -102,7 +102,9 @@ function hannover_customize_register( $wp_customize ) {
 
 	$wp_customize->add_control(
 		'portfolio_auto_archive', array(
-			'label'           => __( 'Number of recent elements which will NOT be archived.', 'hannover' ),
+			'label'           =>
+				__( 'Number of recent elements which will NOT be archived.',
+					'hannover' ),
 			'type'            => 'number',
 			'section'         => 'portfolio_archive',
 			'settings'        => 'portfolio_auto_archive',
