@@ -39,6 +39,21 @@ function hannover_customize_register( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'exclude_portfolio_elements_from_blog', array(
+			'sanitize_callback' => 'hannover_sanitize_checkbox'
+		)
+	);
+
+	$wp_customize->add_control(
+		'exclude_portfolio_elements_from_blog', array(
+			'label'    => __( 'Exclude the portfolio elements from the blog', 'hannover' ),
+			'type'     => 'checkbox',
+			'section'  => 'portfolio',
+			'settings' => 'exclude_portfolio_elements_from_blog'
+		)
+	);
+
 	$wp_customize->add_panel(
 		'theme_options', array(
 			'title' => __( 'Theme Options', 'hannover' ),
