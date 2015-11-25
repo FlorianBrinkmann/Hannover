@@ -3,7 +3,11 @@
 } ?>
 <div id="comments" class="comments-area">
 	<?php if ( have_comments() ) {
-		if ( ! empty( $comments_by_type['comment'] ) ) { ?>
+		if ( ! empty( $comments_by_type['comment'] ) ) {
+			echo count( $comments_by_type['pings'] );
+			echo "<pre>";
+			print_r( $comments_by_type );
+			echo "</pre>"; ?>
 			<h2 id="comments-title">
 				<?php printf( _nx(
 					'%1$s Comment on “%2$s”',

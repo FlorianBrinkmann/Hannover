@@ -128,54 +128,42 @@ function hannover_entry_meta() { ?>
 				'hannover'
 			), '<span>' . get_the_tag_list( '', _x( ', ', 'term delimiter', 'hannover' ) ) . '</span>' ) ?></span>
 	<?php }
-	if ( hannover_get_comment_count() > 0 ) { ?>
+	$comments_by_type = hannover_get_comments_by_type();
+	if ( $comments_by_type['comment'] ) {
+		$comment_number = count( $comments_by_type['comment'] ); ?>
 		<span class="comments"><?php printf( _nx(
 				'%s Comment',
 				'%s Comments',
-				hannover_get_comment_count(),
+				$comment_number,
 				'Label for comment number in entry footer. s=comment number',
 				'hannover'
-			), '<span>' . number_format_i18n( hannover_get_comment_count() ) . '</span>' ) ?></span>
+			), '<span>' . number_format_i18n( $comment_number ) . '</span>' ) ?></span>
 	<?php }
-	if ( hannover_get_trackback_count() > 0 ) { ?>
+	if ( $comments_by_type['pings'] ) {
+		$trackback_number = count( $comments_by_type['pings'] ); ?>
 		<span class="comments"><?php printf( _nx(
 				'%s Trackback',
 				'%s Trackbacks',
-				hannover_get_trackback_count(),
+				$trackback_number,
 				'Label for trackback number in entry footer. s=trackback number',
 				'hannover'
-			), '<span>' . number_format_i18n( hannover_get_trackback_count() ) . '</span>' ) ?></span>
+			), '<span>' . number_format_i18n( $trackback_number ) . '</span>' ) ?></span>
 	<?php };
 }
 
-/**
- * Returns the number of comments for a post
- *
- * @return int
- */
-function hannover_get_comment_count() {
-	global $post;
-	$the_post_id = $post->ID;
-	global $wpdb;
-	$co_number = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->comments WHERE comment_type = %s
-AND comment_post_ID = %d AND comment_approved = %d", ' ', $the_post_id, 1 ) );
+function hannover_get_comments_by_type() {
+	global $wp_query, $post;
+	$comment_args               = array(
+		'order'   => 'ASC',
+		'orderby' => 'comment_date_gmt',
+		'status'  => 'approve',
+		'post_id' => $post->ID,
+	);
+	$comments                   = get_comments( $comment_args );
+	$wp_query->comments_by_type = separate_comments( $comments );
+	$comments_by_type           = &$wp_query->comments_by_type;
 
-	return $co_number;
-}
-
-/**
- * Returns the Number of trackbacks for a post
- *
- * @return int
- */
-function hannover_get_trackback_count() {
-	global $post;
-	$the_post_id = $post->ID;
-	global $wpdb;
-	$tb_number = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->comments WHERE comment_type != %s
-AND comment_post_ID = %d AND comment_approved = %d", ' ', $the_post_id, 1 ) );
-
-	return $tb_number;
+	return $comments_by_type;
 }
 
 function hannover_comments( $comment, $args, $depth ) {
