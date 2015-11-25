@@ -178,4 +178,54 @@ AND comment_post_ID = %d AND comment_approved = %d", ' ', $the_post_id, 1 ) );
 	return $tb_number;
 }
 
+function hannover_comments( $comment, $args, $depth ) {
+	$GLOBALS['comment'] = $comment; ?>
+	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
+	<article id="comment-<?php comment_ID(); ?>" class="comment">
+		<header class="comment-meta comment-author vcard clearfix">
+			<?php
+			echo get_avatar( $comment, 100 ); ?>
+			<cite class="fn">
+				<?php esc_url( comment_author_link() ); ?>
+			</cite>
+
+			<?php printf( '<a href="%1$s"><time datetime="%2$s">%3$s</time></a>',
+				esc_url( get_comment_link( $comment->comment_ID ) ),
+				get_comment_time( 'c' ),
+				sprintf( _x( '%1$s @ %2$s', '1=date 2=time', 'hannover' ), get_comment_date(), get_comment_time() )
+			); ?>
+		</header>
+
+		<?php if ( '0' == $comment->comment_approved ) { ?>
+			<p class="comment-awaiting-moderation">
+				<?php _e( 'Your comment is awaiting moderation.', 'hannover' ); ?>
+			</p>
+		<?php } ?>
+
+		<div class="comment-content comment">
+			<?php comment_text(); ?>
+			<?php esc_url( edit_comment_link( __( 'Edit', 'hannover' ), '<p class="edit-link">', '</p>' ) ); ?>
+		</div>
+
+		<div class="reply">
+			<?php esc_url( comment_reply_link(
+				array(
+					'reply_text' => __( 'Reply', 'hannover' ),
+					'depth'      => $depth,
+					'max_depth'  => $args['max_depth']
+				)
+			) ); ?>
+		</div>
+	</article>
+	<?php
+}
+
+function hannover_trackbacks( $comment ) {
+	$GLOBALS['comment'] = $comment; ?>
+<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
+	<?php _e( 'Trackback:', 'bornholm' ); ?>
+	<?php esc_url( comment_author_link() ); ?>
+	<?php esc_url( edit_comment_link( __( '(Edit)', 'bornholm' ), '<span class="edit-link">', '</span>' ) );
+}
+
 require get_template_directory() . '/inc/customizer.php';
