@@ -1,7 +1,6 @@
 <?php if ( post_password_required() ) {
 	return;
-}
-?>
+} ?>
 <div id="comments" class="comments-area">
 	<?php if ( have_comments() ) {
 		if ( ! empty( $comments_by_type['comment'] ) ) { ?>
