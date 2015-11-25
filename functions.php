@@ -184,7 +184,7 @@ function hannover_comments( $comment, $args, $depth ) {
 	<article id="comment-<?php comment_ID(); ?>" class="comment">
 		<header class="comment-meta comment-author vcard clearfix">
 			<?php
-			echo get_avatar( $comment, 100 ); ?>
+			echo get_avatar( $comment, 50 ); ?>
 			<cite class="fn">
 				<?php esc_url( comment_author_link() ); ?>
 			</cite>
