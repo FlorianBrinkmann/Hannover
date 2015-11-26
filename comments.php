@@ -3,15 +3,16 @@
 } ?>
 <div id="comments" class="comments-area">
 	<?php if ( have_comments() ) {
-		if ( ! empty( $comments_by_type['comment'] ) ) { ?>
+		if ( ! empty( $comments_by_type['comment'] ) ) {
+			$comment_number = count( $comments_by_type['comment'] ); ?>
 			<h2 id="comments-title">
 				<?php printf( _nx(
 					'%1$s Comment on “%2$s”',
 					'%1$s Comments on “%2$s”',
-					hannover_get_comment_count(),
+					$comment_number,
 					'Title for comment list. 1=comment number, 2=post title',
 					'hannover'
-				), number_format_i18n( hannover_get_comment_count() ), get_the_title() ) ?>
+				), number_format_i18n( $comment_number ), get_the_title() ) ?>
 			</h2>
 
 			<ol class="commentlist">
@@ -22,15 +23,16 @@
 				) ); ?>
 			</ol>
 		<?php }
-		if ( ! empty( $comments_by_type['pings'] ) ) { ?>
+		if ( ! empty( $comments_by_type['pings'] ) ) {
+			$trackback_number = count( $comments_by_type['pings'] ); ?>
 			<h2 id="trackbacks-title">
 				<?php printf( _nx(
 					'%1$s Trackback on “%2$s”',
 					'%1$s Trackbacks on “%2$s”',
-					hannover_get_trackback_count(),
+					$trackback_number,
 					'Title for trackback list. 1=trackback number, 2=post title',
 					'hannover'
-				), number_format_i18n( hannover_get_trackback_count() ), get_the_title() ) ?>
+				), number_format_i18n( $trackback_number ), get_the_title() ) ?>
 			</h2>
 
 			<ol class="commentlist">
