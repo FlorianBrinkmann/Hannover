@@ -12,7 +12,8 @@
 					$comment_number,
 					'Title for comment list. 1=comment number, 2=post title',
 					'hannover'
-				), number_format_i18n( $comment_number ), get_the_title() ) ?>
+				), number_format_i18n( $comment_number ),
+					get_the_title() ) ?>
 			</h2>
 
 			<ol class="commentlist">
@@ -37,25 +38,16 @@
 
 			<ol class="commentlist">
 				<?php wp_list_comments( array(
-					'callback'   => 'hannover_trackbacks',
-					'type'       => 'pings',
-					'short_ping' => true,
+					'callback' => 'hannover_trackbacks',
+					'type'     => 'pings',
 				) ); ?>
 			</ol>
 		<?php }
-		if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) { ?>
-			<nav id="comment-nav-below" class="navigation" role="navigation">
-				<h2 class="screen-reader-text"><?php _e( 'Comment navigation', 'bornholm' ); ?></h2>
-
-				<div
-					class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'bornholm' ) ); ?></div>
-				<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'bornholm' ) ); ?></div>
-			</nav>
-		<?php }
+		the_comments_pagination();
 		if ( ! comments_open() && get_comments_number() ) { ?>
-			<p class="nocomments"><?php _e( 'Comments are closed.', 'bornholm' ); ?></p>
+			<p class="nocomments"><?php _e( 'Comments are closed.', 'hannover' ); ?></p>
 		<?php }
 
 	}
-	comment_form( array( 'comment_notes_after' => '', 'label_submit' => __( 'Submit Comment', 'bornholm' ) ) ); ?>
+	comment_form( array( 'comment_notes_after' => '', 'label_submit' => __( 'Submit Comment', 'hannover' ) ) ); ?>
 </div>
