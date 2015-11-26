@@ -47,7 +47,6 @@
 		if ( ! comments_open() && get_comments_number() ) { ?>
 			<p class="nocomments"><?php _e( 'Comments are closed.', 'hannover' ); ?></p>
 		<?php }
-
 	}
-	comment_form( array( 'comment_notes_after' => '', 'label_submit' => __( 'Submit Comment', 'hannover' ) ) ); ?>
+	comment_form( array( 'label_submit' => __( 'Submit Comment', 'hannover' ) ) ); ?>
 </div>
