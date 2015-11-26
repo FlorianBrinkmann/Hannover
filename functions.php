@@ -166,18 +166,17 @@ function hannover_get_comments_by_type() {
 	return $comments_by_type;
 }
 
-function hannover_comments( $comment, $args, $depth ) {
-	$GLOBALS['comment'] = $comment; ?>
+function hannover_comments( $comment, $args, $depth ) { ?>
 	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
 	<article id="comment-<?php comment_ID(); ?>" class="comment">
 		<header class="comment-meta comment-author vcard clearfix">
-			<?php
-			echo get_avatar( $comment, 50 ); ?>
+			<?php echo get_avatar( $comment, 50 ); ?>
 			<cite class="fn">
 				<?php esc_url( comment_author_link() ); ?>
 			</cite>
 
-			<?php printf( '<a href="%1$s"><time datetime="%2$s">%3$s</time></a>',
+			<?php printf(
+				'<a href="%1$s"><time datetime="%2$s">%3$s</time></a>',
 				esc_url( get_comment_link( $comment->comment_ID ) ),
 				get_comment_time( 'c' ),
 				sprintf( _x( '%1$s @ %2$s', '1=date 2=time', 'hannover' ), get_comment_date(), get_comment_time() )
@@ -208,8 +207,7 @@ function hannover_comments( $comment, $args, $depth ) {
 	<?php
 }
 
-function hannover_trackbacks( $comment ) {
-	$GLOBALS['comment'] = $comment; ?>
+function hannover_trackbacks( $comment ) { ?>
 <li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
 	<?php _e( 'Trackback:', 'bornholm' ); ?>
 	<?php esc_url( comment_author_link() ); ?>
