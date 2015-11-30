@@ -221,8 +221,8 @@ function hannover_comments( $comment, $args, $depth ) { ?>
 function hannover_trackbacks( $comment ) { ?>
 <li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
 	<?php _e( 'Trackback:', 'bornholm' ); ?>
-	<?php esc_url( comment_author_link() ); ?>
-	<?php esc_url( edit_comment_link( __( '(Edit)', 'bornholm' ), '<span class="edit-link">', '</span>' ) );
+	<?php comment_author_link(); ?>
+	<?php edit_comment_link( __( '(Edit)', 'bornholm' ), '<span class="edit-link">', '</span>' );
 }
 
 require get_template_directory() . '/inc/customizer.php';
