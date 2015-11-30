@@ -57,6 +57,17 @@ function hannover_register_sidebars() {
 add_action( 'widgets_init', 'hannover_register_sidebars' );
 
 /**
+ * Adds the scripts and styles to the header
+ */
+function hannover_scripts_styles() {
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
+}
+
+add_action( 'wp_enqueue_scripts', 'hannover_scripts_styles' );
+
+/**
  * Displays date and time of a post
  */
 function hannover_the_date() {
@@ -177,7 +188,7 @@ function hannover_comments( $comment, $args, $depth ) { ?>
 
 			<?php printf(
 				'<a href="%1$s"><time datetime="%2$s">%3$s</time></a>',
-				get_comment_link( $comment->comment_ID ) ,
+				get_comment_link( $comment->comment_ID ),
 				get_comment_time( 'c' ),
 				sprintf( _x( '%1$s @ %2$s', '1=date 2=time', 'hannover' ), get_comment_date(), get_comment_time() )
 			); ?>
@@ -195,13 +206,13 @@ function hannover_comments( $comment, $args, $depth ) { ?>
 		</div>
 
 		<div class="reply">
-			<?php esc_url( comment_reply_link(
+			<?php comment_reply_link(
 				array(
 					'reply_text' => __( 'Reply', 'hannover' ),
 					'depth'      => $depth,
 					'max_depth'  => $args['max_depth']
 				)
-			) ); ?>
+			); ?>
 		</div>
 	</article>
 	<?php
