@@ -177,7 +177,7 @@ function hannover_comments( $comment, $args, $depth ) { ?>
 
 			<?php printf(
 				'<a href="%1$s"><time datetime="%2$s">%3$s</time></a>',
-				esc_url( get_comment_link( $comment->comment_ID ) ),
+				get_comment_link( $comment->comment_ID ) ,
 				get_comment_time( 'c' ),
 				sprintf( _x( '%1$s @ %2$s', '1=date 2=time', 'hannover' ), get_comment_date(), get_comment_time() )
 			); ?>
@@ -191,7 +191,7 @@ function hannover_comments( $comment, $args, $depth ) { ?>
 
 		<div class="comment-content comment">
 			<?php comment_text(); ?>
-			<?php esc_url( edit_comment_link( __( 'Edit', 'hannover' ), '<p class="edit-link">', '</p>' ) ); ?>
+			<?php edit_comment_link( __( 'Edit', 'hannover' ), '<p class="edit-link">', '</p>' ); ?>
 		</div>
 
 		<div class="reply">
