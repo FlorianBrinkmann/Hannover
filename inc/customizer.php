@@ -64,8 +64,7 @@ function hannover_customize_register( $wp_customize ) {
 
 	$wp_customize->add_control(
 		'portfolio_elements_per_page', array(
-			'label'    =>
-				__( 'Number of portfolio elements to show on one page (0 to show all elements on one page).', 'hannover' ),
+			'label'    => __( 'Number of portfolio elements to show on one page (0 to show all elements on one page).', 'hannover' ),
 			'type'     => 'number',
 			'section'  => 'portfolio_elements',
 			'settings' => 'portfolio_elements_per_page',
