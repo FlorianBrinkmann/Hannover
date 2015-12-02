@@ -181,6 +181,12 @@ function hannover_sanitize_checkbox( $checked ) {
 	return ( ( isset( $checked ) && true == $checked ) ? true : false );
 }
 
+function hannover_sanitize_int( $number, $setting ) {
+	$number = absint( $number );
+
+	return ( $number ? $number : $setting->default );
+}
+
 function hannover_sanitize_positive_int( $number, $setting ) {
 	$number = absint( $number );
 
