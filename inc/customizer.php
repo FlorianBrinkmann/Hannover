@@ -56,6 +56,23 @@ function hannover_customize_register( $wp_customize ) {
 	);
 
 	$wp_customize->add_setting(
+		'portfolio_elements_per_page', array(
+			'default'           => 0,
+			'sanitize_callback' => 'hannover_sanitize_positive_int'
+		)
+	);
+
+	$wp_customize->add_control(
+		'portfolio_elements_per_page', array(
+			'label'    =>
+				__( 'Number of portfolio elements to show on one page (0 to show all elements on one page).', 'hannover' ),
+			'type'     => 'number',
+			'section'  => 'portfolio_elements',
+			'settings' => 'portfolio_elements_per_page',
+		)
+	);
+
+	$wp_customize->add_setting(
 		'portfolio_archive', array(
 			'default'           => 'no_archive',
 			'sanitize_callback' => 'hannover_sanitize_select'
@@ -102,9 +119,7 @@ function hannover_customize_register( $wp_customize ) {
 
 	$wp_customize->add_control(
 		'portfolio_auto_archive', array(
-			'label'           =>
-				__( 'Number of recent elements which will NOT be archived.',
-					'hannover' ),
+			'label'           => __( 'Number of recent elements which will NOT be archived.', 'hannover' ),
 			'type'            => 'number',
 			'section'         => 'portfolio_archive',
 			'settings'        => 'portfolio_auto_archive',
