@@ -1,4 +1,4 @@
 <?php
 /**
- * Template Name: Page for portfolio overview
+ * Template Name: Portfolio page
  */
