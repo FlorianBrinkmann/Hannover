@@ -243,4 +243,102 @@ function hannover_image_and_gallery_posts_array() {
 	return $tax_query_array;
 }
 
+
+/**
+ * Fetch image post objects for all gallery images in a post.
+ *
+ * @param $post_id
+ *
+ * @return array
+ */
+function hannover_get_gallery_images( $post_id ) {
+
+	$post = get_post( $post_id );
+
+	// Den Beitrag gibt es nicht, oder er ist leer.
+	if ( ! $post || empty ( $post->post_content ) ) {
+		return array();
+	}
+
+	$galleries = get_post_galleries( $post, false );
+	if ( empty ( $galleries ) ) {
+		return array();
+	}
+	$ids = array();
+	foreach ( $galleries as $gallery ) {
+		if ( ! empty ( $gallery['ids'] ) ) {
+			$ids = array_merge( $ids, explode( ',', $gallery['ids'] ) );
+		}
+	}
+	$ids = array_unique( $ids );
+	if ( empty ( $ids ) ) {
+		$attachments = get_children( array(
+			'post_parent'    => $post_id,
+			'post_status'    => 'inherit',
+			'post_type'      => 'attachment',
+			'post_mime_type' => 'image',
+			'order'          => 'ASC',
+			'orderby'        => 'menu_order',
+		) );
+		if ( empty ( $attachments ) ) {
+			return array();
+		}
+	}
+
+	$images = get_posts(
+		array(
+			'post_type'      => 'attachment',
+			'post_mime_type' => 'image',
+			'orderby'        => 'post__in',
+			'numberposts'    => 999,
+			'include'        => $ids
+		)
+	);
+	if ( ! $images && ! $attachments ) {
+		return array();
+	} elseif ( ! $images ) {
+		$images = $attachments;
+	}
+
+	return $images;
+}
+
+function hannover_get_first_image_from_post_content() {
+	global $post;
+	$first_img = '';
+	ob_start();
+	ob_end_clean();
+	$output    = preg_match_all( '/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches );
+	$first_img = $matches[1][0];
+
+	if ( empty( $first_img ) ) {
+		$first_img = "/path/to/default.png";
+	}
+
+	return $first_img;
+}
+
+function hannover_image_from_gallery_or_image_post( $size, $post ) {
+	if ( has_post_thumbnail() ) {
+		the_post_thumbnail( $size );
+	} else {
+		$post_format = get_post_format( $post );
+		if ( $post_format == 'gallery' ) {
+			$images  = hannover_get_gallery_images( $post->ID );
+			$image   = array_shift( $images );
+			$img_tag = wp_get_attachment_image( $image->ID, $size );
+		} elseif ( $post_format == 'image' ) {
+			$first_img_url = hannover_get_first_image_from_post_content();
+			$first_img_id  = attachment_url_to_postid( $first_img_url );
+			if ( $first_img_id == 0 ) {
+				$pattern       = '/-\d+x\d+(\.\w{3,4}$)/i';
+				$first_img_url = preg_replace( $pattern, '${1}', $first_img_url );
+				$first_img_id  = attachment_url_to_postid( $first_img_url );
+			}
+			$img_tag = wp_get_attachment_image( $first_img_id, $size );
+		}
+		echo $img_tag;
+	}
+}
+
 require get_template_directory() . '/inc/customizer.php';
