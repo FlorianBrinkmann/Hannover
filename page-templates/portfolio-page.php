@@ -4,17 +4,21 @@
  */
 get_header(); ?>
 	<main role="main">
-		<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
+		<header>
+			<h1 class="page-title"><?php single_post_title(); ?></h1>
+		</header>
 		<?php $use_portfolio_category = get_theme_mod( 'portfolio_from_category' );
 		$portfolio_category           = get_theme_mod( 'portfolio_category' );
 		$elements_per_page            = get_theme_mod( 'portfolio_elements_per_page', 0 );
 		$tax_query_array              = hannover_image_and_gallery_posts_array();
+		$paged                        = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 		if ( $elements_per_page == 0 ) {
 			$elements_per_page = - 1;
 		}
 		if ( $use_portfolio_category == 'checked' && $portfolio_category !== '' ) {
 			$args = array(
 				'posts_per_page' => $elements_per_page,
+				'paged'          => $paged,
 				'tax_query'      => array(
 					'relation' => 'AND',
 					array(
@@ -28,10 +32,10 @@ get_header(); ?>
 		} else {
 			$args = array(
 				'posts_per_page' => $elements_per_page,
-				'tax_query'      => $tax_query_array
+				'tax_query'      => $tax_query_array,
+				'paged'          => $paged
 			);
 		}
-		$paged           = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 		$portfolio_query = new WP_Query( $args );
 		$temp_query      = $wp_query;
 		$wp_query        = null;
