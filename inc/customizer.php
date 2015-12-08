@@ -87,7 +87,6 @@ function hannover_customize_register( $wp_customize ) {
 			'choices'  => array(
 				'no_archive'       => 'No archive',
 				'archive_category' => 'Archive category',
-				'auto_archive'     => 'Automatic archive less recent elements'
 			)
 		)
 	);
@@ -105,23 +104,6 @@ function hannover_customize_register( $wp_customize ) {
 			'section'         => 'portfolio_archive',
 			'settings'        => 'portfolio_archive_category',
 			'choices'         => $category_array,
-			'active_callback' => 'hannover_choice_callback'
-		)
-	);
-
-	$wp_customize->add_setting(
-		'portfolio_auto_archive', array(
-			'default'           => 3,
-			'sanitize_callback' => 'hannover_sanitize_positive_int'
-		)
-	);
-
-	$wp_customize->add_control(
-		'portfolio_auto_archive', array(
-			'label'           => __( 'Number of recent elements which will NOT be archived.', 'hannover' ),
-			'type'            => 'number',
-			'section'         => 'portfolio_archive',
-			'settings'        => 'portfolio_auto_archive',
 			'active_callback' => 'hannover_choice_callback'
 		)
 	);
