@@ -38,15 +38,17 @@ get_header(); ?>
 		} else {
 			$args = array(
 				'posts_per_page' => $elements_per_page,
+				'paged'          => $paged,
 				'tax_query'      => array(
-					'taxonomy' => 'post_format',
-					'field'    => 'slug',
-					'terms'    => array(
-						'post-format-gallery',
-						'post-format-image'
+					array(
+						'taxonomy' => 'post_format',
+						'field'    => 'slug',
+						'terms'    => array(
+							'post-format-gallery',
+							'post-format-image'
+						),
 					),
-				),
-				'paged'          => $paged
+				)
 			);
 		}
 		$portfolio_query = new WP_Query( $args );
