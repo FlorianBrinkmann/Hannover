@@ -80,7 +80,7 @@ function hannover_customize_register( $wp_customize ) {
 
 	$wp_customize->add_control(
 		'portfolio_archive', array(
-			'label'    => __( 'Choose how you want to select portfolio elements for the archive.', 'hannover' ),
+			'label'    => __( 'Choose if you want to select portfolio elements for the archive.', 'hannover' ),
 			'type'     => 'radio',
 			'section'  => 'portfolio_archive',
 			'settings' => 'portfolio_archive',
