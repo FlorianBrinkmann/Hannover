@@ -225,25 +225,6 @@ function hannover_trackbacks( $comment ) { ?>
 	<?php edit_comment_link( __( '(Edit)', 'bornholm' ), '<span class="edit-link">', '</span>' );
 }
 
-function hannover_image_and_gallery_posts_array() {
-	$tax_query_array = array(
-		'relation' => 'OR',
-		array(
-			'taxonomy' => 'post_format',
-			'field'    => 'slug',
-			'terms'    => 'post-format-gallery'
-		),
-		array(
-			'taxonomy' => 'post_format',
-			'field'    => 'slug',
-			'terms'    => 'post-format-image'
-		)
-	);
-
-	return $tax_query_array;
-}
-
-
 /**
  * Fetch image post objects for all gallery images in a post.
  *
