@@ -10,7 +10,6 @@ get_header(); ?>
 		<?php $use_portfolio_category = get_theme_mod( 'portfolio_from_category' );
 		$portfolio_category           = get_theme_mod( 'portfolio_category' );
 		$elements_per_page            = get_theme_mod( 'portfolio_elements_per_page', 0 );
-		$tax_query_array              = hannover_image_and_gallery_posts_array();
 		$paged                        = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 		if ( $elements_per_page == 0 ) {
 			$elements_per_page = - 1;
@@ -26,13 +25,27 @@ get_header(); ?>
 						'field'    => 'term_id',
 						'terms'    => array( $portfolio_category ),
 					),
-					$tax_query_array
+					array(
+						'taxonomy' => 'post_format',
+						'field'    => 'slug',
+						'terms'    => array(
+							'post-format-gallery',
+							'post-format-image'
+						),
+					),
 				)
 			);
 		} else {
 			$args = array(
 				'posts_per_page' => $elements_per_page,
-				'tax_query'      => $tax_query_array,
+				'tax_query'      => array(
+					'taxonomy' => 'post_format',
+					'field'    => 'slug',
+					'terms'    => array(
+						'post-format-gallery',
+						'post-format-image'
+					),
+				),
 				'paged'          => $paged
 			);
 		}
