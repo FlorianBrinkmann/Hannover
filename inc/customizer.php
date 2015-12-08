@@ -58,7 +58,7 @@ function hannover_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'portfolio_elements_per_page', array(
 			'default'           => 0,
-			'sanitize_callback' => 'hannover_sanitize_positive_int'
+			'sanitize_callback' => 'hannover_sanitize_int'
 		)
 	);
 
@@ -111,7 +111,7 @@ function hannover_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'portfolio_archive_elements_per_page', array(
 			'default'           => 0,
-			'sanitize_callback' => 'hannover_sanitize_positive_int'
+			'sanitize_callback' => 'hannover_sanitize_int'
 		)
 	);
 
@@ -161,9 +161,6 @@ function hannover_choice_callback( $control ) {
 	if ( $control_id == 'portfolio_archive_category' && $radio_setting == 'archive_category' ) {
 		return true;
 	}
-	if ( $control_id == 'portfolio_auto_archive' && $radio_setting == 'auto_archive' ) {
-		return true;
-	}
 
 	return false;
 }
@@ -183,10 +180,4 @@ function hannover_sanitize_int( $number, $setting ) {
 	$number = absint( $number );
 
 	return ( $number ? $number : $setting->default );
-}
-
-function hannover_sanitize_positive_int( $number, $setting ) {
-	$number = absint( $number );
-
-	return ( $number > 0 ? $number : $setting->default );
 }
