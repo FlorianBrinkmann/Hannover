@@ -124,6 +124,43 @@ function hannover_customize_register( $wp_customize ) {
 		)
 	);
 
+	$portfolio_category_pages = get_posts(
+		array(
+			'post_type'  => 'page',
+			'meta_key'   => '_wp_page_template',
+			'meta_value' => 'page-templates/portfolio-category-page.php'
+		)
+	);
+
+
+	if ( ! empty( $portfolio_category_pages ) ) {
+		foreach ( $portfolio_category_pages as $portfolio_category_page ) {
+			$wp_customize->add_setting(
+				"portfolio_category_page_$portfolio_category_page->ID", array(
+					'sanitize_callback' => 'hannover_sanitize_select'
+				)
+			);
+
+			$label = sprintf(
+				_x(
+					'Choose portfolio category to show on “%s”',
+					'Label for portfolio category pages customizer control. s=page title',
+					'hannover'
+				),
+				esc_html( $portfolio_category_page->post_title )
+			);
+			$wp_customize->add_control(
+				"portfolio_category_page_$portfolio_category_page->ID", array(
+					'label'    => $label,
+					'type'     => 'select',
+					'section'  => 'portfolio_category_pages',
+					'settings' => "portfolio_category_page_$portfolio_category_page->ID",
+					'choices'  => $category_array,
+				)
+			);
+		}
+	}
+
 	$wp_customize->add_panel(
 		'theme_options', array(
 			'title' => __( 'Theme Options', 'hannover' ),
@@ -141,6 +178,14 @@ function hannover_customize_register( $wp_customize ) {
 		'portfolio_archive', array(
 			'title' => __( 'Portfolio archive', 'hannover' ),
 			'panel' => 'theme_options'
+		)
+	);
+
+	$wp_customize->add_section(
+		'portfolio_category_pages', array(
+			'title'       => __( 'Portfolio category pages', 'hannover' ),
+			'description' => __( 'Here you can choose the category to display on the respective portfolio category page. The category must include portfolio elements—otherwise all portfolio elements will be displayed.', 'hannover' ),
+			'panel'       => 'theme_options'
 		)
 	);
 }
