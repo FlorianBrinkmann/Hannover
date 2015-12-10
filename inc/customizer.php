@@ -142,11 +142,7 @@ function hannover_customize_register( $wp_customize ) {
 			);
 
 			$label = sprintf(
-				_x(
-					'Choose portfolio category to show on “%s”',
-					'Label for portfolio category pages customizer control. s=page title',
-					'hannover'
-				),
+				_x( 'Choose portfolio category to show on “%s”', 'Label for portfolio category pages customizer control. s=page title', 'hannover' ),
 				esc_html( $portfolio_category_page->post_title )
 			);
 			$wp_customize->add_control(
