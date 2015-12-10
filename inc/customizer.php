@@ -135,8 +135,9 @@ function hannover_customize_register( $wp_customize ) {
 
 	if ( ! empty( $portfolio_category_pages ) ) {
 		foreach ( $portfolio_category_pages as $portfolio_category_page ) {
+			$id = $portfolio_category_page->ID;
 			$wp_customize->add_setting(
-				"portfolio_category_page_$portfolio_category_page->ID", array(
+				"portfolio_category_page_$id", array(
 					'sanitize_callback' => 'hannover_sanitize_select'
 				)
 			);
@@ -146,12 +147,28 @@ function hannover_customize_register( $wp_customize ) {
 				esc_html( $portfolio_category_page->post_title )
 			);
 			$wp_customize->add_control(
-				"portfolio_category_page_$portfolio_category_page->ID", array(
+				"portfolio_category_page_$id", array(
 					'label'    => $label,
 					'type'     => 'select',
 					'section'  => 'portfolio_category_pages',
-					'settings' => "portfolio_category_page_$portfolio_category_page->ID",
+					'settings' => "portfolio_category_page_$id",
 					'choices'  => $category_array,
+				)
+			);
+
+			$wp_customize->add_setting(
+				"portfolio_category_page_elements_per_page_$id", array(
+					'default'           => 0,
+					'sanitize_callback' => 'hannover_sanitize_int'
+				)
+			);
+
+			$wp_customize->add_control(
+				"portfolio_category_page_elements_per_page_$id", array(
+					'label'    => __( 'Number of elements to show on one page (0 to show all).', 'hannover' ),
+					'type'     => 'number',
+					'section'  => 'portfolio_category_pages',
+					'settings' => "portfolio_category_page_elements_per_page_$id",
 				)
 			);
 		}
