@@ -67,14 +67,19 @@ get_header(); ?>
 				);
 			}
 		}
-		$archive_query = new WP_Query( $args );
-		$temp_query    = $wp_query;
-		$wp_query      = null;
-		$wp_query      = $archive_query;
+		$archive_query      = new WP_Query( $args );
+		$temp_query         = $wp_query;
+		$wp_query           = null;
+		$wp_query           = $archive_query;
+		$archive_alt_layout = get_theme_mod( 'portfolio_archive_alt_layout' );
 		if ( $archive_query->have_posts() ) {
 			while ( $archive_query->have_posts() ) {
 				$archive_query->the_post();
-				get_template_part( 'template-parts/content', 'portfolio-element' );
+				if ( $archive_alt_layout == 'checked' ) {
+					get_template_part( 'template-parts/content', 'portfolio-element-alt' );
+				} else {
+					get_template_part( 'template-parts/content', 'portfolio-element' );
+				}
 			}
 		}
 		wp_reset_postdata();
