@@ -197,7 +197,7 @@ function hannover_customize_register( $wp_customize ) {
 	$wp_customize->add_section(
 		'portfolio_category_pages', array(
 			'title'       => __( 'Portfolio category pages', 'hannover' ),
-			'description' => __( 'Here you can choose the category to display on the respective portfolio category page. The category must include portfolio elements—otherwise all portfolio elements will be displayed.', 'hannover' ),
+			'description' => __( 'Here you can choose the category to display on the respective portfolio category page. The category must include portfolio elements—otherwise nothing will be displayed.', 'hannover' ),
 			'panel'       => 'theme_options'
 		)
 	);
