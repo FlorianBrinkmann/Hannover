@@ -72,6 +72,21 @@ function hannover_customize_register( $wp_customize ) {
 	);
 
 	$wp_customize->add_setting(
+		'portfolio_alt_layout', array(
+			'sanitize_callback' => 'hannover_sanitize_checkbox'
+		)
+	);
+
+	$wp_customize->add_control(
+		'portfolio_alt_layout', array(
+			'label'    => __( 'Use alternative layout for portfolio overview', 'hannover' ),
+			'type'     => 'checkbox',
+			'section'  => 'portfolio_elements',
+			'settings' => 'portfolio_alt_layout'
+		)
+	);
+
+	$wp_customize->add_setting(
 		'portfolio_archive', array(
 			'default'           => 'no_archive',
 			'sanitize_callback' => 'hannover_sanitize_select'
