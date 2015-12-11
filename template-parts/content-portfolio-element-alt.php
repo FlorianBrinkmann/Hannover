@@ -1,6 +1,6 @@
 <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 	<a href="<?php the_permalink(); ?>">
-		<?php hannover_image_from_gallery_or_image_post( 'medium_large', $post ); ?>
+		<?php hannover_image_from_gallery_or_image_post( 'medium', $post ); ?>
 	</a>
 	<div>
 		<a href="<?php the_permalink(); ?>">
