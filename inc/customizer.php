@@ -201,6 +201,21 @@ function hannover_customize_register( $wp_customize ) {
 					'settings' => "portfolio_category_page_elements_per_page_$id",
 				)
 			);
+
+			$wp_customize->add_setting(
+				"portfolio_category_page_alt_layout_$id", array(
+					'sanitize_callback' => 'hannover_sanitize_checkbox'
+				)
+			);
+
+			$wp_customize->add_control(
+				"portfolio_category_page_alt_layout_$id", array(
+					'label'    => __( 'Use alternative layout', 'hannover' ),
+					'type'     => 'checkbox',
+					'section'  => 'portfolio_category_pages',
+					'settings' => "portfolio_category_page_alt_layout_$id"
+				)
+			);
 		}
 	}
 
