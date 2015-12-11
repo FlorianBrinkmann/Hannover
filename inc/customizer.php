@@ -139,6 +139,21 @@ function hannover_customize_register( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'portfolio_archive_alt_layout', array(
+			'sanitize_callback' => 'hannover_sanitize_checkbox'
+		)
+	);
+
+	$wp_customize->add_control(
+		'portfolio_archive_alt_layout', array(
+			'label'    => __( 'Use alternative layout for archive', 'hannover' ),
+			'type'     => 'checkbox',
+			'section'  => 'portfolio_archive',
+			'settings' => 'portfolio_archive_alt_layout'
+		)
+	);
+
 	$portfolio_category_pages = get_posts(
 		array(
 			'post_type'  => 'page',
