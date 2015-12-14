@@ -219,6 +219,37 @@ function hannover_customize_register( $wp_customize ) {
 		}
 	}
 
+	$wp_customize->add_setting(
+		'slider_autoplay', array(
+			'sanitize_callback' => 'hannover_sanitize_checkbox',
+		)
+	);
+
+	$wp_customize->add_control(
+		'slider_autoplay', array(
+			'label'    => __( 'Enable autoplay', 'hannover' ),
+			'type'     => 'checkbox',
+			'section'  => 'slider_settings',
+			'settings' => 'slider_autoplay'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'slider_autoplay_time', array(
+			'default'           => 3000,
+			'sanitize_callback' => 'hannover_sanitize_int'
+		)
+	);
+
+	$wp_customize->add_control(
+		'slider_autoplay_time', array(
+			'label'    => __( 'Time in milliseconds to show each image with autoplay', 'hannover' ),
+			'type'     => 'number',
+			'section'  => 'slider_settings',
+			'settings' => 'slider_autoplay_time',
+		)
+	);
+
 	$wp_customize->add_panel(
 		'theme_options', array(
 			'title' => __( 'Theme Options', 'hannover' ),
@@ -244,6 +275,13 @@ function hannover_customize_register( $wp_customize ) {
 			'title'       => __( 'Portfolio category pages', 'hannover' ),
 			'description' => __( 'Here you can choose the category to display on the respective portfolio category page. The category must include portfolio elements—otherwise nothing will be displayed.', 'hannover' ),
 			'panel'       => 'theme_options'
+		)
+	);
+
+	$wp_customize->add_section(
+		'slider_settings', array(
+			'title' => __( 'Slider settings', 'hannover' ),
+			'panel' => 'theme_options'
 		)
 	);
 }
