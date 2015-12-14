@@ -63,6 +63,17 @@ function hannover_scripts_styles() {
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
+
+	wp_enqueue_style( 'owl-carousel', get_template_directory_uri() . '/css/owl-carousel.css' );
+	wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl-carousel.js', array( 'jquery' ), false, true );
+	$params = array(
+		'autoplay'        => true,
+		'autoplayTimeout' => 3000,
+		'prev'            => __( 'Previous Slide', 'hannover' ),
+		'next'            => __( 'Next Slide', 'hannover' ),
+
+	);
+	wp_localize_script( 'owl-carousel', 'OwlParams', $params );
 }
 
 add_action( 'wp_enqueue_scripts', 'hannover_scripts_styles' );

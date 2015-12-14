@@ -3094,3 +3094,30 @@
     $.fn.owlCarousel.Constructor.Plugins.Hash = Hash;
 
 })(window.Zepto || window.jQuery, window, document);
+
+jQuery(document).ready(function () {
+    jQuery('.gallery').wrap("<div class='slider'></div>");
+    jQuery('.gallery').owlCarousel({
+        items: 1,
+        animateOut: "fadeOut",
+        animateIn: "fadeIn",
+        loop: true,
+        autoplay: OwlParams.autoplay,
+        autoplayTimeout: OwlParams.autoplayTimeout,
+    });
+});
+
+var owl = jQuery('.gallery');
+owl.on('initialized.owl.carousel', function () {
+    jQuery(".slider").append(
+        '<button class="prev"><span aria-hidden="true">‹</span>' +
+        '<span class="screen-reader-text"' + OwlParams.prev + '</span>' +
+        '</button><button class="next"><span aria-hidden="true">›</span>' +
+        '<span class="screen-reader-text"' + OwlParams.next + '</span></button>');
+    jQuery(".next").click(function () {
+        owl.trigger('next.owl.carousel');
+    })
+    jQuery(".prev").click(function () {
+        owl.trigger('prev.owl.carousel');
+    })
+});
