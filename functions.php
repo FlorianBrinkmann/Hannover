@@ -66,9 +66,11 @@ function hannover_scripts_styles() {
 
 	wp_enqueue_style( 'owl-carousel', get_template_directory_uri() . '/css/owl-carousel.css' );
 	wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl-carousel.js', array( 'jquery' ), false, true );
-	$params = array(
-		'autoplay'        => true,
-		'autoplayTimeout' => 3000,
+	$slider_autoplay      = get_theme_mod( 'slider_autoplay' );
+	$slider_autoplay_time = get_theme_mod( 'slider_autoplay_time', 3000 );
+	$params               = array(
+		'autoplay'        => $slider_autoplay,
+		'autoplayTimeout' => $slider_autoplay_time,
 		'prev'            => __( 'Previous Slide', 'hannover' ),
 		'next'            => __( 'Next Slide', 'hannover' ),
 
