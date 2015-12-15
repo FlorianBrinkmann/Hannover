@@ -5,7 +5,8 @@
 		hannover_the_date(); ?>
 	</header>
 	<div class="entry-content">
-		<?php hannover_the_content(); ?>
+		<?php hannover_the_content();
+		wp_link_pages(); ?>
 	</div>
 	<footer>
 		<p><?php hannover_entry_meta() ?></p>

@@ -3,6 +3,7 @@
 		<?php hannover_the_title( 'h1', false ); ?>
 	</header>
 	<div class="entry-content">
-		<?php hannover_the_content(); ?>
+		<?php hannover_the_content();
+		wp_link_pages(); ?>
 	</div>
 </article>
