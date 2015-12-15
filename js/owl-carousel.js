@@ -3104,22 +3104,12 @@ jQuery(document).ready(function () {
         loop: true,
         autoplay: OwlParams.autoplay,
         autoplayTimeout: OwlParams.autoplayTimeout,
+        nav: true,
+        navText: [
+            '<span class="screen-reader-text">' + OwlParams.next +
+            '</span><span aria-hidden="true">›</span>',
+            '<span aria-hidden="true">‹</span>' +
+            '<span class="screen-reader-text">'
+            + OwlParams.prev + '</span>'],
     });
-});
-
-var owl = jQuery('.gallery');
-owl.on('initialized.owl.carousel', function () {
-    jQuery(".slider").append(
-        '<button class="prev"><span aria-hidden="true">‹</span>' +
-        '<span class="screen-reader-text"' + OwlParams.prev +
-        '</span></button><button class="next">' +
-        '<span aria-hidden="true">›</span>' +
-        '<span class="screen-reader-text"' + OwlParams.next +
-        '</span></button>');
-    jQuery(".next").click(function () {
-        owl.trigger('next.owl.carousel');
-    })
-    jQuery(".prev").click(function () {
-        owl.trigger('prev.owl.carousel');
-    })
 });
