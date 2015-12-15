@@ -250,6 +250,21 @@ function hannover_customize_register( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'galleries_as_slider', array(
+			'sanitize_callback' => 'hannover_sanitize_checkbox',
+		)
+	);
+
+	$wp_customize->add_control(
+		'galleries_as_slider', array(
+			'label'    => __( 'Display all galleries as sliders', 'hannover' ),
+			'type'     => 'checkbox',
+			'section'  => 'slider_settings',
+			'settings' => 'galleries_as_slider'
+		)
+	);
+
 	$wp_customize->add_panel(
 		'theme_options', array(
 			'title' => __( 'Theme Options', 'hannover' ),
