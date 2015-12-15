@@ -44,9 +44,9 @@ add_action( 'init', 'hannover_register_menus' );
 
 function hannover_register_sidebars() {
 	register_sidebar( array(
-		'name'          => __( 'Main Sidebar', 'textdomain' ),
+		'name'          => __( 'Main Sidebar', 'hannover' ),
 		'id'            => 'sidebar-1',
-		'description'   => __( 'Widgets in this area will be shown on all normal posts and pages.', 'textdomain' ),
+		'description'   => __( 'Widgets in this area will be shown on all normal posts and pages.', 'hannover' ),
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</div>',
 		'before_title'  => '<h3 class="widget-title">',
@@ -242,9 +242,9 @@ function hannover_comments( $comment, $args, $depth ) { ?>
 
 function hannover_trackbacks( $comment ) { ?>
 <li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
-	<?php _e( 'Trackback:', 'bornholm' ); ?>
+	<?php _e( 'Trackback:', 'hannover' ); ?>
 	<?php comment_author_link(); ?>
-	<?php edit_comment_link( __( '(Edit)', 'bornholm' ), '<span class="edit-link">', '</span>' );
+	<?php edit_comment_link( __( '(Edit)', 'hannover' ), '<span class="edit-link">', '</span>' );
 }
 
 /**
