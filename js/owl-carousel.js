@@ -3111,9 +3111,11 @@ var owl = jQuery('.gallery');
 owl.on('initialized.owl.carousel', function () {
     jQuery(".slider").append(
         '<button class="prev"><span aria-hidden="true">‹</span>' +
-        '<span class="screen-reader-text"' + OwlParams.prev + '</span>' +
-        '</button><button class="next"><span aria-hidden="true">›</span>' +
-        '<span class="screen-reader-text"' + OwlParams.next + '</span></button>');
+        '<span class="screen-reader-text"' + OwlParams.prev +
+        '</span></button><button class="next">' +
+        '<span aria-hidden="true">›</span>' +
+        '<span class="screen-reader-text"' + OwlParams.next +
+        '</span></button>');
     jQuery(".next").click(function () {
         owl.trigger('next.owl.carousel');
     })
