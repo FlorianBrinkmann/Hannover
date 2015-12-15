@@ -65,8 +65,11 @@ function hannover_scripts_styles() {
 	}
 
 	global $post;
-	$page_template = get_page_template_slug( $post->ID );
-	if ( $page_template == 'page-templates/slider-front-page.php' ) {
+	$galleries_as_slider = get_theme_mod( 'galleries_as_slider' );
+	$page_template       = get_page_template_slug( $post->ID );
+	if ( $page_template == 'page-templates/slider-front-page.php' ||
+	     $galleries_as_slider == 'checked'
+	) {
 		wp_enqueue_style( 'owl-carousel', get_template_directory_uri() . '/css/owl-carousel.css' );
 		wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl-carousel.js', array( 'jquery' ), false, true );
 		$slider_autoplay      = get_theme_mod( 'slider_autoplay' );
