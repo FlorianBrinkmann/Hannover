@@ -83,6 +83,8 @@ function hannover_scripts_styles() {
 		);
 		wp_localize_script( 'owl-carousel', 'OwlParams', $params );
 	}
+
+	wp_enqueue_style( 'hannover-style', get_template_directory_uri() . '/css/hannover.css', array(), null );
 }
 
 add_action( 'wp_enqueue_scripts', 'hannover_scripts_styles' );
