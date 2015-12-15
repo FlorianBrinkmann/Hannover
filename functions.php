@@ -64,18 +64,22 @@ function hannover_scripts_styles() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 
-	wp_enqueue_style( 'owl-carousel', get_template_directory_uri() . '/css/owl-carousel.css' );
-	wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl-carousel.js', array( 'jquery' ), false, true );
-	$slider_autoplay      = get_theme_mod( 'slider_autoplay' );
-	$slider_autoplay_time = get_theme_mod( 'slider_autoplay_time', 3000 );
-	$params               = array(
-		'autoplay'        => $slider_autoplay,
-		'autoplayTimeout' => $slider_autoplay_time,
-		'prev'            => __( 'Previous Slide', 'hannover' ),
-		'next'            => __( 'Next Slide', 'hannover' ),
+	global $post;
+	$page_template = get_page_template_slug( $post->ID );
+	if ( $page_template == 'page-templates/slider-front-page.php' ) {
+		wp_enqueue_style( 'owl-carousel', get_template_directory_uri() . '/css/owl-carousel.css' );
+		wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl-carousel.js', array( 'jquery' ), false, true );
+		$slider_autoplay      = get_theme_mod( 'slider_autoplay' );
+		$slider_autoplay_time = get_theme_mod( 'slider_autoplay_time', 3000 );
+		$params               = array(
+			'autoplay'        => $slider_autoplay,
+			'autoplayTimeout' => $slider_autoplay_time,
+			'prev'            => __( 'Previous Slide', 'hannover' ),
+			'next'            => __( 'Next Slide', 'hannover' ),
 
-	);
-	wp_localize_script( 'owl-carousel', 'OwlParams', $params );
+		);
+		wp_localize_script( 'owl-carousel', 'OwlParams', $params );
+	}
 }
 
 add_action( 'wp_enqueue_scripts', 'hannover_scripts_styles' );
