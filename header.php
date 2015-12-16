@@ -9,7 +9,7 @@
 	wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-<header>
+<header id="header">
 	<div class="site-branding">
 		<?php if ( get_header_image() ) {
 			if ( is_front_page() && is_home() ) { ?>
@@ -33,17 +33,20 @@
 			<p class="site-description"><?php echo $description; ?></p>
 		<?php } ?>
 	</div>
-	<nav>
-		<h2 class="screen-reader-text">
-			<?php _ex( 'Main navigation', 'hidden screen reader headline for the main navigation', 'hannover' ); ?>
-		</h2>
-		<?php wp_nav_menu(
-			array(
-				'theme_location' => 'primary',
-				'menu_class'     => 'primary-menu',
-				'container'      => ''
-			)
-		); ?>
-	</nav>
+	<?php if ( has_nav_menu( 'primary' ) ) { ?>
+		<button id="menu-toggle" class="menu-toggle"><?php _e( 'Menu', 'hannover' ); ?></button>
+		<nav>
+			<h2 class="screen-reader-text">
+				<?php _ex( 'Main navigation', 'hidden screen reader headline for the main navigation', 'hannover' ); ?>
+			</h2>
+			<?php wp_nav_menu(
+				array(
+					'theme_location' => 'primary',
+					'menu_class'     => 'primary-menu',
+					'container'      => ''
+				)
+			); ?>
+		</nav>
+	<?php } ?>
 </header>
 <div id="content">
