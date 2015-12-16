@@ -359,4 +359,19 @@ function hannover_image_from_gallery_or_image_post( $size, $post ) {
 	}
 }
 
+/**
+ * Removes the page jump after clicking on a read more link
+ *
+ * @param $link
+ *
+ * @return mixed
+ */
+function hannover_remove_more_link_scroll( $link ) {
+	$link = preg_replace( '/#more-[0-9]+/', '', $link );
+
+	return $link;
+}
+
+add_filter( 'the_content_more_link', 'hannover_remove_more_link_scroll' );
+
 require get_template_directory() . '/inc/customizer.php';
