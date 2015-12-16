@@ -64,6 +64,8 @@ function hannover_scripts_styles() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 
+	wp_enqueue_script( 'hannover-lightbox', get_template_directory_uri() . '/js/lightbox.js', array( 'jquery' ), false, true );
+
 	global $post;
 	$galleries_as_slider = get_theme_mod( 'galleries_as_slider' );
 	$page_template       = get_page_template_slug( $post->ID );
