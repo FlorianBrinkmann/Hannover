@@ -1,9 +1,6 @@
-/* global screenReaderText */
-/**
- * Theme functions file.
- *
- * Contains handlers for navigation and widget area.
- */
+var root = document.documentElement;
+root.removeAttribute('class', 'no-js');
+root.setAttribute('class', 'js');
 
 (function ($) {
     var body, masthead, menuToggle, siteNavigation;
