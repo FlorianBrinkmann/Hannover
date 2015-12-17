@@ -94,6 +94,8 @@ function hannover_scripts_styles() {
 	}
 
 	wp_enqueue_style( 'hannover-style', get_template_directory_uri() . '/css/hannover.css', array(), null );
+
+	wp_enqueue_style( 'hannover-fonts', '//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic', array(), null );
 }
 
 add_action( 'wp_enqueue_scripts', 'hannover_scripts_styles' );
