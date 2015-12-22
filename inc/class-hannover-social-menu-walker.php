@@ -153,7 +153,7 @@ class Hannover_Social_Menu_Walker extends Walker_Nav_Menu {
 			$icon_url    = get_template_directory_uri() . '/svg/social-media-icons.svg#' . $svg_id;
 			$item_output = $args->before;
 			$item_output .= '<a' . $attributes . '>';
-			$item_output .= '<svg class="icon-google-plus"><use xlink:href="' . $icon_url . '"></use></svg>';
+			$item_output .= '<svg class="' . $svg_id . '"><use xlink:href="' . $icon_url . '"></use></svg>';
 			$item_output .= '</a>';
 			$item_output .= $args->after;
 		} else {
