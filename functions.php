@@ -35,7 +35,9 @@ add_action( 'after_setup_theme', 'hannover_add_theme_support' );
 function hannover_register_menus() {
 	register_nav_menus(
 		array(
-			'primary' => _x( 'Primary Menu', 'Name of menu position in the header', 'hannover' )
+			'primary' => _x( 'Primary Menu', 'Name of menu position in the header', 'hannover' ),
+			'footer'  => _x( 'Footer Menu', 'Name of menu position in the footer', 'hannover' ),
+			'social'  => _x( 'Social Menu', 'Name of menu position for social media icons', 'hannover' ),
 		)
 	);
 }
@@ -67,6 +69,10 @@ function hannover_scripts_styles() {
 	wp_enqueue_script( 'hannover-lightbox', get_template_directory_uri() . '/js/lightbox.js', array( 'jquery' ), false, true );
 
 	wp_enqueue_script( 'hannover-menu', get_template_directory_uri() . '/js/menu.js', array( 'jquery' ), false, true );
+
+	if ( has_nav_menu( 'social' ) ) {
+		wp_enqueue_script( 'hannover-svg4everybody', get_template_directory_uri() . '/js/svg4everybody.js', array( 'jquery' ), false, true );
+	}
 
 	wp_localize_script( 'hannover-menu', 'screenReaderText', array(
 		'expand'   => __( 'expand child menu', 'hannover' ),
@@ -377,3 +383,5 @@ function hannover_remove_more_link_scroll( $link ) {
 add_filter( 'the_content_more_link', 'hannover_remove_more_link_scroll' );
 
 require get_template_directory() . '/inc/customizer.php';
+
+require get_template_directory() . '/inc/class-hannover-social-menu-walker.php';
