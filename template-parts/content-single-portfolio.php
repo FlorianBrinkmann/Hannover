@@ -1,6 +1,7 @@
 <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 	<header class="entry-header">
-		<?php hannover_the_title( 'h1', false );
+		<?php the_post_thumbnail( 'large' );
+		hannover_the_title( 'h1', false );
 		hannover_the_date(); ?>
 	</header>
 	<div class="entry-content">
