@@ -11,23 +11,18 @@ root.setAttribute('class', 'js');
         var dropdownToggle = $('<button />', {
             'class': 'dropdown-toggle',
             'aria-expanded': false
-        }).append($('<span />', {
-            'class': 'screen-reader-text',
+        }).append($('<svg version="1.1" id="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve"><title>' + screenReaderText.expand + '</title><polygon points="11,6 7.5,9.5 4,6 3,7 7.5,11.5 12,7 "/></svg>', {
             text: screenReaderText.expand
         }));
 
         container.find('.menu-item-has-children > a').after(dropdownToggle);
-
-        // Toggle buttons and submenu items with active children menu items.
-        container.find('.current-menu-ancestor > button').addClass('toggled-on');
-        container.find('.current-menu-ancestor > .sub-menu').addClass('toggled-on');
 
         // Add menu items with submenus to aria-haspopup="true".
         container.find('.menu-item-has-children').attr('aria-haspopup', 'true');
 
         container.find('.dropdown-toggle').click(function (e) {
             var _this = $(this),
-                screenReaderSpan = _this.find('.screen-reader-text');
+                screenReaderSpan = _this.find('svg title');
 
             e.preventDefault();
             _this.toggleClass('toggled-on');
@@ -39,6 +34,7 @@ root.setAttribute('class', 'js');
             screenReaderSpan.text(screenReaderSpan.text() === screenReaderText.expand ? screenReaderText.collapse : screenReaderText.expand);
         });
     }
+
 
     initMainNavigation($('.primary-menu'));
 
@@ -100,7 +96,7 @@ root.setAttribute('class', 'js');
             toggleFocusClassTouchScreen();
         }
 
-        siteNavigation.find('a').on('focus blur', function () {
+        siteNavigation.find('.sub-menu a').on('focus blur', function () {
             $(this).parents('.menu-item').toggleClass('focus');
         });
     })();
