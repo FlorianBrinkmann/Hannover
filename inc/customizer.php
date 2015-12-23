@@ -41,6 +41,22 @@ function hannover_customize_register( $wp_customize ) {
 	);
 
 	$wp_customize->add_setting(
+		'portfolio_remove_category_from_cat_widget', array(
+			'sanitize_callback' => 'hannover_sanitize_checkbox'
+		)
+	);
+
+	$wp_customize->add_control(
+		'portfolio_remove_category_from_cat_list', array(
+			'label'           => __( 'Remove portfolio category from category widget', 'hannover' ),
+			'type'            => 'checkbox',
+			'section'         => 'portfolio_elements',
+			'settings'        => 'portfolio_remove_category_from_cat_widget',
+			'active_callback' => 'hannover_use_portfolio_category_callback'
+		)
+	);
+
+	$wp_customize->add_setting(
 		'exclude_portfolio_elements_from_blog', array(
 			'sanitize_callback' => 'hannover_sanitize_checkbox'
 		)
@@ -119,6 +135,22 @@ function hannover_customize_register( $wp_customize ) {
 			'section'         => 'portfolio_archive',
 			'settings'        => 'portfolio_archive_category',
 			'choices'         => $category_array,
+			'active_callback' => 'hannover_choice_callback'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'portfolio_archive_remove_category_from_cat_widget', array(
+			'sanitize_callback' => 'hannover_sanitize_checkbox'
+		)
+	);
+
+	$wp_customize->add_control(
+		'portfolio_archive_remove_category_from_cat_widget', array(
+			'label'           => __( 'Remove archive category from category widget', 'hannover' ),
+			'type'            => 'checkbox',
+			'section'         => 'portfolio_archive',
+			'settings'        => 'portfolio_archive_remove_category_from_cat_widget',
 			'active_callback' => 'hannover_choice_callback'
 		)
 	);
@@ -315,6 +347,8 @@ function hannover_choice_callback( $control ) {
 	$radio_setting = $control->manager->get_setting( 'portfolio_archive' )->value();
 	$control_id    = $control->id;
 	if ( $control_id == 'portfolio_archive_category' && $radio_setting == 'archive_category' ) {
+		return true;
+	} elseif ( $control_id == 'portfolio_archive_remove_category_from_cat_widget' && $radio_setting == 'archive_category' ) {
 		return true;
 	}
 
