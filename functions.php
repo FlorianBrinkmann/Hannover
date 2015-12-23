@@ -201,6 +201,38 @@ function hannover_entry_meta() { ?>
 	<?php };
 }
 
+/**
+ * Removes the archive and portfolio category from the category widget if selected in the customizer
+ *
+ * @param $cat_args
+ *
+ * @return array
+ */
+function hannover_filter_category_widget( $cat_args ) {
+	$use_portfolio_category            = get_theme_mod( 'portfolio_from_category' );
+	$archive_type                      = get_theme_mod( 'portfolio_archive' );
+	$exclude_portfolio_cat_from_widget = get_theme_mod( 'portfolio_remove_category_from_cat_widget' );
+	$exclude_archive_cat_from_widget   = get_theme_mod( 'portfolio_archive_remove_category_from_cat_widget' );
+	$exclude                           = '';
+	if ( $exclude_portfolio_cat_from_widget == 'checked' && $use_portfolio_category == 'checked' ) {
+		$portfolio_category = get_theme_mod( 'portfolio_category' );
+		$exclude            = $portfolio_category;
+	}
+	if ( $exclude_archive_cat_from_widget == 'checked' && $archive_type == 'archive_category' ) {
+		$archive_category = get_theme_mod( 'portfolio_archive_category' );
+		if ( $exclude != '' ) {
+			$exclude .= ', ' . $archive_category;
+		} else {
+			$exclude = $archive_category;
+		}
+	}
+	$cat_args['exclude'] = $exclude;
+
+	return $cat_args;
+}
+
+add_filter( 'widget_categories_args', 'hannover_filter_category_widget' );
+
 function hannover_get_comments_by_type() {
 	global $wp_query, $post;
 	$comment_args               = array(
