@@ -17,8 +17,13 @@ root.setAttribute('class', 'js');
 
         container.find('.menu-item-has-children > a').after(dropdownToggle);
 
+        // Toggle buttons and submenu items with active children menu items.
+        container.find('.current-menu-ancestor > button').addClass('toggled-on');
+        container.find('.current-menu-ancestor > .sub-menu').addClass('toggled-on');
+
         // Add menu items with submenus to aria-haspopup="true".
         container.find('.menu-item-has-children').attr('aria-haspopup', 'true');
+
 
         container.find('.dropdown-toggle').click(function (e) {
             var _this = $(this),
@@ -96,7 +101,7 @@ root.setAttribute('class', 'js');
             toggleFocusClassTouchScreen();
         }
 
-        siteNavigation.find('.sub-menu a').on('focus blur', function () {
+        siteNavigation.find('a').on('focus blur', function () {
             $(this).parents('.menu-item').toggleClass('focus');
         });
     })();

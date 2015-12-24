@@ -191,7 +191,7 @@ function hannover_entry_meta() { ?>
 	<?php }
 	if ( $comments_by_type['pings'] ) {
 		$trackback_number = count( $comments_by_type['pings'] ); ?>
-		<span class="comments"><?php printf( _nx(
+		<span class="trackbacks"><?php printf( _nx(
 				'%s Trackback',
 				'%s Trackbacks',
 				$trackback_number,
