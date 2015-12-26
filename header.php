@@ -14,19 +14,27 @@
 		<?php if ( get_header_image() ) {
 			if ( is_front_page() && is_home() ) { ?>
 				<h1 class="logo"><img src="<?php header_image(); ?>" alt="<?php bloginfo( 'name' ); ?>"></h1>
-			<?php } else { ?>
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-					<img class="logo" src="<?php header_image(); ?>" alt="<?php bloginfo( 'name' ); ?>">
-				</a>
-			<?php }
+			<?php } else {
+				if ( ! is_front_page() ) { ?>
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+				<?php } ?>
+				<img class="logo" src="<?php header_image(); ?>" alt="<?php bloginfo( 'name' ); ?>">
+				<?php if ( ! is_front_page() ) { ?>
+					</a >
+				<?php }
+			}
 		} else {
 			if ( is_front_page() && is_home() ) { ?>
 				<h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
-			<?php } else { ?>
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-					<p class="site-title"><?php bloginfo( 'name' ); ?></p>
-				</a>
-			<?php }
+			<?php } else {
+				if ( ! is_front_page() ) { ?>
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+				<?php } ?>
+				<p class="site-title"><?php bloginfo( 'name' ); ?></p>
+				<?php if ( ! is_front_page() ) { ?>
+					</a >
+				<?php }
+			}
 		}
 		$description = get_bloginfo( 'description', 'display' );
 		if ( $description ) { ?>

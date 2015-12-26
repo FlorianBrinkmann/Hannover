@@ -11,9 +11,9 @@ get_header(); ?>
 			<?php if ( ! empty( $first_image ) ) {
 				echo wp_get_attachment_image( $first_image->ID, 'large' );
 			}
-			if ( ! empty( $first_image->post_title ) ) { ?>
+			if ( ! empty( $first_image->post_excerpt ) ) { ?>
 				<figcaption>
-					<?php echo $first_image->post_title; ?>
+					<?php echo $first_image->post_excerpt; ?>
 				</figcaption>
 			<?php } ?>
 		</figure>

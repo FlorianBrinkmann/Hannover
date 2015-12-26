@@ -1,3 +1,20 @@
-Licence
+
+== Copyright ==
 
 Menu JS from Twenty Sixteen
+
+Genericons icon font, Copyright 2013-2015 Automattic.com
+License: GNU GPL, Version 2 (or later)
+Source: http://www.genericons.com
+
+Xing Icon from Font Awesome 4.5
+Licence: SIL OFL 1.1
+Source: http://fontastic.me/
+
+svg4everybody
+Licence: CC0 1.0 Universal License
+Source: https://github.com/jonathantneal/svg4everybody
+
+Image from Screenshot
+Licence: CC0 1.0 Universal
+Source: https://unsplash.com/photos/a0YaUXLjKaY
