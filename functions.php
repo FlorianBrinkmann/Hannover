@@ -1,4 +1,10 @@
 <?php
+
+if ( ! isset( $content_width ) ) {
+	$content_width = 845;
+}
+update_option( 'large_size_w', 845 );
+
 /**
  * Adds theme support for feed links, custom head, html5, post formats, post thumbnails and the title tag
  */
