@@ -1,5 +1,31 @@
 <?php
 
+function hannover_load_translation() {
+	if ( ( ! defined( 'DOING_AJAX' ) && ! 'DOING_AJAX' ) || ! hannover_is_login_page() || ! hannover_is_wp_comments_post() ) {
+		load_theme_textdomain( 'hannover' );
+	}
+}
+
+add_action( 'after_setup_theme', 'hannover_load_translation' );
+
+/**
+ * Check if we are on the login page
+ *
+ * @return bool
+ */
+function hannover_is_login_page() {
+	return in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) );
+}
+
+/**
+ * Check if we are on the wp-comments-post.php
+ *
+ * @return bool
+ */
+function hannover_is_wp_comments_post() {
+	return in_array( $GLOBALS['pagenow'], array( 'wp-comments-post.php' ) );
+}
+
 if ( ! isset( $content_width ) ) {
 	$content_width = 845;
 }

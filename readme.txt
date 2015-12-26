@@ -1,7 +1,26 @@
+== Changelog ==
+
+Version 1.0 – 26.12.2015
+---
+- initial release
 
 == Copyright ==
 
-Menu JS from Twenty Sixteen
+Noto Sans
+Licence: Apache License, version 2.0
+Source: https://www.google.com/fonts/specimen/Noto+Sans
+
+Owl Carousel
+Licence: MIT License
+Source: http://www.owlcarousel.owlgraphic.com/
+
+Lightbox Script
+Licence: MIT License
+Source: http://osvaldas.info/image-lightbox-responsive-touch-friendly
+
+Menu JS
+Licence: GPLv2 or later
+Source: https://github.com/WordPress/twentysixteen/blob/master/js/functions.js
 
 Genericons icon font, Copyright 2013-2015 Automattic.com
 License: GNU GPL, Version 2 (or later)
@@ -18,3 +37,7 @@ Source: https://github.com/jonathantneal/svg4everybody
 Image from Screenshot
 Licence: CC0 1.0 Universal
 Source: https://unsplash.com/photos/a0YaUXLjKaY
+
+---
+Hannover WordPress Theme, Copyright 2015 Florian Brinkmann
+Hannover is distributed under the terms of the GNU GPL
