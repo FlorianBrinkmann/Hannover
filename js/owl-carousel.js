@@ -3106,10 +3106,10 @@ jQuery(document).ready(function () {
         autoplayTimeout: OwlParams.autoplayTimeout,
         nav: true,
         navText: [
-            '<span class="screen-reader-text">' + OwlParams.next +
-            '</span><span aria-hidden="true">›</span>',
-            '<span aria-hidden="true">‹</span>' +
+            '<span class="screen-reader-text">' + OwlParams.prev +
+            '</span><span aria-hidden="true">‹</span>',
+            '<span aria-hidden="true">›</span>' +
             '<span class="screen-reader-text">'
-            + OwlParams.prev + '</span>'],
+            + OwlParams.next + '</span>'],
     });
 });
