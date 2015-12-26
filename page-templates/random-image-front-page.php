@@ -8,7 +8,9 @@ get_header(); ?>
 		shuffle( $images );
 		$first_image = array_shift( $images ); ?>
 		<figure>
-			<?php echo wp_get_attachment_image( $first_image->ID, 'large' );
+			<?php if ( ! empty( $first_image ) ) {
+				echo wp_get_attachment_image( $first_image->ID, 'large' );
+			}
 			if ( ! empty( $first_image->post_title ) ) { ?>
 				<figcaption>
 					<?php echo $first_image->post_title; ?>
