@@ -2,7 +2,7 @@
 	<header class="entry-header">
 		<?php the_post_thumbnail( 'large' );
 		hannover_the_title( 'h1', false ); ?>
-		<p><?php hannover_the_date(); ?></p>
+		<span><?php hannover_the_date(); ?></span>
 	</header>
 	<div class="entry-content">
 		<?php hannover_the_content();
