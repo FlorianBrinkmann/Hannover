@@ -1,6 +1,6 @@
 == Changelog ==
 
-Version 1.0 – 26.12.2015
+Version 1.0 – 27.12.2015
 ---
 - initial release
 
