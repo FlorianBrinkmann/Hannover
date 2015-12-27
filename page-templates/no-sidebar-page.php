@@ -1,6 +1,8 @@
 <?php
 /**
  * Template Name: Page without Sidebar
+ *
+ * @version 1.0
  */
 get_header(); ?>
 	<main role="main">

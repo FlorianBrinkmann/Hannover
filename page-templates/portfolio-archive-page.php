@@ -1,6 +1,8 @@
 <?php
 /**
  * Template Name: Portfolio archive page
+ *
+ * @version 1.0
  */
 get_header(); ?>
 	<main role="main">

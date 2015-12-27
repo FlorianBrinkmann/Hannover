@@ -1,3 +1,10 @@
+<?php
+/**
+ * Template part for single view of portfolio elements
+ *
+ * @version 1.0
+ */
+?>
 <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 	<header class="entry-header">
 		<?php hannover_the_title( 'h1', false ); ?>

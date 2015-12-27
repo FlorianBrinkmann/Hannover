@@ -1,4 +1,9 @@
 <?php
+/**
+ * File for everything regarding to the customizer
+ *
+ * @version 1.0
+ */
 
 /**
  * Registers customizer settings, controls, panels and sections

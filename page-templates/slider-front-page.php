@@ -1,6 +1,8 @@
 <?php
 /**
  * Template Name: Front page with slider
+ *
+ * @version 1.0
  */
 get_header(); ?>
 	<main role="main">

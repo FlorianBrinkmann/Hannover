@@ -1,4 +1,10 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Main template file
+ *
+ * @version 1.0
+ */
+get_header(); ?>
 	<main role="main">
 		<?php $exclude_portfolio_elements = get_theme_mod( 'exclude_portfolio_elements_from_blog' );
 		if ( $exclude_portfolio_elements == 'checked' ) {

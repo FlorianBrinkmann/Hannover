@@ -1,4 +1,10 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Template for archives like categories, tags, author…
+ *
+ * @version 1.0
+ */
+get_header(); ?>
 	<main role="main">
 		<?php if ( have_posts() ) { ?>
 			<header class="page-header">

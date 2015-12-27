@@ -1,4 +1,10 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Template for displaying pages with no specific page template
+ *
+ * @version 1.0
+ */
+get_header(); ?>
 	<main role="main">
 		<?php while ( have_posts() ) {
 			the_post();

@@ -1,3 +1,10 @@
+<?php
+/**
+ * Template part for single view
+ *
+ * @version 1.0
+ */
+?>
 <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 	<header class="entry-header">
 		<?php the_post_thumbnail( 'large' );

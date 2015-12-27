@@ -1,4 +1,9 @@
 <?php
+/**
+ * Functions file
+ *
+ * @version 1.0
+ */
 
 /**
  * Load translation from translate.WordPress.org if available

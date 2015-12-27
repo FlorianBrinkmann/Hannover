@@ -1,3 +1,10 @@
+<?php
+/**
+ * Template file for the footer
+ *
+ * @version 1.0
+ */
+?>
 </div>
 <footer id="footer">
 	<?php if ( has_nav_menu( 'social' ) ) {

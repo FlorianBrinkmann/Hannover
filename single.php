@@ -1,4 +1,10 @@
-<?php get_header();
+<?php
+/**
+ * Template file for displaying a single post
+ *
+ * @version 1.0
+ */
+get_header();
 $portfolio_post = false;
 $format         = get_post_format( $post );
 if ( $format == 'gallery' || $format == 'image' ) {

@@ -1,3 +1,10 @@
+<?php
+/**
+ * Template part for gallery posts
+ *
+ * @version 1.0
+ */
+?>
 <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 	<header class="entry-header">
 		<?php hannover_image_from_gallery_or_image_post( 'large', $post );

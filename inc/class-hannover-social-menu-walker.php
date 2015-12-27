@@ -4,6 +4,8 @@
  * Class Hannover_Social_Menu_Walker
  *
  * Extends the Walker_Nav_Menu and displays SVG for social media channels
+ *
+ * @version 1.0
  */
 class Hannover_Social_Menu_Walker extends Walker_Nav_Menu {
 

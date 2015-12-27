@@ -1,4 +1,10 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Template for 404 error
+ *
+ * @version 1.0
+ */
+get_header(); ?>
 	<main role="main">
 		<article id="post-0" class="post no-results not-found">
 			<header class="entry-header">

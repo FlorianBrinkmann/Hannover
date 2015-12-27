@@ -1,4 +1,10 @@
-<?php if ( post_password_required() ) {
+<?php
+/**
+ * Comment template
+ *
+ * @version 1.0
+ */
+if ( post_password_required() ) {
 	return;
 } ?>
 <div id="comments" class="comments-area">
