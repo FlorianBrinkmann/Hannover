@@ -156,6 +156,8 @@ add_action( 'wp_enqueue_scripts', 'hannover_scripts_styles' );
 
 /**
  * Displays date and time of a post
+ *
+ * @return string
  */
 function hannover_the_date() {
 	printf( _x(
@@ -169,6 +171,8 @@ function hannover_the_date() {
  * Displays the title of a post
  *
  * @param $heading , $link
+ *
+ * @return string Formatted output in HTML.
  */
 function hannover_the_title( $heading, $link ) {
 	if ( $link ) {
@@ -186,6 +190,8 @@ function hannover_the_title( $heading, $link ) {
 
 /**
  * Displays the_content with a more accessible more tag
+ *
+ * @return string Formatted output in HTML.
  */
 function hannover_the_content() {
 	the_content(
@@ -201,6 +207,8 @@ function hannover_the_content() {
 
 /**
  * Displays the author, categories, tags and number for comments and trackbacks
+ *
+ * @return string Formatted output in HTML.
  */
 function hannover_entry_meta() { ?>
 	<span class="author"><?php printf( _x(
@@ -281,6 +289,11 @@ function hannover_filter_category_widget( $cat_args ) {
 
 add_filter( 'widget_categories_args', 'hannover_filter_category_widget' );
 
+/**
+ * Gets the comments seperated by type
+ *
+ * @return array
+ */
 function hannover_get_comments_by_type() {
 	global $wp_query, $post;
 	$comment_args               = array(
@@ -296,6 +309,13 @@ function hannover_get_comments_by_type() {
 	return $comments_by_type;
 }
 
+/**
+ * Callback function for displaying the comment list
+ *
+ * @param $comment , $args, $depth
+ *
+ * @return string Formatted output in HTML.
+ */
 function hannover_comments( $comment, $args, $depth ) { ?>
 	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
 	<article id="comment-<?php comment_ID(); ?>" class="comment">
@@ -337,6 +357,13 @@ function hannover_comments( $comment, $args, $depth ) { ?>
 	<?php
 }
 
+/**
+ * Callback function for displaying the trackback list
+ *
+ * @param $comment
+ *
+ * @return string Formatted output in HTML.
+ */
 function hannover_trackbacks( $comment ) { ?>
 <li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
 	<?php _e( 'Trackback:', 'hannover' ); ?>
@@ -403,6 +430,11 @@ function hannover_get_gallery_images( $post_id ) {
 	return $images;
 }
 
+/**
+ * Get first image from post content with regular expression
+ *
+ * @return string
+ */
 function hannover_get_first_image_from_post_content() {
 	global $post;
 	$first_img = '';
@@ -414,6 +446,14 @@ function hannover_get_first_image_from_post_content() {
 	return $first_img;
 }
 
+/**
+ * Returns the first image from the post content for a image post
+ * and the first image from the gallery for a gallery post.
+ *
+ * @param $size , $post
+ *
+ * @return string Formatted output in HTML.
+ */
 function hannover_image_from_gallery_or_image_post( $size, $post ) {
 	if ( has_post_thumbnail() ) {
 		the_post_thumbnail( $size );
