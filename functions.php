@@ -130,21 +130,23 @@ function hannover_scripts_styles() {
 	 * Localizes script with strings for next and previous button and slider options from the customizer
 	 */
 	global $post;
-	$galleries_as_slider = get_theme_mod( 'galleries_as_slider' );
-	$page_template       = get_page_template_slug( $post->ID );
-	if ( $page_template == 'page-templates/slider-front-page.php' || $galleries_as_slider == 'checked' ) {
-		wp_enqueue_style( 'owl-carousel', get_template_directory_uri() . '/css/owl-carousel.css' );
-		wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl-carousel.js', array( 'jquery' ), false, true );
-		$slider_autoplay      = get_theme_mod( 'slider_autoplay' );
-		$slider_autoplay_time = get_theme_mod( 'slider_autoplay_time', 3000 );
-		$params               = array(
-			'autoplay'        => $slider_autoplay,
-			'autoplayTimeout' => $slider_autoplay_time,
-			'prev'            => __( 'Previous Slide', 'hannover' ),
-			'next'            => __( 'Next Slide', 'hannover' ),
+	if ( $post ) {
+		$galleries_as_slider = get_theme_mod( 'galleries_as_slider' );
+		$page_template       = get_page_template_slug( $post->ID );
+		if ( $page_template == 'page-templates/slider-front-page.php' || $galleries_as_slider == 'checked' ) {
+			wp_enqueue_style( 'owl-carousel', get_template_directory_uri() . '/css/owl-carousel.css' );
+			wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl-carousel.js', array( 'jquery' ), false, true );
+			$slider_autoplay      = get_theme_mod( 'slider_autoplay' );
+			$slider_autoplay_time = get_theme_mod( 'slider_autoplay_time', 3000 );
+			$params               = array(
+				'autoplay'        => $slider_autoplay,
+				'autoplayTimeout' => $slider_autoplay_time,
+				'prev'            => __( 'Previous Slide', 'hannover' ),
+				'next'            => __( 'Next Slide', 'hannover' ),
 
-		);
-		wp_localize_script( 'owl-carousel', 'OwlParams', $params );
+			);
+			wp_localize_script( 'owl-carousel', 'OwlParams', $params );
+		}
 	}
 
 	wp_enqueue_style( 'hannover-style', get_template_directory_uri() . '/css/hannover.css', array(), null );
