@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Registers customizer settings, controls, panels and sections
+ *
+ * @param $wp_customize
+ */
 function hannover_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'portfolio_from_category', array(
@@ -335,6 +341,13 @@ function hannover_customize_register( $wp_customize ) {
 
 add_action( 'customize_register', 'hannover_customize_register' );
 
+/**
+ * Checks if checkbox for portfolio category is checked and returns true, otherwise false
+ *
+ * @param $control
+ *
+ * @return bool
+ */
 function hannover_use_portfolio_category_callback( $control ) {
 	if ( $control->manager->get_setting( 'portfolio_from_category' )->value() == 'checked' ) {
 		return true;
@@ -343,6 +356,13 @@ function hannover_use_portfolio_category_callback( $control ) {
 	}
 }
 
+/**
+ * Callback function for controls dependent from radio controls
+ *
+ * @param $control
+ *
+ * @return bool
+ */
 function hannover_choice_callback( $control ) {
 	$radio_setting = $control->manager->get_setting( 'portfolio_archive' )->value();
 	$control_id    = $control->id;
@@ -355,6 +375,13 @@ function hannover_choice_callback( $control ) {
 	return false;
 }
 
+/**
+ * Sanitizes select input
+ *
+ * @param $input , $setting
+ *
+ * @return string
+ */
 function hannover_sanitize_select( $input, $setting ) {
 	$input   = sanitize_key( $input );
 	$choices = $setting->manager->get_control( $setting->id )->choices;
@@ -362,10 +389,24 @@ function hannover_sanitize_select( $input, $setting ) {
 	return ( array_key_exists( $input, $choices ) ? $input : $setting->default );
 }
 
+/**
+ * Sanitizes checkbox input
+ *
+ * @param $checked
+ *
+ * @return bool
+ */
 function hannover_sanitize_checkbox( $checked ) {
 	return ( ( isset( $checked ) && true == $checked ) ? true : false );
 }
 
+/**
+ * Sanitizes int input
+ *
+ * @param $number , $setting
+ *
+ * @return int
+ */
 function hannover_sanitize_int( $number, $setting ) {
 	$number = absint( $number );
 

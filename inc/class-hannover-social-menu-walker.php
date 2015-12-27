@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class Hannover_Social_Menu_Walker
+ *
+ * Extends the Walker_Nav_Menu and displays SVG for social media channels
+ */
 class Hannover_Social_Menu_Walker extends Walker_Nav_Menu {
 
 	/**
