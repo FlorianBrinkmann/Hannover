@@ -43,7 +43,7 @@
 				) ); ?>
 			</ol>
 		<?php }
-		the_comments_pagination();
+		the_comments_navigation();
 		if ( ! comments_open() && get_comments_number() ) { ?>
 			<p class="nocomments"><?php _e( 'Comments are closed.', 'hannover' ); ?></p>
 		<?php }

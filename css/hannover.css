@@ -109,7 +109,7 @@ a {
 
 a:active,
 a:hover,
-a:active,
+a:focus,
 .current-cat > a,
 .current-menu-item > a,
 .current-menu-parent > a,
@@ -869,8 +869,15 @@ nav.navigation::before {
 }
 
 #footer .social-menu li svg {
+    fill: #444;
     height: 2em;
     width: 2em;
+}
+
+#footer .social-menu a:hover svg,
+#footer .social-menu a:focus svg,
+#footer .social-menu a:active svg {
+    fill: #999;
 }
 
 .theme-author,
