@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Load translation from translate.WordPress.org if available
+ */
 function hannover_load_translation() {
 	if ( ( ! defined( 'DOING_AJAX' ) && ! 'DOING_AJAX' ) || ! hannover_is_login_page() || ! hannover_is_wp_comments_post() ) {
 		load_theme_textdomain( 'hannover' );
@@ -26,9 +29,16 @@ function hannover_is_wp_comments_post() {
 	return in_array( $GLOBALS['pagenow'], array( 'wp-comments-post.php' ) );
 }
 
+/**
+ * Set content width to 845 px
+ */
 if ( ! isset( $content_width ) ) {
 	$content_width = 845;
 }
+
+/**
+ * Set width of large image size to 845 px
+ */
 update_option( 'large_size_w', 845 );
 
 /**
@@ -76,6 +86,9 @@ function hannover_register_menus() {
 
 add_action( 'init', 'hannover_register_menus' );
 
+/**
+ * Register sidebar
+ */
 function hannover_register_sidebars() {
 	register_sidebar( array(
 		'name'          => __( 'Main Sidebar', 'hannover' ),
@@ -111,12 +124,15 @@ function hannover_scripts_styles() {
 		'collapse' => __( 'collapse child menu', 'hannover' ),
 	) );
 
+	/**
+	 * Adds slider script to footer if front page template with slidre is displayed or user
+	 * wants to show all galleries as slider.
+	 * Localizes script with strings for next and previous button and slider options from the customizer
+	 */
 	global $post;
 	$galleries_as_slider = get_theme_mod( 'galleries_as_slider' );
 	$page_template       = get_page_template_slug( $post->ID );
-	if ( $page_template == 'page-templates/slider-front-page.php' ||
-	     $galleries_as_slider == 'checked'
-	) {
+	if ( $page_template == 'page-templates/slider-front-page.php' || $galleries_as_slider == 'checked' ) {
 		wp_enqueue_style( 'owl-carousel', get_template_directory_uri() . '/css/owl-carousel.css' );
 		wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl-carousel.js', array( 'jquery' ), false, true );
 		$slider_autoplay      = get_theme_mod( 'slider_autoplay' );
