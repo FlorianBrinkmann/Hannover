@@ -1,5 +1,10 @@
 == Changelog ==
 
+Version 1.0.1 – 27.12.2015
+---
+- small CSS fixes for mobile view
+
+
 Version 1.0 – 27.12.2015
 ---
 - initial release
