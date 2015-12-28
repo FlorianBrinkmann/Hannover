@@ -2,7 +2,7 @@
 /**
  * File for everything regarding to the customizer
  *
- * @version 1.0
+ * @version 1.0.2
  */
 
 /**
@@ -85,7 +85,7 @@ function hannover_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'portfolio_elements_per_page', array(
 			'default'           => 0,
-			'sanitize_callback' => 'hannover_sanitize_int'
+			'sanitize_callback' => 'absint'
 		)
 	);
 
@@ -169,7 +169,7 @@ function hannover_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'portfolio_archive_elements_per_page', array(
 			'default'           => 0,
-			'sanitize_callback' => 'hannover_sanitize_int'
+			'sanitize_callback' => 'absint'
 		)
 	);
 
@@ -232,7 +232,7 @@ function hannover_customize_register( $wp_customize ) {
 			$wp_customize->add_setting(
 				"portfolio_category_page_elements_per_page_$id", array(
 					'default'           => 0,
-					'sanitize_callback' => 'hannover_sanitize_int'
+					'sanitize_callback' => 'absint'
 				)
 			);
 
@@ -280,7 +280,7 @@ function hannover_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'slider_autoplay_time', array(
 			'default'           => 3000,
-			'sanitize_callback' => 'hannover_sanitize_int'
+			'sanitize_callback' => 'absint'
 		)
 	);
 
@@ -403,17 +403,4 @@ function hannover_sanitize_select( $input, $setting ) {
  */
 function hannover_sanitize_checkbox( $checked ) {
 	return ( ( isset( $checked ) && true == $checked ) ? true : false );
-}
-
-/**
- * Sanitizes int input
- *
- * @param $number , $setting
- *
- * @return int
- */
-function hannover_sanitize_int( $number, $setting ) {
-	$number = absint( $number );
-
-	return ( $number ? $number : $setting->default );
 }

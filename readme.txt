@@ -1,5 +1,10 @@
 == Changelog ==
 
+Version 1.0.2 – 28.12.2015
+---
+- directly use absint() as sanitize callback in customizer.php instead of hannover_sanitize_int()
+
+
 Version 1.0.1 – 27.12.2015
 ---
 - small CSS fixes for mobile view
