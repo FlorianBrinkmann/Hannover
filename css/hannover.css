@@ -1077,6 +1077,10 @@ nav.navigation::before {
 }
 
 @media screen and (min-width: 50em) {
+    #header .site-branding {
+        max-width: 40%;
+    }
+
     #header nav {
         float: right;
         font-size: .9em;
