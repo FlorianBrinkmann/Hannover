@@ -570,6 +570,16 @@ dt {
     font-size: .9em;
 }
 
+#header {
+    margin-bottom: 3em;
+}
+
+#header::after {
+    clear: both;
+    content: '';
+    display: block;
+}
+
 #header .site-branding {
     float: left;
     max-width: 75%;
@@ -610,6 +620,7 @@ dt {
 @media screen and (max-width: 49.99em) {
     .js #menu-toggle {
         display: block;
+        padding: .3em;
     }
 
     #menu-toggle {
@@ -670,8 +681,7 @@ dt {
         fill: #444;
     }
 
-    #header nav .menu-item-has-children.focus > .sub-menu,
-    #header nav .dropdown-toggle.toggled-on + .sub-menu {
+    #header nav .menu-item-has-children .sub-menu.toggled-on {
         display: block;
     }
 
@@ -1084,6 +1094,10 @@ nav.navigation::before {
     #header nav {
         float: right;
         font-size: .9em;
+    }
+
+    #header .primary-menu {
+        margin-top: .3em;
     }
 
     #header nav > ul > li {
