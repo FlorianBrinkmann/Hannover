@@ -593,6 +593,7 @@ dt {
 
 #header .site-description {
     font-size: .9em;
+    margin-bottom: 0;
 }
 
 #menu-toggle {
