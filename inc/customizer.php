@@ -361,6 +361,19 @@ function hannover_use_portfolio_category_callback( $control ) {
 	}
 }
 
+function hannover_header_textcolor() {
+	if ( get_theme_mod( 'header_textcolor' ) ) { ?>
+		<style type="text/css">
+			#header,
+			#header a {
+				color: <?php echo '#' . get_theme_mod('header_textcolor'); ?>;
+			}
+		</style>
+	<?php }
+}
+
+add_action( 'wp_head', 'hannover_header_textcolor' );
+
 /**
  * Callback function for controls dependent from radio controls
  *

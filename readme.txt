@@ -25,6 +25,10 @@ You can create a archive for portfolio elements you don’t want to show up on t
 To do this, create a page with the template ”Portfolio archive page“. After that, you have to choose a archive category in the customizer in the ”Portfolio archive“ section.
 Besides that, you can remove the archive category from the category widget, set the number of archived portfolio elements to show on one page and use the alternative layout.
 
+== Header image ==
+
+The header image from the customizer will be shown instead of the title, so you can upload your logo here
+
 == Changelog ==
 
 Version 1.0.3 – 29.12.2015
