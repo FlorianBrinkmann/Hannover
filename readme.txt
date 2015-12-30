@@ -1,3 +1,30 @@
+== Use portfolio function ==
+
+The Hannover theme gives you the ability to show your posts which have the image or gallery post format on one page as a ”portfolio“.
+To do this, you have to create a page with the page template ”portfolio page“.
+After that all posts with post format ”gallery“ or ”image“ will be shown as “portfolio elements” on this page as a linked image to the single view of the post.
+
+You can customize that in the customizer in the following ways (the options can be found in the panel ”Theme Options“ and the section “Portfolio elements“:
+- instead of showing all posts with the both post formats you can select a category to show only image and gallery posts which are assigned to this category
+- you can exclude the portfolio elements from the blog
+- you can set the number of elements to show on one page
+- you can activate a alternative layout to show the title, one image and the excerpt from each portfolio element instead of the linked image
+
+= Portfolio category pages =
+
+To show a subset of the portfolio elements, you can create pages with the template ”Portfolio category page“.
+For each of this pages you will get three controls in the customizer in the section ”Portfolio category pages“ which is only shown if one or more pages with this page template exist:
+- you can choose the category to show on the page. Next to the category you choose there the post has to be a portfolio
+element—if you chose to use posts from one category as portfolio elements, the post must be assigned to both categories.
+- you can set the number of elements to show on one page before pagination appears
+- you can activate the alternative layout
+
+= Portfolio archive =
+
+You can create a archive for portfolio elements you don’t want to show up on the portfolio overview and on portfolio category pages.
+To do this, create a page with the template ”Portfolio archive page“. After that, you have to choose a archive category in the customizer in the ”Portfolio archive“ section.
+Besides that, you can remove the archive category from the category widget, set the number of archived portfolio elements to show on one page and use the alternative layout.
+
 == Changelog ==
 
 Version 1.0.3 – 29.12.2015
