@@ -10,6 +10,7 @@
     - you can choose the category for each page with the template in the customizer section ”Portfolio category pages“
 4. Create a page with the template ”Portfolio archive page“ to display portfolio elements you don’t want to see on the portfolio page or the portfolio category pages
     - to label portfolio elements as archived, you must choose a archive category in the customizer section ”Portfolio archive“ and add this to the posts you want to archive
+5. You can create a page with a gallery and choose one of the two front page templates. One will show the gallery as a slider, the other one will display one image randomly
 
 == In Detail ==
 
