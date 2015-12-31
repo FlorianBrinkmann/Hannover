@@ -2,7 +2,7 @@
 /**
  * Template Name: Front page with slider
  *
- * @version 1.0
+ * @version 1.0.4
  */
 get_header(); ?>
 	<main role="main">

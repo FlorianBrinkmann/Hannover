@@ -2,7 +2,7 @@
 /**
  * File for everything regarding to the customizer
  *
- * @version 1.0.2
+ * @version 1.0.4
  */
 
 /**

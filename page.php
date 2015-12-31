@@ -2,7 +2,7 @@
 /**
  * Template for displaying pages with no specific page template
  *
- * @version 1.0
+ * @version 1.0.4
  */
 get_header(); ?>
 	<main role="main">

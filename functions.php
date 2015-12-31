@@ -2,7 +2,7 @@
 /**
  * Functions file
  *
- * @version 1.0
+ * @version 1.0.4
  */
 
 /**
@@ -492,6 +492,79 @@ function hannover_image_from_gallery_or_image_post( $size, $post ) {
 		}
 		echo $img_tag;
 	}
+}
+
+/**
+ * Returns the query args for the page templates
+ *
+ * @param $post
+ * @param string $template name of page template. Possible values: portfolio, portfolio-archive, portfolio-category-page
+ *
+ * @return array
+ */
+function hannover_page_template_query_args( $post, $template = 'portfolio' ) {
+	$archive_type           = get_theme_mod( 'portfolio_archive' );
+	$archive_category       = get_theme_mod( 'portfolio_archive_category' );
+	$use_portfolio_category = get_theme_mod( 'portfolio_from_category' );
+	$portfolio_category     = get_theme_mod( 'portfolio_category' );
+	if ( $template == 'portfolio' ) {
+		$elements_per_page = get_theme_mod( 'portfolio_elements_per_page', 0 );
+	} elseif ( $template == 'portfolio-archive' ) {
+		$elements_per_page = get_theme_mod( 'portfolio_archive_elements_per_page', 0 );
+	} else {
+		$elements_per_page                = get_theme_mod( "portfolio_category_page_elements_per_page_$post->ID", 0 );
+		$portfolio_category_page_category = get_theme_mod( "portfolio_category_page_$post->ID" );
+	}
+	$paged     = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+	$tax_query = array( 'relation' => 'AND' );
+	if ( $elements_per_page == 0 ) {
+		$elements_per_page = - 1;
+	}
+
+	$tax_query[] = array(
+		'taxonomy' => 'post_format',
+		'field'    => 'slug',
+		'terms'    => array(
+			'post-format-gallery',
+			'post-format-image'
+		),
+	);
+	if ( $template != 'portfolio-archive' && $archive_type == 'archive_category' ) {
+		$tax_query[] = array(
+			'taxonomy' => 'category',
+			'field'    => 'term_id',
+			'terms'    => array( $archive_category ),
+			'operator' => 'NOT IN'
+		);
+	}
+	if ( $template == 'portfolio-archive' && $archive_category !== '' && $archive_type == 'archive_category' ) {
+		$tax_query[] = array(
+			'taxonomy' => 'category',
+			'field'    => 'term_id',
+			'terms'    => array( $archive_category ),
+		);
+	}
+	if ( $template == 'portfolio-category-page' ) {
+		$tax_query[] = array(
+			'taxonomy' => 'category',
+			'field'    => 'term_id',
+			'terms'    => array( $portfolio_category_page_category ),
+		);
+	}
+	if ( $use_portfolio_category == 'checked' && $portfolio_category !== '' ) {
+		$tax_query[] = array(
+			'taxonomy' => 'category',
+			'field'    => 'term_id',
+			'terms'    => array( $portfolio_category ),
+		);
+	}
+	$args = array(
+		'posts_per_page' => $elements_per_page,
+		'paged'          => $paged,
+		'tax_query'      => $tax_query
+	);
+
+	return $args;
 }
 
 /**

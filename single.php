@@ -2,7 +2,7 @@
 /**
  * Template file for displaying a single post
  *
- * @version 1.0
+ * @version 1.0.4
  */
 get_header();
 $portfolio_post = false;
