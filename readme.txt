@@ -11,7 +11,7 @@
 4. Create a page with the template ”Portfolio archive page“ to display portfolio elements you don’t want to see on the portfolio page or the portfolio category pages
     - to label portfolio elements as archived, you must choose a archive category in the customizer section ”Portfolio archive“ and add this to the posts you want to archive
 
-== more detailed ==
+== In Detail ==
 
 The Hannover theme gives you the ability to show your posts which have the image or gallery post format on one page as a ”portfolio“.
 To do this, you have to create a page with the page template ”portfolio page“.
