@@ -1,4 +1,17 @@
-== Use portfolio function ==
+=== Use portfolio function ===
+
+== Quick start ==
+
+1. Create posts with the post formats “gallery” and/or “image”—these will be your “portfolio elements”
+2. Create a page with the template ”portfolio page“ to show these posts on this page
+    - if you want to show only gallery and image posts from a specific category, you can select a category in the customizer section “Portfolio elements“
+    - you can also exclude the portfolio elements from the blog here
+3. Create pages with the template ”Portfolio category page“ to show only one category from your portfolio elements
+    - you can choose the category for each page with the template in the customizer section ”Portfolio category pages“
+4. Create a page with the template ”Portfolio archive page“ to display portfolio elements you don’t want to see on the portfolio page or the portfolio category pages
+    - to label portfolio elements as archived, you must choose a archive category in the customizer section ”Portfolio archive“ and add this to the posts you want to archive
+
+== more detailed ==
 
 The Hannover theme gives you the ability to show your posts which have the image or gallery post format on one page as a ”portfolio“.
 To do this, you have to create a page with the page template ”portfolio page“.
@@ -29,7 +42,7 @@ Besides that, you can remove the archive category from the category widget, set 
 
 The header image from the customizer will be shown instead of the title, so you can upload your logo here
 
-== Changelog ==
+=== Changelog ===
 
 Version 1.0.3 – 29.12.2015
 ---
@@ -50,7 +63,7 @@ Version 1.0 – 27.12.2015
 ---
 - initial release
 
-== Copyright ==
+=== Copyright ===
 
 Noto Sans
 Licence: Apache License, version 2.0
