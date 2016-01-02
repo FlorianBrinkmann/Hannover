@@ -1,5 +1,3 @@
-=== Use portfolio function ===
-
 == Quick start ==
 
 1. Create posts with the post formats “gallery” and/or “image”—these will be your “portfolio elements”
@@ -10,8 +8,9 @@
     - you can choose the category for each page with the template in the customizer section ”Portfolio category pages“
 4. Create a page with the template ”Portfolio archive page“ to display portfolio elements you don’t want to see on the portfolio page or the portfolio category pages
     - to label portfolio elements as archived, you must choose a archive category in the customizer section ”Portfolio archive“ and add this to the posts you want to archive
+5. Create a page with a gallery and choose one of the two front page templates. One will show the gallery as a slider, the other one will display one image randomly
 
-== In Detail ==
+== Use portfolio function ==
 
 The Hannover theme gives you the ability to show your posts which have the image or gallery post format on one page as a ”portfolio“.
 To do this, you have to create a page with the page template ”portfolio page“.
@@ -38,17 +37,32 @@ You can create a archive for portfolio elements you don’t want to show up on t
 To do this, create a page with the template ”Portfolio archive page“. After that, you have to choose a archive category in the customizer in the ”Portfolio archive“ section.
 Besides that, you can remove the archive category from the category widget, set the number of archived portfolio elements to show on one page and use the alternative layout.
 
-=== More ===
+== More ==
 
-== Front page ==
+= Front page =
 
 You can create a page with a gallery and choose one of the two front page templates. One will show the gallery as a slider, the other one will display one image randomly
 
-== Header image ==
+= Header image/logo =
 
 The header image from the customizer will be shown instead of the title, so you can upload your logo here
 
-=== Changelog ===
+== Changelog ==
+
+Version 1.0.5 – 01.01.2016
+---
+- added changelog notice for 1.0.4
+- updated screenshot.png
+
+
+Version 1.0.4 – 31.12.2015
+---
+- better readme
+- customizer control for header text color works now
+- if ( have_posts() ) before while ( have_posts() )
+- offset logic from page templates to functions.php
+- more theme tags in style.css
+
 
 Version 1.0.3 – 29.12.2015
 ---
@@ -69,7 +83,7 @@ Version 1.0 – 27.12.2015
 ---
 - initial release
 
-=== Copyright ===
+== Copyright ==
 
 Noto Sans
 Licence: Apache License, version 2.0
