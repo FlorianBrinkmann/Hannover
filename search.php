@@ -2,7 +2,7 @@
 /**
  * Template for displaying search results
  *
- * @version 1.0
+ * @version 1.0.6
  */
 get_header(); ?>
 	<main role="main">
@@ -16,7 +16,7 @@ get_header(); ?>
 			}
 		} else { ?>
 			<header class="page-header">
-				<h1><?php printf( __( 'Nothing found for “%s”', 'hannover' ), esc_html( get_search_query() ) ); ?></h1>
+				<h1><?php printf( __( 'Nothing found for "%s"', 'hannover' ), esc_html( get_search_query() ) ); ?></h1>
 			</header>
 			<?php get_search_form();
 		}

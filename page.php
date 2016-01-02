@@ -14,6 +14,8 @@ get_header(); ?>
 					comments_template( '', true );
 				}
 			}
+		} else {
+			get_template_part( 'template-parts/content', 'none' );
 		} ?>
 	</main>
 <?php get_sidebar();

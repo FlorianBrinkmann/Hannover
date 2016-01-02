@@ -2,7 +2,7 @@
 /**
  * Template Name: Portfolio category page
  *
- * @version 1.0.4
+ * @version 1.0.6
  */
 get_header(); ?>
 	<main role="main">
@@ -24,6 +24,8 @@ get_header(); ?>
 					get_template_part( 'template-parts/content', 'portfolio-element' );
 				}
 			}
+		} else {
+			get_template_part( 'template-parts/content', 'none' );
 		}
 		wp_reset_postdata();
 		the_posts_pagination( array( 'type' => 'list' ) );

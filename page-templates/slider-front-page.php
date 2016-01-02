@@ -2,7 +2,7 @@
 /**
  * Template Name: Front page with slider
  *
- * @version 1.0.4
+ * @version 1.0.6
  */
 get_header(); ?>
 	<main role="main">
@@ -14,6 +14,8 @@ get_header(); ?>
 					comments_template( '', true );
 				}
 			}
+		} else {
+			get_template_part( 'template-parts/content', 'none' );
 		} ?>
 	</main>
 <?php get_footer();

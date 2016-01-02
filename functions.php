@@ -2,7 +2,7 @@
 /**
  * Functions file
  *
- * @version 1.0.4
+ * @version 1.0.6
  */
 
 /**
@@ -164,7 +164,7 @@ add_action( 'wp_enqueue_scripts', 'hannover_scripts_styles' );
 /**
  * Displays date and time of a post
  *
- * @return string
+ * @return void
  */
 function hannover_the_date() {
 	printf( _x(
@@ -179,7 +179,7 @@ function hannover_the_date() {
  *
  * @param $heading , $link
  *
- * @return string Formatted output in HTML.
+ * @return void
  */
 function hannover_the_title( $heading, $link ) {
 	if ( $link ) {
@@ -198,12 +198,12 @@ function hannover_the_title( $heading, $link ) {
 /**
  * Displays the_content with a more accessible more tag
  *
- * @return string Formatted output in HTML.
+ * @return void
  */
 function hannover_the_content() {
 	the_content(
 		sprintf(
-			_x( 'Continue reading “%s”',
+			_x( 'Continue reading "%s"',
 				'text for the more tag. s= title',
 				'hannover'
 			),
@@ -215,7 +215,7 @@ function hannover_the_content() {
 /**
  * Displays the author, categories, tags and number for comments and trackbacks
  *
- * @return string Formatted output in HTML.
+ * @return void
  */
 function hannover_entry_meta() { ?>
 	<span class="author"><?php printf( _x(
@@ -321,7 +321,7 @@ function hannover_get_comments_by_type() {
  *
  * @param $comment , $args, $depth
  *
- * @return string Formatted output in HTML.
+ * @return void
  */
 function hannover_comments( $comment, $args, $depth ) { ?>
 	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
@@ -369,7 +369,7 @@ function hannover_comments( $comment, $args, $depth ) { ?>
  *
  * @param $comment
  *
- * @return string Formatted output in HTML.
+ * @return void
  */
 function hannover_trackbacks( $comment ) { ?>
 <li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
@@ -459,7 +459,7 @@ function hannover_get_first_image_from_post_content() {
  *
  * @param $size , $post
  *
- * @return string Formatted output in HTML.
+ * @return void
  */
 function hannover_image_from_gallery_or_image_post( $size, $post ) {
 	if ( has_post_thumbnail() ) {
@@ -582,6 +582,6 @@ function hannover_remove_more_link_scroll( $link ) {
 
 add_filter( 'the_content_more_link', 'hannover_remove_more_link_scroll' );
 
-require get_template_directory() . '/inc/customizer.php';
+require_once get_template_directory() . '/inc/customizer.php';
 
-require get_template_directory() . '/inc/class-hannover-social-menu-walker.php';
+require_once get_template_directory() . '/inc/class-hannover-social-menu-walker.php';

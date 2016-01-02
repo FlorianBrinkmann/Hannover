@@ -2,7 +2,7 @@
 /**
  * Main template file
  *
- * @version 1.0
+ * @version 1.0.6
  */
 get_header(); ?>
 	<main role="main">
@@ -43,6 +43,8 @@ get_header(); ?>
 					$index_query->the_post();
 					get_template_part( 'template-parts/content', get_post_format() );
 				}
+			} else {
+				get_template_part( 'template-parts/content', 'none' );
 			}
 			wp_reset_postdata();
 			the_posts_pagination( array( 'type' => 'list' ) );
@@ -59,6 +61,8 @@ get_header(); ?>
 					the_post();
 					get_template_part( 'template-parts/content', get_post_format() );
 				}
+			} else {
+				get_template_part( 'template-parts/content', 'none' );
 			}
 			the_posts_pagination( array( 'type' => 'list' ) );
 		} ?>

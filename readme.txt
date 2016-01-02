@@ -49,6 +49,14 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
+Version 1.0.6 – 02.01.2016
+---
+- changed double quotes
+- included 'no posts found' message if have_posts() doesn't find anything
+- require_once instead of require
+- PHPDoc: use void correctly for functions that doesn't use return
+
+
 Version 1.0.5 – 01.01.2016
 ---
 - added changelog notice for 1.0.4

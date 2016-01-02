@@ -723,7 +723,7 @@ article.post {
 }
 
 .gallery-size-thumbnail .gallery-item {
-    line-height: 0px;
+    line-height: 0;
 }
 
 .gallery-size-thumbnail .gallery-item figcaption {
@@ -1375,11 +1375,11 @@ Lightbox
 }
 
 .imagelightbox-arrow-left {
-    left: 0em; /* 40 */
+    left: 0; /* 40 */
 }
 
 .imagelightbox-arrow-right {
-    right: 0em; /* 40 */
+    right: 0; /* 40 */
 }
 
 #imagelightbox-loading,

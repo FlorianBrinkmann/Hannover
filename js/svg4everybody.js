@@ -1,3 +1,8 @@
+/**
+ * svg4everybody v2.0.0
+ * @license CC0 1.0 Universal License
+ * github.com/jonathantneal/svg4everybody
+ */
 !function (root, factory) {
     "function" == typeof define && define.amd ? define([], function () {
         return root.svg4everybody = factory();

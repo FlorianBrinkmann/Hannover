@@ -13,8 +13,8 @@ if ( post_password_required() ) {
 			$comment_number = count( $comments_by_type['comment'] ); ?>
 			<h2 id="comments-title">
 				<?php printf( _nx(
-					'%1$s Comment on “%2$s”',
-					'%1$s Comments on “%2$s”',
+					'%1$s Comment on "%2$s"',
+					'%1$s Comments on "%2$s"',
 					$comment_number,
 					'Title for comment list. 1=comment number, 2=post title',
 					'hannover'
@@ -34,8 +34,8 @@ if ( post_password_required() ) {
 			$trackback_number = count( $comments_by_type['pings'] ); ?>
 			<h2 id="trackbacks-title">
 				<?php printf( _nx(
-					'%1$s Trackback on “%2$s”',
-					'%1$s Trackbacks on “%2$s”',
+					'%1$s Trackback on "%2$s"',
+					'%1$s Trackbacks on "%2$s"',
 					$trackback_number,
 					'Title for trackback list. 1=trackback number, 2=post title',
 					'hannover'
