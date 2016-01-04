@@ -2,7 +2,7 @@
 /**
  * Comment template
  *
- * @version 1.0
+ * @version 1.0.6
  */
 if ( post_password_required() ) {
 	return;
