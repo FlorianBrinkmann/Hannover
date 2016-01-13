@@ -2,7 +2,7 @@
 /**
  * Functions file
  *
- * @version 1.0.6
+ * @version 1.0.7
  */
 
 /**
@@ -295,6 +295,36 @@ function hannover_filter_category_widget( $cat_args ) {
 }
 
 add_filter( 'widget_categories_args', 'hannover_filter_category_widget' );
+
+/**
+ * Function to exclude the portfolio elements from the main query if chosen in the customizer
+ *
+ * @param $query
+ */
+function hannover_exlude_portfolio_elements_from_blog( $query ) {
+	if ( $query->is_home() && $query->is_main_query() ) {
+		$exclude_portfolio_elements = get_theme_mod( 'exclude_portfolio_elements_from_blog' );
+		if ( $exclude_portfolio_elements == 'checked' ) {
+			$use_portfolio_category = get_theme_mod( 'portfolio_from_category' );
+			$portfolio_category     = get_theme_mod( 'portfolio_category' );
+			if ( $use_portfolio_category == 'checked' && $portfolio_category != '' ) {
+				$query->set( 'cat', "-$portfolio_category" );
+			} else {
+				$tax_query = array(
+					array(
+						'taxonomy' => 'post_format',
+						'field'    => 'slug',
+						'terms'    => array( 'post-format-gallery', 'post-format-image' ),
+						'operator' => 'NOT IN'
+					)
+				);
+				$query->set( 'tax_query', $tax_query );
+			}
+		}
+	}
+}
+
+add_action( 'pre_get_posts', 'hannover_exlude_portfolio_elements_from_blog' );
 
 /**
  * Gets the comments seperated by type
