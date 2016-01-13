@@ -49,6 +49,11 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
+Version 1.0.7 – 13.01.2016
+---
+- use pre_get_posts hook for excluding portfolio elements from main query
+
+
 Version 1.0.6 – 02.01.2016
 ---
 - changed double quotes
