@@ -2,7 +2,7 @@
 /**
  * Template file for the footer
  *
- * @version 1.0
+ * @version 1.0.8
  */
 ?>
 </div>
@@ -21,7 +21,8 @@
 	if ( has_nav_menu( 'footer' ) ) { ?>
 		<nav>
 			<h2 class="screen-reader-text">
-				<?php _ex( 'Footer navigation', 'hidden screen reader headline for the footer navigation', 'hannover' ); ?>
+				<?php /* translators: hidden screen reader headline for the footer navigation */
+				_e( 'Footer navigation', 'hannover' ); ?>
 			</h2>
 			<?php wp_nav_menu(
 				array(

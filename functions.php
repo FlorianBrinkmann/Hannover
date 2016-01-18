@@ -2,7 +2,7 @@
 /**
  * Functions file
  *
- * @version 1.0.7
+ * @version 1.0.8
  */
 
 /**
@@ -82,9 +82,12 @@ add_action( 'after_setup_theme', 'hannover_add_theme_support' );
 function hannover_register_menus() {
 	register_nav_menus(
 		array(
-			'primary' => _x( 'Primary Menu', 'Name of menu position in the header', 'hannover' ),
-			'footer'  => _x( 'Footer Menu', 'Name of menu position in the footer', 'hannover' ),
-			'social'  => _x( 'Social Menu', 'Name of menu position for social media icons', 'hannover' ),
+			/* translators: Name of menu position in the header */
+			'primary' => __( 'Primary Menu', 'hannover' ),
+			/* translators: Name of menu position in the footer */
+			'footer'  => __( 'Footer Menu', 'hannover' ),
+			/* translators: Name of menu position for social media icons */
+			'social'  => __( 'Social Menu', 'hannover' ),
 		)
 	);
 }
@@ -167,8 +170,8 @@ add_action( 'wp_enqueue_scripts', 'hannover_scripts_styles' );
  * @return void
  */
 function hannover_the_date() {
-	printf( _x(
-		'%1$s @ %2$s', '1=date, 2=time', 'hannover' ),
+	/* translators: 1=date, 2=time */
+	printf( __( '%1$s @ %2$s', 'hannover' ),
 		get_the_date(),
 		get_the_time()
 	);
@@ -201,12 +204,10 @@ function hannover_the_title( $heading, $link ) {
  * @return void
  */
 function hannover_the_content() {
+	/* translators: text for the more tag. s= title */
 	the_content(
 		sprintf(
-			_x( 'Continue reading "%s"',
-				'text for the more tag. s= title',
-				'hannover'
-			),
+			__( 'Continue reading "%s"', 'hannover' ),
 			esc_html( get_the_title() )
 		)
 	);
@@ -218,47 +219,47 @@ function hannover_the_content() {
  * @return void
  */
 function hannover_entry_meta() { ?>
-	<span class="author"><?php printf( _x(
-			'Author %s',
-			'name of the author in entry footer. s=author name',
-			'hannover'
-		), '<span>' . get_the_author() . '</span>' ) ?></span>
+	<span class="author"><?php /* translators: name of the author in entry footer. s=author name */
+		printf( __( 'Author %s', 'hannover' ),
+			'<span>' . get_the_author() . '</span>' ) ?></span>
 	<?php if ( get_the_category() ) { ?>
-		<span class="categories"><?php printf( _nx(
+		<span class="categories"><?php /* translators: Label for category list in entry footer. s=categories */
+			printf( _n(
 				'Category %s',
 				'Categories %s',
 				count( get_the_category() ),
-				'Label for category list in entry footer. s=categories',
 				'hannover'
-			), '<span>' . get_the_category_list( _x( ', ', 'term delimiter', 'hannover' ) ) . '</span>' ) ?></span>
+			), /* translators: term delimiter */
+				'<span>' . get_the_category_list( __( ', ', 'hannover' ) ) . '</span>' ) ?></span>
 	<?php }
 	if ( get_the_tags() ) { ?>
-		<span class="tags"><?php printf( _nx(
+		<span class="tags"><?php /* translators: Label for tag list in entry footer. s=tags */
+			printf( _n(
 				'Tag %s',
 				'Tags %s',
 				count( get_the_tags() ),
-				'Label for tag list in entry footer. s=tags',
 				'hannover'
-			), '<span>' . get_the_tag_list( '', _x( ', ', 'term delimiter', 'hannover' ) ) . '</span>' ) ?></span>
+			), /* translators: term delimiter */
+				'<span>' . get_the_tag_list( '', __( ', ', 'hannover' ) ) . '</span>' ) ?></span>
 	<?php }
 	$comments_by_type = hannover_get_comments_by_type();
 	if ( $comments_by_type['comment'] ) {
 		$comment_number = count( $comments_by_type['comment'] ); ?>
-		<span class="comments"><?php printf( _nx(
+		<span class="comments"><?php /* translators: Label for comment number in entry footer. s=comment number */
+			printf( _n(
 				'%s Comment',
 				'%s Comments',
 				$comment_number,
-				'Label for comment number in entry footer. s=comment number',
 				'hannover'
 			), '<span>' . number_format_i18n( $comment_number ) . '</span>' ) ?></span>
 	<?php }
 	if ( $comments_by_type['pings'] ) {
 		$trackback_number = count( $comments_by_type['pings'] ); ?>
-		<span class="trackbacks"><?php printf( _nx(
+		<span class="trackbacks"><?php /* translators: Label for trackback number in entry footer. s=trackback number */
+			printf( _n(
 				'%s Trackback',
 				'%s Trackbacks',
 				$trackback_number,
-				'Label for trackback number in entry footer. s=trackback number',
 				'hannover'
 			), '<span>' . number_format_i18n( $trackback_number ) . '</span>' ) ?></span>
 	<?php };
@@ -366,7 +367,8 @@ function hannover_comments( $comment, $args, $depth ) { ?>
 				'<a href="%1$s"><time datetime="%2$s">%3$s</time></a>',
 				get_comment_link( $comment->comment_ID ),
 				get_comment_time( 'c' ),
-				sprintf( _x( '%1$s @ %2$s', '1=date 2=time', 'hannover' ), get_comment_date(), get_comment_time() )
+				/* translators: 1=date 2=time */
+				sprintf( __( '%1$s @ %2$s', 'hannover' ), get_comment_date(), get_comment_time() )
 			); ?>
 		</header>
 

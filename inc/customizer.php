@@ -2,7 +2,7 @@
 /**
  * File for everything regarding to the customizer
  *
- * @version 1.0.6
+ * @version 1.0.8
  */
 
 /**
@@ -215,8 +215,9 @@ function hannover_customize_register( $wp_customize ) {
 				)
 			);
 
+			/* translators: Label for portfolio category pages customizer control. s=page title */
 			$label = sprintf(
-				_x( 'Choose portfolio category to show on "%s"', 'Label for portfolio category pages customizer control. s=page title', 'hannover' ),
+				__( 'Choose portfolio category to show on "%s"', 'hannover' ),
 				esc_html( $portfolio_category_page->post_title )
 			);
 			$wp_customize->add_control(

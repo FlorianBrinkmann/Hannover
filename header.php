@@ -2,7 +2,7 @@
 /**
  * Template for displaying the header
  *
- * @version 1.0
+ * @version 1.0.8
  */
 ?>
 <!DOCTYPE html>
@@ -16,10 +16,12 @@
 	wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
+<a class="screen-reader-text skip-link" href="#content"><?php _e( '[Skip to Content]', 'hannover' ); ?></a>
 <header id="header">
 	<div class="site-branding">
-		<?php if ( get_header_image() ) {
-			if ( is_front_page() && is_home() ) { ?>
+		<?php $page_template = get_page_template_slug( $post->ID );
+		if ( get_header_image() ) {
+			if ( ( is_front_page() && is_home() ) || $page_template == 'page-templates/slider-front-page.php' || $page_template == 'page-templates/random-image-front-page.php' ) { ?>
 				<h1 class="logo"><img src="<?php header_image(); ?>" alt="<?php bloginfo( 'name' ); ?>"></h1>
 			<?php } else {
 				if ( ! is_front_page() ) { ?>
@@ -31,7 +33,7 @@
 				<?php }
 			}
 		} else {
-			if ( is_front_page() && is_home() ) { ?>
+			if ( ( is_front_page() && is_home() ) || $page_template == 'page-templates/slider-front-page.php' || $page_template == 'page-templates/random-image-front-page.php' ) { ?>
 				<h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
 			<?php } else {
 				if ( ! is_front_page() ) { ?>
@@ -52,7 +54,8 @@
 		<button id="menu-toggle" class="menu-toggle"><?php _e( 'Menu', 'hannover' ); ?></button>
 		<nav>
 			<h2 class="screen-reader-text">
-				<?php _ex( 'Main navigation', 'hidden screen reader headline for the main navigation', 'hannover' ); ?>
+				<?php /* translators: hidden screen reader headline for the main navigation */
+				_e( 'Main navigation', 'hannover' ); ?>
 			</h2>
 			<?php wp_nav_menu(
 				array(

@@ -49,6 +49,11 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
+Version 1.0.8 – 17.01.2016
+---
+- use translators: comments instead of context gettext functions to give a description
+
+
 Version 1.0.7 – 13.01.2016
 ---
 - use pre_get_posts hook for excluding portfolio elements from main query

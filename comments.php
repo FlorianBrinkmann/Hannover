@@ -2,7 +2,7 @@
 /**
  * Comment template
  *
- * @version 1.0.6
+ * @version 1.0.8
  */
 if ( post_password_required() ) {
 	return;
@@ -12,11 +12,11 @@ if ( post_password_required() ) {
 		if ( ! empty( $comments_by_type['comment'] ) ) {
 			$comment_number = count( $comments_by_type['comment'] ); ?>
 			<h2 id="comments-title">
-				<?php printf( _nx(
+				<?php /* translators: Title for comment list. 1=comment number, 2=post title */
+				printf( _n(
 					'%1$s Comment on "%2$s"',
 					'%1$s Comments on "%2$s"',
 					$comment_number,
-					'Title for comment list. 1=comment number, 2=post title',
 					'hannover'
 				), number_format_i18n( $comment_number ),
 					get_the_title() ) ?>
@@ -33,11 +33,11 @@ if ( post_password_required() ) {
 		if ( ! empty( $comments_by_type['pings'] ) ) {
 			$trackback_number = count( $comments_by_type['pings'] ); ?>
 			<h2 id="trackbacks-title">
-				<?php printf( _nx(
+				<?php /* translators: Title for trackback list. 1=trackback number, 2=post title */
+				printf( _n(
 					'%1$s Trackback on "%2$s"',
 					'%1$s Trackbacks on "%2$s"',
 					$trackback_number,
-					'Title for trackback list. 1=trackback number, 2=post title',
 					'hannover'
 				), number_format_i18n( $trackback_number ), get_the_title() ) ?>
 			</h2>
