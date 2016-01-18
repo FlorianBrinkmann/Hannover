@@ -49,9 +49,10 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
-Version 1.0.8 – 17.01.2016
+Version 1.0.8 – 18.01.2016
 ---
 - use translators: comments instead of context gettext functions to give a description
+- small fixes
 
 
 Version 1.0.7 – 13.01.2016
