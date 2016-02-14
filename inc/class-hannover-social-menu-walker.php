@@ -5,7 +5,7 @@
  *
  * Extends the Walker_Nav_Menu and displays SVG for social media channels
  *
- * @version 1.0
+ * @version 1.0.10
  */
 class Hannover_Social_Menu_Walker extends Walker_Nav_Menu {
 
@@ -125,23 +125,74 @@ class Hannover_Social_Menu_Walker extends Walker_Nav_Menu {
 		 */
 
 		$social_media_channels = array(
-			'plus.google.com' => 'icon-google-plus',
-			'wordpress.org'   => 'icon-wordpress',
-			'wordpress.com'   => 'icon-wordpress',
-			'facebook.com'    => 'icon-facebook',
-			'twitter.com'     => 'icon-twitter',
-			'dribbble.com'    => 'icon-dribbble',
-			'pinterest.com'   => 'icon-pinterest',
-			'github.com'      => 'icon-github',
-			'tumblr.com'      => 'icon-tumblr',
-			'youtube.com'     => 'icon-youtube',
-			'flickr.com'      => 'icon-flickr',
-			'vimeo.com'       => 'icon-vimeo',
-			'instagram.com'   => 'icon-instagram',
-			'linkedin.com'    => 'icon-linkedin',
-			'xing.de'         => 'icon-xing',
-			'xing.com'        => 'icon-xing',
-			'/feed'           => 'icon-feed',
+			'plus.google.com' => array(
+				'id'                 => 'icon-google-plus',
+				'screen-reader-text' => __( 'Google Plus', 'hannover' )
+			),
+			'wordpress.org'   => array(
+				'id'                 => 'icon-wordpress',
+				'screen-reader-text' => __( 'WordPress.org', 'hannover' )
+			),
+			'wordpress.com'   => array(
+				'id'                 => 'icon-wordpress',
+				'screen-reader-text' => __( 'WordPress.com', 'hannover' )
+			),
+			'facebook.com'    => array(
+				'id'                 => 'icon-facebook',
+				'screen-reader-text' => __( 'Facebook', 'hannover' )
+			),
+			'twitter.com'     => array(
+				'id'                 => 'icon-twitter',
+				'screen-reader-text' => __( 'Twitter', 'hannover' )
+			),
+			'dribbble.com'    => array(
+				'id'                 => 'icon-dribbble',
+				'screen-reader-text' => __( 'Dribbble', 'hannover' )
+			),
+			'pinterest.com'   => array(
+				'id'                 => 'icon-pinterest',
+				'screen-reader-text' => __( 'Pinterest', 'hannover' )
+			),
+			'github.com'      => array(
+				'id'                 => 'icon-github',
+				'screen-reader-text' => __( 'GitHub', 'hannover' )
+			),
+			'tumblr.com'      => array(
+				'id'                 => 'icon-tumblr',
+				'screen-reader-text' => __( 'Tumblr', 'hannover' )
+			),
+			'youtube.com'     => array(
+				'id'                 => 'icon-youtube',
+				'screen-reader-text' => __( 'YouTube', 'hannover' )
+			),
+			'flickr.com'      => array(
+				'id'                 => 'icon-flickr',
+				'screen-reader-text' => __( 'Flickr', 'hannover' )
+			),
+			'vimeo.com'       => array(
+				'id'                 => 'icon-vimeo',
+				'screen-reader-text' => __( 'Vimeo', 'hannover' )
+			),
+			'instagram.com'   => array(
+				'id'                 => 'icon-instagram',
+				'screen-reader-text' => __( 'Instagram', 'hannover' )
+			),
+			'linkedin.com'    => array(
+				'id'                 => 'icon-linkedin',
+				'screen-reader-text' => __( 'LinkedIn', 'hannover' )
+			),
+			'xing.de'         => array(
+				'id'                 => 'icon-xing',
+				'screen-reader-text' => __( 'Xing', 'hannover' )
+			),
+			'xing.com'        => array(
+				'id'                 => 'icon-xing',
+				'screen-reader-text' => __( 'Xing', 'hannover' )
+			),
+			'/feed'           => array(
+				'id'                 => 'icon-feed',
+				'screen-reader-text' => __( 'Feed', 'hannover' )
+			),
 		);
 
 		$svg_id = "";
@@ -150,8 +201,9 @@ class Hannover_Social_Menu_Walker extends Walker_Nav_Menu {
 			$pattern = "|$key|";
 			preg_match( $pattern, $atts['href'], $matches );
 			if ( ! empty( $matches[0] ) ) {
-				$match  = $matches[0];
-				$svg_id = $social_media_channels[ $match ];
+				$match                  = $matches[0];
+				$svg_id                 = $social_media_channels[ $match ]['id'];
+				$svg_screen_reader_text = $social_media_channels[ $match ]['screen-reader-text'];
 				break;
 			}
 		}
@@ -160,7 +212,7 @@ class Hannover_Social_Menu_Walker extends Walker_Nav_Menu {
 			$icon_url    = get_template_directory_uri() . '/svg/social-media-icons.svg#' . $svg_id;
 			$item_output = $args->before;
 			$item_output .= '<a' . $attributes . '>';
-			$item_output .= '<svg class="' . $svg_id . '"><use xlink:href="' . $icon_url . '"></use></svg>';
+			$item_output .= '<svg class="' . $svg_id . '"><use xlink:href="' . $icon_url . '"></use></svg><span class="screen-reader-text">' . $svg_screen_reader_text . '</span>';
 			$item_output .= '</a>';
 			$item_output .= $args->after;
 		} else {

@@ -597,7 +597,7 @@ dt {
     margin-bottom: 3em;
 }
 
-#header::after {
+#header::after, .clearfix::after {
     clear: both;
     content: '';
     display: block;

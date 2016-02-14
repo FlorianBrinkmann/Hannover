@@ -49,6 +49,17 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
+Version 1.0.10 – 14.02.2016
+---
+- moved screen reader text span outside the svg element
+
+
+Version 1.0.9 – 14.02.2016
+---
+- added clearfix to sidebar widgets
+- accessibility improvements with the svg social menu
+
+
 Version 1.0.8 – 18.01.2016
 ---
 - use translators: comments instead of context gettext functions to give a description

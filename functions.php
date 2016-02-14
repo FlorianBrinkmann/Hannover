@@ -2,7 +2,7 @@
 /**
  * Functions file
  *
- * @version 1.0.8
+ * @version 1.0.9
  */
 
 /**
@@ -102,7 +102,7 @@ function hannover_register_sidebars() {
 		'name'          => __( 'Main Sidebar', 'hannover' ),
 		'id'            => 'sidebar-1',
 		'description'   => __( 'Widgets in this area will be shown on all normal posts and pages.', 'hannover' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'before_widget' => '<div id="%1$s" class="widget clearfix %2$s">',
 		'after_widget'  => '</div>',
 		'before_title'  => '<h3 class="widget-title">',
 		'after_title'   => '</h3>',
