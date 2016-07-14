@@ -49,6 +49,12 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
+Version 1.0.12 – 14.07.2016
+---
+- added mail icon to social menu
+- removed @version tag from functions.php
+
+
 Version 1.0.11 – 30.05.2016
 ---
 - removed deprecated theme tags from style.css

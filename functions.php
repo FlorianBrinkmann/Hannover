@@ -1,8 +1,6 @@
 <?php
 /**
  * Functions file
- *
- * @version 1.0.9
  */
 
 /**

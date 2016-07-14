@@ -193,6 +193,10 @@ class Hannover_Social_Menu_Walker extends Walker_Nav_Menu {
 				'id'                 => 'icon-feed',
 				'screen-reader-text' => __( 'Feed', 'hannover' )
 			),
+			'mailto:'         => array(
+				'id'                 => 'icon-mail',
+				'screen-reader-text' => __( 'E-Mail', 'hannover' )
+			),
 		);
 
 		$svg_id = "";
