@@ -979,6 +979,11 @@ nav.navigation::before {
     display: none !important;;
 }
 
+.slider .owl-item .portrait img {
+    margin: 0 auto;
+    width: auto;
+}
+
 /* SLIDER END */
 
 @media screen and (min-width: 22em) {

@@ -49,6 +49,11 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
+Version 1.0.13 – 16.07.2016
+---
+- portrait images in the slider don’t get stretched to full width if they are smaller and are centered vertically now
+
+
 Version 1.0.12 – 14.07.2016
 ---
 - added mail icon to social menu
