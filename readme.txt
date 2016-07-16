@@ -49,6 +49,11 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
+Version 1.0.14 – 16.07.2016
+---
+- changed “E-Mail” to “Email” in screen reader text for new email icon
+
+
 Version 1.0.13 – 16.07.2016
 ---
 - portrait images in the slider don’t get stretched to full width if they are smaller and are centered vertically now

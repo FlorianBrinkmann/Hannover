@@ -195,7 +195,7 @@ class Hannover_Social_Menu_Walker extends Walker_Nav_Menu {
 			),
 			'mailto:'         => array(
 				'id'                 => 'icon-mail',
-				'screen-reader-text' => __( 'E-Mail', 'hannover' )
+				'screen-reader-text' => __( 'Email', 'hannover' )
 			),
 		);
 
