@@ -1085,6 +1085,7 @@ input[type=submit]:active {
 
 .page-template-portfolio-page .element-alt > a,
 .page-template-portfolio-category-page .element-alt > a,
+.page-template-portfolio-category-page .element > a,
 .page-template-portfolio-archive-page .element > a {
     border-bottom: none;
 }

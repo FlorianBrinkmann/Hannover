@@ -49,6 +49,11 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
+Version 1.1.1 – 05.08.2016
+---
+- small CSS fix.
+
+
 Version 1.1 – 05.08.2016
 ---
 - Overhaul of Typography (margins, …)
