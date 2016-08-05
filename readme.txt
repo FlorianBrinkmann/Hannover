@@ -49,6 +49,11 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
+Version 1.1 – 05.08.2016
+---
+- Overhaul of Typography (margins, …)
+
+
 Version 1.0.14 – 16.07.2016
 ---
 - changed “E-Mail” to “Email” in screen reader text for new email icon
@@ -166,7 +171,7 @@ Source: https://github.com/jonathantneal/svg4everybody
 
 Image from Screenshot
 Licence: CC0 1.0 Universal
-Source: https://unsplash.com/photos/a0YaUXLjKaY
+Source: https://unsplash.com/photos/9i9RquPtXsg
 
 ---
 Hannover WordPress Theme, Copyright 2015 Florian Brinkmann

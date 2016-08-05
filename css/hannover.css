@@ -12,9 +12,12 @@
 
 html {
     background: #fff;
+    color: #444;
     font-family: "Noto Sans", sans-serif; /* 1 */
+    font-size: 1em;
     -ms-text-size-adjust: 100%; /* 2 */
     -webkit-text-size-adjust: 100%; /* 2 */
+    line-height: 1.6;
     word-wrap: break-word;
 }
 
@@ -23,11 +26,8 @@ html {
  */
 
 body {
-    color: #444;
     margin: 0;
-    font-size: 1em;
-    line-height: 1.5em;
-    padding: .5em;
+    padding: 1rem;
 }
 
 /* HTML5 display definitions
@@ -98,9 +98,12 @@ template {
  * Remove the gray background color from active links in IE 10.
  */
 
-a {
+a,
+figure figcaption a {
     background-color: transparent;
+    border-bottom: 2px solid;
     color: #444;
+    text-decoration: none;
 }
 
 /**
@@ -116,7 +119,7 @@ a:focus,
 .current_page_item > a,
 .current_page_parent > a {
     outline: 0;
-    text-decoration: none;
+    border-bottom: none;
 }
 
 /* Text-level semantics
@@ -145,17 +148,6 @@ strong {
 
 dfn {
     font-style: italic;
-}
-
-/**
- * Address variable `h1` font-size and margin within `section` and `article`
- * contexts in Firefox 4+, Safari, and Chrome.
- */
-
-h1 {
-    font-size: 2.25em;
-    line-height: 1.3333em;
-    margin: 0 0 0.67em;
 }
 
 /**
@@ -224,7 +216,7 @@ svg:not(:root) {
  */
 
 figure {
-    margin: 0 0 1.5em;
+    margin: 1.6rem 0;
 }
 
 /**
@@ -449,7 +441,7 @@ optgroup {
 table {
     border-collapse: collapse;
     border-spacing: 0;
-    margin: 0 0 1.5em;
+    margin: 1.6rem 0;
 }
 
 td,
@@ -478,54 +470,83 @@ h6 {
     font-weight: 400;
 }
 
+h1 {
+    font-size: 2.488rem;
+    line-height: 2.8rem;
+    margin: 3.2rem 0 0;
+}
+
 h2 {
-    font-size: 2em;
-    line-height: 1.5em;
-    margin: 0 0 0.75em;
+    font-size: 2.074rem;
+    line-height: 2.4rem;
+    margin: 2.8rem 0 0;
 }
 
 h3 {
-    font-size: 1.75em;
-    line-height: 1.7143em;
-    margin: 0 0 0.8571em;
+    font-size: 1.728rem;
+    line-height: 2rem;
+    margin: 2.4rem 0 0;
 }
 
 h4 {
-    font-size: 1.5em;
-    line-height: 1em;
-    margin: 0 0 1em;
+    font-size: 1.44rem;
+    line-height: 1.8rem;
+    margin: 2rem 0 0;
 }
 
 h5 {
-    font-size: 1.25em;
-    line-height: 1.2em;
-    margin: 0 0 1.2em;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    margin: 1.8rem 0 0;
 }
 
 h6 {
-    font-size: 1em;
-    line-height: 1.5em;
-    margin: 0 0 1.5em;
+    font-size: 1rem;
+    line-height: 1.6rem;
+    margin: 1.6rem 0 0;
 }
 
 p {
-    margin: 0 0 1.5em;
+    margin: .8rem 0 0;
 }
 
 blockquote {
-    margin: 0 2em 1.5em;
+    margin: 1.6rem 2rem;
 }
 
 dl {
-    margin: 0 0 1.5em;
+    margin: .8rem 0 0;
 }
 
 dd {
-    margin-left: 2em;
+    margin-bottom: .4rem;
+    margin-left: 2rem;
 }
 
 dt {
     font-weight: 700;
+}
+
+ul,
+ol {
+    margin: 1.6rem 0;
+    padding-left: 1rem;
+}
+
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+    margin: 0;
+    padding-left: 1.6rem;
+}
+
+li {
+    margin-top: .4rem;
+}
+
+iframe {
+    margin: 1.6rem 0 !important; /* !important to overwrite inline styles from embeds */
 }
 
 .screen-reader-text {
@@ -574,13 +595,13 @@ dt {
 .alignleft {
     display: block;
     float: left;
-    margin-right: 1em;
+    margin-right: 1.2rem;
 }
 
 .alignright {
     display: block;
     float: right;
-    margin-left: 1em;
+    margin-left: 1.2rem;
 }
 
 .aligncenter {
@@ -589,12 +610,33 @@ dt {
     margin-right: auto;
 }
 
+.aligncenter,
+.alignnone {
+    margin: 1.6rem 0;
+}
+
+.alignleft,
+.alignright {
+    margin-top: .6rem;
+    margin-bottom: .8rem;
+}
+
+figure.alignleft,
+figure.alignright {
+    margin-top: 1.2rem;;
+}
+
+.alignleft img,
+.alignright img {
+    margin: 0;
+}
+
 .wp-caption-text {
-    font-size: .9em;
+    font-size: .9rem;
 }
 
 #header {
-    margin-bottom: 3em;
+    margin-top: 1.6rem;
 }
 
 #header::after, .clearfix::after {
@@ -608,14 +650,18 @@ dt {
     max-width: 75%;
 }
 
+.site-branding a {
+    border-bottom: none;
+}
+
 #header .site-branding .site-title {
-    font-size: 1.3em;
+    font-size: 1.44rem;
     line-height: 1.5em;
-    margin-bottom: .5em;
+    margin: 0;
 }
 
 #header .site-description {
-    font-size: .9em;
+    font-size: .9rem;
     margin-bottom: 0;
 }
 
@@ -644,7 +690,7 @@ dt {
 @media screen and (max-width: 49.99em) {
     .js #menu-toggle {
         display: block;
-        padding: .3em;
+        padding: .3rem;
     }
 
     #menu-toggle {
@@ -715,16 +761,54 @@ dt {
     clear: both;
 }
 
-article.post {
-    margin-bottom: 3em;
+#content::after {
+    clear: both;
+    content: '';
+    display: block;
 }
 
-.entry-header {
-    margin-bottom: 1.5em;
+#content ul > li {
+    list-style-type: none;
+    position: relative;
 }
 
-.entry-header .entry-title {
-    margin-bottom: 0;
+#content ul > li::before {
+    content: "–";
+    left: -.8rem;
+    top: 0;
+    position: absolute;
+}
+
+#content nav li::before {
+    display: none;
+}
+
+article {
+    margin-top: 4.8rem;
+}
+
+.entry-header a,
+.gallery a,
+figure a {
+    border-bottom: none;
+}
+
+.entry-title {
+    margin: 0;
+}
+
+.blog .format-gallery .entry-title {
+    margin-top: .2rem;
+}
+
+.entry-header .entry-date {
+    display: block;
+    font-style: italic;
+    margin-top: .4rem;
+}
+
+.gallery {
+    margin: 1.6rem 0;
 }
 
 .gallery::after {
@@ -763,6 +847,10 @@ article.post {
     clear: left;
 }
 
+article footer {
+    margin-top: 1.6rem;
+}
+
 article footer p > span {
     font-weight: 700;
 }
@@ -781,10 +869,6 @@ article footer p span.comments + span.trackbacks::before {
     display: none;
 }
 
-.post-navigation {
-    margin-bottom: 3em;
-}
-
 .post-navigation .nav-previous a::before {
     content: "« ";
 }
@@ -795,6 +879,7 @@ article footer p span.comments + span.trackbacks::before {
 
 #comments {
     clear: both;
+    margin-top: 3.2rem;
 }
 
 .commentlist {
@@ -816,14 +901,6 @@ article footer p span.comments + span.trackbacks::before {
 
 .fn {
     display: block;
-}
-
-.comment-content :last-child {
-    margin-bottom: 0;
-}
-
-article.comment {
-    margin-bottom: 2em;
 }
 
 #commentform label {
@@ -865,15 +942,27 @@ input[type=submit]:active {
     color: #444;
 }
 
-nav.navigation::before {
+.navigation::before {
     clear: both;
     content: "";
     display: block;
 }
 
+.navigation {
+    margin-top: 4.8rem;
+}
+
 .page-numbers {
     font-weight: 700;
     padding-left: 0;
+    margin: 0;
+}
+
+.page-numbers::after,
+.social-menu::after {
+    clear: both;
+    content: '';
+    display: block;
 }
 
 .page-numbers li {
@@ -893,16 +982,22 @@ nav.navigation::before {
 
 #secondary {
     clear: both;
-    padding-top: 3em;
+    margin-top: 4.9rem;
+}
+
+#secondary .widget:first-of-type .widget-title {
+    margin-top: 0;
 }
 
 #footer {
-    padding-top: 3em;
+    margin-bottom: 1.6rem;
+    margin-top: 4.8rem;
     clear: both;
 }
 
 #footer .social-menu {
     padding-left: 0;
+    margin-top: 0;
 }
 
 #footer .social-menu li {
@@ -910,7 +1005,11 @@ nav.navigation::before {
     list-style-type: none;
     margin: 0.7em;
     line-height: 0;
-    font-size: .9em;
+    font-size: .9rem;
+}
+
+#footer .social-menu li a {
+    border-bottom: none;
 }
 
 #footer .social-menu li svg {
@@ -931,16 +1030,29 @@ nav.navigation::before {
 }
 
 #footer nav {
-    padding: 1.5em 0;
+    padding: 0;
 }
 
 #footer nav li {
     margin: .5em 0;
 }
 
+.footer-menu li {
+    list-style-type: none;
+    position: relative;
+}
+
+.footer-menu li::before {
+    content: "–";
+    left: -.8rem;
+    top: 0;
+    position: absolute;
+}
+
 .theme-author {
     font-size: .9em;
     text-align: center;
+    margin-top: 1.6rem;
 }
 
 /* PAGE TEMPLATES */
@@ -966,6 +1078,17 @@ nav.navigation::before {
     line-height: 1rem;
 }
 
+.page-template-portfolio-page .element-alt div h2,
+.page-template-portfolio-category-page .element-alt div h2 {
+    margin-top: .4rem;
+}
+
+.page-template-portfolio-page .element-alt > a,
+.page-template-portfolio-category-page .element-alt > a,
+.page-template-portfolio-archive-page .element > a {
+    border-bottom: none;
+}
+
 /* PAGE TEMPLATES END */
 
 /* SLIDER */
@@ -988,7 +1111,7 @@ nav.navigation::before {
 
 @media screen and (min-width: 22em) {
     body {
-        padding: 1em 6%;
+        padding: 1rem 6%;
     }
 }
 
@@ -1003,17 +1126,13 @@ nav.navigation::before {
         padding-left: 1.5em;
     }
 
-    .comment-meta {
-        margin-bottom: 1em;
-    }
-
     .comment-content {
         clear: left;
     }
 }
 
 @media screen and (min-width: 41em) {
-    body {
+    html {
         font-size: 1.1em;
     }
 
@@ -1036,6 +1155,7 @@ nav.navigation::before {
         margin-left: -3px;
         vertical-align: middle;
         width: 50%;
+        margin-bottom: 0;
     }
 
     #footer .social-menu {
@@ -1050,6 +1170,7 @@ nav.navigation::before {
 
     #footer nav ul {
         padding-left: 0;
+        margin: 0;
     }
 
     article.element-alt::after {
@@ -1086,6 +1207,11 @@ nav.navigation::before {
         vertical-align: middle;
     }
 
+    .page-template-portfolio-page .element-alt div h2,
+    .page-template-portfolio-category-page .element-alt div h2 {
+        margin-top: 0;
+    }
+
     .slider .owl-prev,
     .slider .owl-next {
         display: block !important;
@@ -1104,7 +1230,7 @@ nav.navigation::before {
 }
 
 @media screen and (min-width: 47em) {
-    body {
+    html {
         font-size: 1.2em;
     }
 
@@ -1122,11 +1248,11 @@ nav.navigation::before {
 
     #header nav {
         float: right;
-        font-size: .9em;
+        font-size: .9rem;
     }
 
     #header .primary-menu {
-        margin-top: .3em;
+        margin-top: .3rem;
     }
 
     #header nav > ul > li {
@@ -1167,21 +1293,21 @@ nav.navigation::before {
         left: -9999em;
         text-align: right;
         background: #fff;
-        padding: 0 1.5em 1.5em;
+        padding: 0 .6em .6em;
         position: absolute;
         white-space: nowrap;
         z-index: 9;
     }
 
     #header nav .sub-menu li {
-        margin: .5em 0;
+        margin: .6rem 0;
     }
 
     #header nav > ul > li:hover > .sub-menu,
     #header nav > ul > li:focus > .sub-menu,
     #header nav > ul > li.focus > .sub-menu {
         left: auto;
-        right: -1.5em;
+        right: .2rem;
     }
 
     #header nav .sub-menu li:hover > .sub-menu,
@@ -1202,13 +1328,13 @@ nav.navigation::before {
 }
 
 @media screen and (min-width: 51em) {
-    body {
+    html {
         font-size: 1.3em;
     }
 }
 
 @media screen and (min-width: 57em) {
-    body {
+    html {
         font-size: 1.4em;
     }
 
@@ -1220,7 +1346,7 @@ nav.navigation::before {
 }
 
 @media screen and (min-width: 62em) {
-    body {
+    html {
         font-size: 1.3em;
     }
 
@@ -1258,14 +1384,14 @@ nav.navigation::before {
     #secondary {
         clear: none;
         float: right;
-        font-size: .9em;
+        font-size: .9rem;
         padding-top: 0;
         width: 30%;
     }
 }
 
 @media screen and (min-width: 80em) {
-    body {
+    html {
         font-size: 1.4em;
     }
 }
@@ -1273,6 +1399,10 @@ nav.navigation::before {
 /******************************
 Lightbox
 *******************************/
+
+.lightbox {
+    border-bottom: none;
+}
 
 #imagelightbox {
     position: fixed;
