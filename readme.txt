@@ -49,6 +49,11 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
+Version 1.1.2 – 06.08.2016
+---
+- further improvements of margins (especially in sidebar and comments section)
+
+
 Version 1.1.1 – 05.08.2016
 ---
 - small CSS fix.

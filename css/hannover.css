@@ -446,7 +446,7 @@ table {
 
 td,
 th {
-    padding: 0 .5em;
+    padding: .4rem;
 }
 
 table tr:first-of-type {
@@ -470,7 +470,8 @@ h6 {
     font-weight: 400;
 }
 
-h1 {
+h1,
+.entry-title {
     font-size: 2.488rem;
     line-height: 2.8rem;
     margin: 3.2rem 0 0;
@@ -531,6 +532,19 @@ ul,
 ol {
     margin: 1.6rem 0;
     padding-left: 1rem;
+}
+
+h2 + ul,
+h3 + ul,
+h4 + ul,
+h5 + ul,
+h6 + ul,
+h2 + ol,
+h3 + ol,
+h4 + ol,
+h5 + ol,
+h6 + ol {
+    margin-top: .8rem;
 }
 
 ul ul,
@@ -807,6 +821,10 @@ figure a {
     margin-top: .4rem;
 }
 
+.entry-content > :first-child {
+    margin-top: .8rem;
+}
+
 .gallery {
     margin: 1.6rem 0;
 }
@@ -879,11 +897,24 @@ article footer p span.comments + span.trackbacks::before {
 
 #comments {
     clear: both;
-    margin-top: 3.2rem;
+    margin-top: 4.8rem;
+}
+
+.comment-respond input,
+.comment-respond textarea {
+    margin-top: 0;
 }
 
 .commentlist {
     padding-left: 0;
+}
+
+li.comment {
+    margin-top: 0;
+}
+
+article.comment {
+    margin-top: 1.6rem;
 }
 
 .comment,
@@ -911,7 +942,12 @@ input,
 textarea {
     border: thin solid;
     font-family: "Noto Sans", sans-serif;
+    margin-top: .8rem;
     padding: .5em;
+}
+
+select {
+    margin-top: .8rem;
 }
 
 input:hover,
@@ -985,8 +1021,20 @@ input[type=submit]:active {
     margin-top: 4.9rem;
 }
 
-#secondary .widget:first-of-type .widget-title {
+.widget {
+    margin-top: 3.2rem;
+}
+
+#secondary .widget:first-of-type {
     margin-top: 0;
+}
+
+.widget-title {
+    margin-top: 0;
+}
+
+.widget-title + * {
+    margin-top: .8rem;
 }
 
 #footer {
@@ -1121,6 +1169,8 @@ input[type=submit]:active {
         display: block;
         float: left;
         margin-right: 1em;
+        position: relative;
+        top: .3rem;
     }
 
     .commentlist .children {
@@ -1135,12 +1185,6 @@ input[type=submit]:active {
 @media screen and (min-width: 41em) {
     html {
         font-size: 1.1em;
-    }
-
-    .fn,
-    .comment-meta time {
-        position: relative;
-        top: -.2em;
     }
 
     #footer {
@@ -1233,12 +1277,6 @@ input[type=submit]:active {
 @media screen and (min-width: 47em) {
     html {
         font-size: 1.2em;
-    }
-
-    .fn,
-    .comment-meta time {
-        position: relative;
-        top: -.3em;
     }
 }
 
@@ -1337,12 +1375,6 @@ input[type=submit]:active {
 @media screen and (min-width: 57em) {
     html {
         font-size: 1.4em;
-    }
-
-    .fn,
-    .comment-meta time {
-        position: relative;
-        top: -.4em;
     }
 }
 
