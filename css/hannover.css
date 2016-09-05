@@ -674,6 +674,10 @@ figure.alignright {
     margin: 0;
 }
 
+#header .logo {
+    margin: 0;
+}
+
 #header .site-description {
     font-size: .9rem;
     margin-bottom: 0;
