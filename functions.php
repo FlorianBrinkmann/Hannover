@@ -3,6 +3,18 @@
  * Functions file
  */
 
+// Include file with add_action() calls.
+require_once __DIR__ . '/inc/actions.php';
+
+// Include file with add_filter() calls.
+require_once __DIR__ . '/inc/filters.php';
+
+// Include customizer register file.
+require_once __DIR__ . '/inc/customizer/register.php';
+
+// Include social nav walker.
+require_once __DIR__ . '/inc/class-hannover-social-menu-walker.php';
+
 /**
  * Load translation from translate.WordPress.org if available
  */
@@ -527,7 +539,7 @@ function hannover_image_from_gallery_or_image_post( $size, $post ) {
 /**
  * Returns the query args for the page templates
  *
- * @param $post
+ * @param        $post
  * @param string $template name of page template. Possible values: portfolio, portfolio-archive, portfolio-category-page
  *
  * @return array
@@ -611,7 +623,3 @@ function hannover_remove_more_link_scroll( $link ) {
 }
 
 add_filter( 'the_content_more_link', 'hannover_remove_more_link_scroll' );
-
-require_once get_template_directory() . '/inc/customizer.php';
-
-require_once get_template_directory() . '/inc/class-hannover-social-menu-walker.php';

@@ -1,0 +1,54 @@
+/* ==========================================================================
+  #SIDEBAR TEMPLATE
+  ========================================================================== */
+
+.-with-sidebar .full-bleed-img {
+	width: 100%;
+}
+
+@media screen and (min-width: 60em) {
+	@include line-height-and-spaces(1.5);
+	.-with-sidebar .content-wrapper {
+		max-width: $layout-max-width;
+		margin: 0 auto;
+	}
+
+	.-with-sidebar .main {
+		float: left;
+		padding-right: add-unit($space, 'em');
+		width: 68%;
+	}
+
+	.-with-sidebar .entry-header > div,
+	.-with-sidebar .post-thumbnail,
+	.-with-sidebar .entry-content,
+	.-with-sidebar .entry-footer,
+	.-with-sidebar .nav-links,
+	.-with-sidebar .comments-area {
+		margin-right: 0;
+		padding-right: 0;
+	}
+
+	.-with-sidebar [class*="-large-featured-image"] .post-thumbnail {
+		padding-left: add-unit($space);
+	}
+
+	@include line-height-and-spaces(1.4);
+}
+
+@media screen and (min-width: 80em) {
+	.-with-sidebar .full-bleed-img {
+		display: block;
+		float: right;
+		position: relative;
+		width: calc(100% + ((100vw - #{$layout-max-width} - 2.8rem) / 4));
+	}
+
+	.-with-sidebar .entry-content .full-bleed-img {
+		width: calc(100% + ((100vw - #{$layout-max-width} - 2.8rem) / 4) + 1.3rem);
+
+		&::after {
+			@include clearfix;
+		}
+	}
+}
