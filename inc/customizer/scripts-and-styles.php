@@ -40,7 +40,8 @@ function hannover_customize_controls_styles() { ?>
 			padding-right: 12px;
 		}
 
-		.no-border-top {
+		.no-border-top,
+		#accordion-section-hannover_portfolio_page_section {
 			border-top: 0 !important;
 		}
 	</style>
@@ -67,12 +68,12 @@ function hannover_customizer_controls_script() {
 
 	// Build array that is handed to the hannoverCustomizeControls function.
 	$exports = [
-		'l10n' => [
+		'l10n'       => [
 			/* translators: Title of the theme options panel in the Customizer. */
 			'panelTitle' => __( 'Theme Options', 'hannover' ),
 		],
 		'categories' => $category_array,
-		'themeMods' => get_theme_mods(),
+		'themeMods'  => get_theme_mods(),
 	];
 
 	// Add inline script to init the controls component and submit internationalized strings.
