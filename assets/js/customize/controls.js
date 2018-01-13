@@ -14,6 +14,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 		themeMods: {},
 		portfolioPageSectionTitleMarkup: '',
 		portfolioArchivePageSectionTitleMarkup: '',
+		portfolioCategoryPageSectionTitleMarkup: '',
 		portfolioCategoryPagesNextId: 1
 	};
 
@@ -72,7 +73,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 		component.createPortfolioArchivePageOptions();
 
 		// Add sections and controls for the existing portfolio category pages options.
-		if (component.themeMods.portfolio_category_page && false === isObjectEmpty(component.themeMods.portfolio_category_page)) {
+		if (component.themeMods.portfolio_category_page && false === component.isEmptyObject(component.themeMods.portfolio_category_page)) {
 			for (var key in component.themeMods.portfolio_category_page) {
 				component.createPortfolioCategoryPageOptions(key);
 			}
@@ -99,6 +100,8 @@ var hannoverCustomizeControls = (function (api, wp) {
 
 		component.displayPortfolioCategoryPagesSectionHeadDescription();
 
+		component.displayAddPortfolioCategoryPageTemplate();
+
 		api.panel('hannover_theme_options', function (panel) {
 			// Add click event listener to the portfolio page section container.
 			panel.container.find('.hannover-customize-create-portfolio-page').on('click', function () {
@@ -109,7 +112,41 @@ var hannoverCustomizeControls = (function (api, wp) {
 			panel.container.find('#accordion-section-hannover_portfolio_archive_page_options').on('click', function () {
 				api.section('hannover_portfolio_archive_page_options').expand();
 			});
+
+			// Add click event listener to the create portfolio category page button.
+			var sectionName = 'hannover_portfolio_category_page_section[' + component.portfolioCategoryPagesNextId + ']';
+			panel.container.find('.hannover-customize-create-portfolio-category-page').on('click', function () {
+				api.section(sectionName).expand();
+			});
 		});
+
+		// Add click event listener to the buttons to remove a category page.
+		var elements = document.querySelectorAll('.delete-portfolio-category-page button');
+		for (var i = 0; i < elements.length; i++) {
+			elements[i].addEventListener('click', function() {
+				// Get id of list item.
+				var listItemId = this.parentElement.parentElement.id;
+
+				// Extract the section index out of the element’s id.
+				var sectionIndex = listItemId.match(/customize-control-portfolio_category_page-(\d)-delete/);
+
+				// Check if we have a match.
+				if ( null !== sectionIndex ) {
+					var id = sectionIndex[1];
+
+					// Close the section.
+					api.section('hannover_portfolio_category_page_section[' + id + ']').collapse();
+
+					// Set flag that the setting needs to be removed.
+					api.control('portfolio_category_page[' + id + '][deleted]', function(control) {
+						control.setting.set(-1);
+					});
+
+					// Remove the section.
+					api.section('hannover_portfolio_category_page_section[' + id + ']').active(false);
+				}
+			});
+		}
 	};
 
 	/**
@@ -309,6 +346,45 @@ var hannoverCustomizeControls = (function (api, wp) {
 				allow_addition: true
 			})
 		);
+
+		if ( id !== component.portfolioCategoryPagesNextId ) {
+			api.control.add(
+				new api.Control('portfolio_category_page[' + id + '][delete]', {
+					section: 'hannover_portfolio_category_page_section[' + id + ']',
+					templateId: 'hannover-delete-portfolio-category-page-button',
+				})
+			)
+		}
+
+		// Add setting for removal flag.
+		api.add(new api.Setting('portfolio_category_page[' + id + '][deleted]', 0));
+
+		// Add control for removal flag.
+		api.control.add(
+			new api.Control('portfolio_category_page[' + id + '][deleted]', {
+				setting: 'portfolio_category_page[' + id + '][deleted]',
+				type: 'number',
+				section: 'hannover_portfolio_category_page_section[' + id + ']',
+				active: false,
+			})
+		);
+	};
+
+	/**
+	 * Adds a new section with options for portfolio category page options.
+	 */
+	component.addNewPortfolioCategoryPageSection = function addNewPortfolioCategoryPageSection() {
+		component.portfolioCategoryPagesNextId = component.portfolioCategoryPagesNextId + 1;
+		component.createPortfolioCategoryPageOptions(component.portfolioCategoryPagesNextId);
+	};
+
+	/**
+	 * Removes a portfolio category page section if no page is selected.
+	 *
+	 * @param {integer} id ID of the section to remove.
+	 */
+	component.removePortfolioCategoryPageSection = function removePortfolioCategoryPageSection(id) {
+
 	};
 
 	/**
@@ -432,6 +508,20 @@ var hannoverCustomizeControls = (function (api, wp) {
 				}
 			});
 		});
+	};
+
+	/**
+	 * Display hint to add portfolio category page.
+	 */
+	component.displayAddPortfolioCategoryPageTemplate = function displayAddPortfolioCategoryPageTemplate() {
+		// Get the ID of the new section.
+		var sectionName = 'hannover_portfolio_category_page_section[' + component.portfolioCategoryPagesNextId + ']';
+		// Backup the markup of the original portfolio page section so we can restore it later.
+		component.portfolioCategoryPageSectionTitleMarkup = api.section(sectionName).headContainer[0].innerHTML;
+
+		api.section(sectionName).headContainer.find('.accordion-section-title').replaceWith(
+			wp.template('hannover-add-portfolio-category-page-button')
+		);
 	};
 
 	component.displayPortfolioSectionHeadDescription = function displayPortfolioSectionHeadDescription() {

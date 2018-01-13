@@ -124,7 +124,7 @@ function hannover_customize_register( $wp_customize ) {
  */
 function hannover_customize_control_templates() { ?>
 	<script type="text/html" id="tmpl-hannover-portfolio-section-title">
-		<div class="hannover-customize-control-text-wrapper" id="hannover-portfolio-section-title">
+		<div class="hannover-customize-control-text-wrapper">
 			<p class="customize-control-title"><?php _e( 'Portfolio feature', 'hannover' ); ?></p>
 			<p class="customize-control-description">
 				<?php _e( 'Hannover allows you to display all of your posts (with the image or gallery post type) from a specific category on one page. These posts are called »portfolio elements«.', 'hannover' ); ?>
@@ -144,7 +144,7 @@ function hannover_customize_control_templates() { ?>
 	</script>
 
 	<script type="text/html" id="tmpl-hannover-portfolio-archive-notice">
-		<div class="hannover-customize-control-text-wrapper" id="hannover-portfolio-section-title">
+		<div class="hannover-customize-control-text-wrapper">
 			<p class="customize-control-title"><?php _e( 'Portfolio archive', 'hannover' ); ?></p>
 			<p class="customize-control-description">
 				<?php _e( 'You can remove elements from a specific category from the portfolio page and display them on an archive page.', 'hannover' ); ?>
@@ -161,11 +161,27 @@ function hannover_customize_control_templates() { ?>
 	</script>
 
 	<script type="text/html" id="tmpl-hannover-portfolio-category-pages-notice">
-		<div class="hannover-customize-control-text-wrapper" id="hannover-portfolio-section-title">
+		<div class="hannover-customize-control-text-wrapper">
 			<p class="customize-control-title"><?php _e( 'Portfolio category pages', 'hannover' ); ?></p>
 			<p class="customize-control-description">
 				<?php _e( 'You can create one or more pages that just show portfolio elements from a specific category.', 'hannover' ); ?>
 			</p>
+		</div>
+	</script>
+
+	<script type="text/html" id="tmpl-hannover-add-portfolio-category-page-button">
+		<div class="hannover-customize-control-text-wrapper">
+			<button type="button" class="button hannover-customize-create-portfolio-category-page">
+				<?php _e( 'Add category page', 'hannover' ); ?>
+			</button>
+		</div>
+	</script>
+
+	<script type="text/html" id="tmpl-hannover-delete-portfolio-category-page-button">
+		<div class="hannover-customize-control-text-wrapper delete-portfolio-category-page">
+			<button type="button" class="button-link button-link-delete">
+				<?php _e( 'Delete category page (does not remove the page itself)' ); ?>
+			</button>
 		</div>
 	</script>
 <?php }
@@ -187,10 +203,8 @@ function hannover_customize_control_templates() { ?>
 function hannover_filter_dynamic_setting_args( $setting_args, $setting_id ) {
 	// Create array of ID patterns.
 	$id_patterns = [
-		'portfolio_category_page_id' => '/^portfolio_category_page\[(?P<id>-?\d+)\]\[id]/',
-		'portfolio_category_page_category' => '/^portfolio_category_page_category\[(?P<id>-?\d+)\]$/',
-		'portfolio_category_page_elements_per_page' => '/^portfolio_category_page_elements_per_page\[(?P<id>-?\d+)\]$/',
-		'portfolio_category_page_alt_layout' => '/^portfolio_category_page_alt_layout\[(?P<id>-?\d+)\]$/',
+		'portfolio_category_page_id' => '/^portfolio_category_page\[\d+\]\[id]/',
+		'portfolio_category_page_deleted' => '/^portfolio_category_page\[\d+\]\[deleted\]/',
 	];
 
 	// Match for the portfolio category page id setting.
@@ -199,6 +213,14 @@ function hannover_filter_dynamic_setting_args( $setting_args, $setting_id ) {
 			'type' => 'theme_mod',
 		];
 	}
+
+	// Match for the deleted portfolio category page setting.
+	if ( preg_match( $id_patterns['portfolio_category_page_deleted'], $setting_id ) ) {
+		$setting_args = [
+			'type' => 'theme_mod',
+		];
+	}
+
 	return $setting_args;
 }
 
