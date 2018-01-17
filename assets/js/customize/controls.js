@@ -15,7 +15,8 @@ var hannoverCustomizeControls = (function (api, wp) {
 		portfolioPageSectionTitleMarkup: '',
 		portfolioArchivePageSectionTitleMarkup: '',
 		portfolioCategoryPageSectionTitleMarkup: '',
-		portfolioCategoryPagesNextId: 1
+		portfolioCategoryPagesNextId: 1,
+		removedPortfolioCategorySections: []
 	};
 
 	/**
@@ -43,7 +44,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 			if (data.themeMods) {
 				_.extend(component.themeMods, data.themeMods);
 
-				if (component.themeMods.portfolio_category_page && false === component.isEmptyObject(component.themeMods.portfolio_category_page)) {
+				if (undefined !== component.themeMods.portfolio_category_page && false === component.isEmptyObject(component.themeMods.portfolio_category_page)) {
 					// Set next highest int as ID for next category page.
 					// https://stackoverflow.com/a/27376421/7774451
 					component.portfolioCategoryPagesNextId = Number.parseInt(Object.keys(component.themeMods.portfolio_category_page).reduce(function (a, b) {
@@ -73,7 +74,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 		component.createPortfolioArchivePageOptions();
 
 		// Add sections and controls for the existing portfolio category pages options.
-		if (component.themeMods.portfolio_category_page && false === component.isEmptyObject(component.themeMods.portfolio_category_page)) {
+		if (undefined !== component.themeMods.portfolio_category_page && false === component.isEmptyObject(component.themeMods.portfolio_category_page)) {
 			for (var key in component.themeMods.portfolio_category_page) {
 				component.createPortfolioCategoryPageOptions(key);
 			}
@@ -98,9 +99,9 @@ var hannoverCustomizeControls = (function (api, wp) {
 
 		component.displayPortfolioArchiveSectionHeadDescription();
 
-		component.displayPortfolioCategoryPagesSectionHeadDescription();
-
 		component.displayAddPortfolioCategoryPageTemplate();
+
+		component.displayPortfolioCategoryPagesSectionHeadDescription();
 
 		api.panel('hannover_theme_options', function (panel) {
 			// Add click event listener to the portfolio page section container.
@@ -112,41 +113,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 			panel.container.find('#accordion-section-hannover_portfolio_archive_page_options').on('click', function () {
 				api.section('hannover_portfolio_archive_page_options').expand();
 			});
-
-			// Add click event listener to the create portfolio category page button.
-			var sectionName = 'hannover_portfolio_category_page_section[' + component.portfolioCategoryPagesNextId + ']';
-			panel.container.find('.hannover-customize-create-portfolio-category-page').on('click', function () {
-				api.section(sectionName).expand();
-			});
 		});
-
-		// Add click event listener to the buttons to remove a category page.
-		var elements = document.querySelectorAll('.delete-portfolio-category-page button');
-		for (var i = 0; i < elements.length; i++) {
-			elements[i].addEventListener('click', function() {
-				// Get id of list item.
-				var listItemId = this.parentElement.parentElement.id;
-
-				// Extract the section index out of the element’s id.
-				var sectionIndex = listItemId.match(/customize-control-portfolio_category_page-(\d)-delete/);
-
-				// Check if we have a match.
-				if ( null !== sectionIndex ) {
-					var id = sectionIndex[1];
-
-					// Close the section.
-					api.section('hannover_portfolio_category_page_section[' + id + ']').collapse();
-
-					// Set flag that the setting needs to be removed.
-					api.control('portfolio_category_page[' + id + '][deleted]', function(control) {
-						control.setting.set(-1);
-					});
-
-					// Remove the section.
-					api.section('hannover_portfolio_category_page_section[' + id + ']').active(false);
-				}
-			});
-		}
 	};
 
 	/**
@@ -320,7 +287,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 	component.createPortfolioCategoryPageOptions = function createSections(id) {
 		var portfolio_page_id_default = '';
 		// Check for existing values for the settings.
-		if (undefined !== component.themeMods.portfolio_category_page[id]) {
+		if (undefined !== component.themeMods.portfolio_category_page && undefined !== component.themeMods.portfolio_category_page[id]) {
 			portfolio_page_id_default = component.themeMods.portfolio_category_page[id].id;
 		}
 
@@ -347,17 +314,107 @@ var hannoverCustomizeControls = (function (api, wp) {
 			})
 		);
 
-		if ( id !== component.portfolioCategoryPagesNextId ) {
+		if (id !== component.portfolioCategoryPagesNextId) {
 			api.control.add(
 				new api.Control('portfolio_category_page[' + id + '][delete]', {
 					section: 'hannover_portfolio_category_page_section[' + id + ']',
 					templateId: 'hannover-delete-portfolio-category-page-button',
 				})
 			)
+		} else {
+			api.control.add(
+				new api.Control('portfolio_category_page[' + id + '][add]', {
+					section: 'hannover_portfolio_category_page_section[' + id + ']',
+					templateId: 'hannover-add-category-page-button',
+				})
+			);
+
+			// Add event listener to the add button for new category pages.
+			var elements = document.querySelectorAll('button.hannover-add-category-page-button');
+			for (var i = 0; i < elements.length; i++) {
+				elements[i].addEventListener('click', function () {
+					// Get id of list item.
+					var listItemId = this.parentElement.parentElement.id;
+
+					// Extract the section index out of the element’s id.
+					var sectionIndex = listItemId.match(/customize-control-portfolio_category_page-(\d)-add/);
+
+					// Check if we have a match.
+					if (null !== sectionIndex) {
+						var id = sectionIndex[1];
+
+						// Close the section.
+						api.section('hannover_portfolio_category_page_section[' + id + ']').collapse();
+
+						// Modify the section’s heading element (remove the button and add the normal toggle).
+						api.section('hannover_portfolio_category_page_section[' + id + ']').headContainer[0].innerHTML = component.portfolioCategoryPageSectionTitleMarkup;
+
+						// Add event listener.
+						api.section('hannover_portfolio_category_page_section[' + id + ']').container.find('.accordion-section-title').on('click', function () {
+							api.section('hannover_portfolio_category_page_section[' + id + ']').expand();
+						});
+
+						// Remove the add button and add a delete button.
+						api.control('portfolio_category_page[' + id + '][add]').active(false);
+						api.control.add(
+							new api.Control('portfolio_category_page[' + id + '][delete]', {
+								section: 'hannover_portfolio_category_page_section[' + id + ']',
+								templateId: 'hannover-delete-portfolio-category-page-button',
+							})
+						);
+
+						// Increase ID for next section.
+						component.portfolioCategoryPagesNextId = component.portfolioCategoryPagesNextId + 1;
+
+						// Add new section for adding a new page.
+						component.createPortfolioCategoryPageOptions(component.portfolioCategoryPagesNextId);
+
+						// Add button.
+						component.displayAddPortfolioCategoryPageTemplate();
+
+						// Add the sections description to first section (if not already there).
+						component.displayPortfolioCategoryPagesSectionHeadDescription();
+					}
+				});
+			}
+
+			// Add click event listener to the buttons to remove a category page.
+			var elements = document.querySelectorAll('.delete-portfolio-category-page button');
+			for (var i = 0; i < elements.length; i++) {
+				elements[i].addEventListener('click', function () {
+					// Get id of list item.
+					var listItemId = this.parentElement.parentElement.id;
+
+					// Extract the section index out of the element’s id.
+					var sectionIndex = listItemId.match(/customize-control-portfolio_category_page-(\d)-delete/);
+
+					// Check if we have a match.
+					if (null !== sectionIndex) {
+						var id = sectionIndex[1];
+
+						// Push ID to array so we know what sections where removed during the session.
+						component.removedPortfolioCategorySections.push(id);
+
+						// Close the section.
+						api.section('hannover_portfolio_category_page_section[' + id + ']').collapse();
+
+						// Set flag that the setting needs to be removed.
+						api.control('portfolio_category_page[' + id + '][deleted]', function (control) {
+							control.setting.set(-1);
+						});
+
+						// Remove the section.
+						api.section('hannover_portfolio_category_page_section[' + id + ']').active(false);
+
+						// Add the sections description to first section (if not already there).
+						component.displayPortfolioCategoryPagesSectionHeadDescription();
+					}
+				});
+			}
 		}
 
 		// Add setting for removal flag.
-		api.add(new api.Setting('portfolio_category_page[' + id + '][deleted]', 0));
+		api.add(new api.Setting('portfolio_category_page[' + id + '][deleted]'));
 
 		// Add control for removal flag.
 		api.control.add(
@@ -522,6 +579,10 @@ var hannoverCustomizeControls = (function (api, wp) {
 		api.section(sectionName).headContainer.find('.accordion-section-title').replaceWith(
 			wp.template('hannover-add-portfolio-category-page-button')
 		);
+
+		api.section(sectionName).headContainer.find('.hannover-customize-create-portfolio-category-page').on('click', function () {
+			api.section(sectionName).expand();
+		});
 	};
 
 	component.displayPortfolioSectionHeadDescription = function displayPortfolioSectionHeadDescription() {
@@ -541,14 +602,21 @@ var hannoverCustomizeControls = (function (api, wp) {
 	};
 
 	component.displayPortfolioCategoryPagesSectionHeadDescription = function displayPortfolioCategoryPagesSectionHeadDescription() {
-		// Get the ID of the first category pages li node.
-		var firstPortfolioCategoryPagesSectionNodeId = document.getElementById('accordion-section-hannover_portfolio_archive_page_options').nextSibling.id;
-		var sectionName = firstPortfolioCategoryPagesSectionNodeId.replace('accordion-section-', '');
-		api.section(sectionName, function (section) {
-			section.headContainer.prepend(
-				wp.template('hannover-portfolio-category-pages-notice')
-			);
-		});
+		// Get the ID of the first visible category pages li node.
+		var firstPortfolioCategoryPagesSectionNode = component.getFirstVisiblePortfolioCategorySection();
+
+		// Check if the node already contains the section description.
+		// For that, we get the first child and check if it has the class hannover-category-pages-sections-description.
+		var firstChild = firstPortfolioCategoryPagesSectionNode.firstElementChild;
+		if ( ! firstChild.classList.contains('hannover-category-pages-sections-description')) {
+			var firstPortfolioCategoryPagesSectionNodeId = firstPortfolioCategoryPagesSectionNode.id;
+			var sectionName = firstPortfolioCategoryPagesSectionNodeId.replace('accordion-section-', '');
+			api.section(sectionName, function (section) {
+				section.headContainer.prepend(
+					wp.template('hannover-portfolio-category-pages-notice')
+				);
+			});
+		}
 	};
 
 	/**
@@ -568,8 +636,87 @@ var hannoverCustomizeControls = (function (api, wp) {
 		return JSON.stringify(obj) === JSON.stringify({});
 	};
 
+	/**
+	 * Get first visible portfolio category section.
+	 *
+	 * @returns {obj} Node obj of first visible portfolio category section.
+	 */
+	component.getFirstVisiblePortfolioCategorySection = function getFirstVisiblePortfolioCategorySection() {
+		var elem = document.getElementById('accordion-section-hannover_portfolio_archive_page_options').nextSibling;
+		while(elem) {
+			// Check if this is a category page section toggle.
+			if ( 0 === elem.id.search(/accordion-section-hannover_portfolio_category_page_section\[\d\]/g) ) {
+				// Get ID of section.
+				var sectionIndex = elem.id.match(/accordion-section-hannover_portfolio_category_page_section\[(\d)\]/);
+
+				if (null !== sectionIndex) {
+					var id = sectionIndex[1];
+
+					// Check if ID does not exist in component.removedPortfolioCategorySections
+					if ( false === component.removedPortfolioCategorySections.includes(id) ) {
+						return elem;
+					}
+				}
+
+				elem = elem.nextSibling;
+			}
+		}
+	};
+
 	return component;
 })(wp.customize, wp);
+
+// https://tc39.github.io/ecma262/#sec-array.prototype.includes
+if (!Array.prototype.includes) {
+	Object.defineProperty(Array.prototype, 'includes', {
+		value: function(searchElement, fromIndex) {
+
+			if (this == null) {
+				throw new TypeError('"this" is null or not defined');
+			}
+
+			// 1. Let O be ? ToObject(this value).
+			var o = Object(this);
+
+			// 2. Let len be ? ToLength(? Get(O, "length")).
+			var len = o.length >>> 0;
+
+			// 3. If len is 0, return false.
+			if (len === 0) {
+				return false;
+			}
+
+			// 4. Let n be ? ToInteger(fromIndex).
+			//    (If fromIndex is undefined, this step produces the value 0.)
+			var n = fromIndex | 0;
+
+			// 5. If n ≥ 0, then
+			//  a. Let k be n.
+			// 6. Else n < 0,
+			//  a. Let k be len + n.
+			//  b. If k < 0, let k be 0.
+			var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+			function sameValueZero(x, y) {
+				return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+			}
+
+			// 7. Repeat, while k < len
+			while (k < len) {
+				// a. Let elementK be the result of ? Get(O, ! ToString(k)).
+				// b. If SameValueZero(searchElement, elementK) is true, return true.
+				if (sameValueZero(o[k], searchElement)) {
+					return true;
+				}
+				// c. Increase k by 1.
+				k++;
+			}
+
+			// 8. Return false
+			return false;
+		}
+	});
+}
 /*(function () {
 	wp.customize.bind('ready', function () {
 

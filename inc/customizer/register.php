@@ -37,8 +37,7 @@ function hannover_customize_register( $wp_customize ) {
 	);
 
 	$wp_customize->add_setting(
-		'portfolio_page[category]', array(
-			//'sanitize_callback' => 'hannover_sanitize_select'
+		'portfolio_page[category]', array(//'sanitize_callback' => 'hannover_sanitize_select'
 		)
 	);
 
@@ -75,8 +74,7 @@ function hannover_customize_register( $wp_customize ) {
 	);
 
 	$wp_customize->add_setting(
-		'portfolio_archive[category]', array(
-			//'sanitize_callback' => 'hannover_sanitize_select'
+		'portfolio_archive[category]', array(//'sanitize_callback' => 'hannover_sanitize_select'
 		)
 	);
 
@@ -137,7 +135,7 @@ function hannover_customize_control_templates() { ?>
 			<p class="customize-control-description">
 				<?php _e( 'It looks like your site does not have a portfolio yet.', 'hannover' ); ?>
 			</p>
-			<button type="button" class="button hannover-customize-create-portfolio-page">
+			<button type="button" class="button">
 				<?php _e( 'Create Portfolio', 'hannover' ); ?>
 			</button>
 		</div>
@@ -154,14 +152,14 @@ function hannover_customize_control_templates() { ?>
 
 	<script type="text/html" id="tmpl-hannover-no-portfolio-archive-page-notice">
 		<div class="hannover-customize-control-text-wrapper">
-			<button type="button" class="button hannover-customize-create-portfolio-page">
+			<button type="button" class="button">
 				<?php _e( 'Create Archive', 'hannover' ); ?>
 			</button>
 		</div>
 	</script>
 
 	<script type="text/html" id="tmpl-hannover-portfolio-category-pages-notice">
-		<div class="hannover-customize-control-text-wrapper">
+		<div class="hannover-customize-control-text-wrapper hannover-category-pages-sections-description">
 			<p class="customize-control-title"><?php _e( 'Portfolio category pages', 'hannover' ); ?></p>
 			<p class="customize-control-description">
 				<?php _e( 'You can create one or more pages that just show portfolio elements from a specific category.', 'hannover' ); ?>
@@ -180,7 +178,15 @@ function hannover_customize_control_templates() { ?>
 	<script type="text/html" id="tmpl-hannover-delete-portfolio-category-page-button">
 		<div class="hannover-customize-control-text-wrapper delete-portfolio-category-page">
 			<button type="button" class="button-link button-link-delete">
-				<?php _e( 'Delete category page (does not remove the page itself)' ); ?>
+				<?php _e( 'Delete category page (does not remove the page itself)', 'hannover' ); ?>
+			</button>
+		</div>
+	</script>
+
+	<script type="text/html" id="tmpl-hannover-add-category-page-button">
+		<div class="hannover-customize-control-text-wrapper delete-portfolio-category-page">
+			<button type="button" class="button hannover-add-category-page-button">
+				<?php _e( 'Add the page', 'hannover' ); ?>
 			</button>
 		</div>
 	</script>
@@ -203,8 +209,8 @@ function hannover_customize_control_templates() { ?>
 function hannover_filter_dynamic_setting_args( $setting_args, $setting_id ) {
 	// Create array of ID patterns.
 	$id_patterns = [
-		'portfolio_category_page_id' => '/^portfolio_category_page\[\d+\]\[id]/',
-		'portfolio_category_page_deleted' => '/^portfolio_category_page\[\d+\]\[deleted\]/',
+		'portfolio_category_page_id'      => '/^portfolio_category_page\[\d+\]\[id]/',
+		'portfolio_category_page_deleted' => '/^portfolio_category_page\[(\d+)\]\[deleted\]/',
 	];
 
 	// Match for the portfolio category page id setting.
@@ -215,13 +221,46 @@ function hannover_filter_dynamic_setting_args( $setting_args, $setting_id ) {
 	}
 
 	// Match for the deleted portfolio category page setting.
-	if ( preg_match( $id_patterns['portfolio_category_page_deleted'], $setting_id ) ) {
+	if ( preg_match( $id_patterns['portfolio_category_page_deleted'], $setting_id, $matches ) ) {
 		$setting_args = [
 			'type' => 'theme_mod',
 		];
 	}
 
 	return $setting_args;
+}
+
+/**
+ * Fires after customize settings are saved.
+ *
+ * @param WP_Customize_Manager $manager Instance of WP_Customize_Manager.
+ */
+function hannover_customize_save_after( $manager ) {
+	// Get the theme mods.
+	$theme_mods = get_theme_mods();
+
+	// Loop them.
+	foreach ( $theme_mods['portfolio_category_page'] as $id => $portfolio_category_page_theme_mod ) {
+		// Check if the delete flag is set.
+		if ( isset( $portfolio_category_page_theme_mod['deleted'] ) && - 1 === $portfolio_category_page_theme_mod['deleted'] ) {
+			// Code inspired by the remove_theme_mod() function.
+			unset( $theme_mods['portfolio_category_page'][ $id ] );
+
+			// Check if we have no more portfolio category pages and if so, unset the array index.
+			if ( empty( $theme_mods['portfolio_category_page'] ) ) {
+				unset( $theme_mods['portfolio_category_page'] );
+			} // End if().
+
+			// Check if that was the last theme mod and if so, remove the entry from the database.
+			if ( empty ( $theme_mods ) ) {
+				remove_theme_mods();
+			} else {
+				// Get theme slug and update the theme mod option.
+				$theme = get_option( 'stylesheet' );
+				update_option( "theme_mods_$theme", $theme_mods );
+			} // End if().
+		} // End if().
+	} // End foreach().
 }
 
 // Include file with customizer callback functions.

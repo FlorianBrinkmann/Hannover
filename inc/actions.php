@@ -18,3 +18,6 @@ add_action( 'customize_controls_print_footer_scripts', 'hannover_customize_contr
 
 // Include control CSS into the customizer.
 add_action( 'customize_controls_print_styles', 'hannover_customize_controls_styles', 999 );
+
+// Remove theme mods after portfolio category page was removed.
+add_action( 'customize_save_after', 'hannover_customize_save_after' );
