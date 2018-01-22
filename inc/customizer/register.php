@@ -136,7 +136,7 @@ function hannover_customize_control_templates() { ?>
 		<div class="hannover-customize-control-text-wrapper">
 			<p class="customize-control-title"><?php _e( 'Portfolio feature', 'hannover' ); ?></p>
 			<p class="customize-control-description">
-				<?php _e( 'Hannover allows you to display all of your posts (with the image or gallery post type) from a specific category on one page. These posts are called »portfolio elements«.', 'hannover' ); ?>
+				<?php _e( 'Hannover allows you to display all of your posts (with the image or gallery post type) on one page. These posts are called »portfolio elements«.', 'hannover' ); ?>
 			</p>
 		</div>
 	</script>

@@ -163,6 +163,13 @@ var hannoverCustomizeControls = (function (api, wp) {
 			})
 		);
 
+		api.control('portfolio_from_category', function (control) {
+			control.setting.bind(function (value) {
+				api.control('portfolio_category').active.set(component.portfolioFromCategory());
+				api.control('portfolio_remove_category_from_cat_list').active.set(component.portfolioFromCategory());
+			});
+		});
+
 		// Add control to select portfolio category.
 		api.control.add(
 			new api.Control('portfolio_category', {
@@ -170,7 +177,8 @@ var hannoverCustomizeControls = (function (api, wp) {
 				type: 'hannover_categories_control',
 				section: 'hannover_portfolio_page_section',
 				label: 'Portfolio category',
-				choices: component.categories
+				choices: component.categories,
+				active: component.portfolioFromCategory()
 			})
 		);
 
@@ -180,7 +188,8 @@ var hannoverCustomizeControls = (function (api, wp) {
 				setting: 'portfolio_page[remove_category_from_cat_list]',
 				type: 'checkbox',
 				section: 'hannover_portfolio_page_section',
-				label: 'Remove portfolio category from category widget.'
+				label: 'Remove portfolio category from category widget.',
+				active: component.portfolioFromCategory()
 			})
 		);
 
@@ -251,6 +260,15 @@ var hannoverCustomizeControls = (function (api, wp) {
 		} else {
 			// Hide deactivate button.
 			api.control('portfolio_page_deactivate').active(false);
+		}
+	};
+
+	component.portfolioFromCategory = function portfolioFromCategory() {
+		// Get value of setting.
+		if (false === api.control('portfolio_from_category').setting.get() || '' === api.control('portfolio_from_category').setting.get()) {
+			return false;
+		} else {
+			return true;
 		}
 	};
 
