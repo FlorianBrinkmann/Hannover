@@ -44,6 +44,20 @@ function hannover_customize_controls_styles() { ?>
 		#accordion-section-hannover_portfolio_page_section {
 			border-top: 0 !important;
 		}
+
+		.button.hannover-customize-create-portfolio-category-page {
+			margin-top: 24px;
+		}
+
+		li[id*=accordion-section-hannover_portfolio_category_page_section] .hannover-customize-control-text-wrapper + .hannover-customize-control-text-wrapper .hannover-customize-create-portfolio-category-page {
+			margin-top: 0;
+		}
+
+		.accordion-section-title .page-category {
+			display: block;
+			font-weight: 600;
+			font-size: 10px;
+		}
 	</style>
 <?php }
 

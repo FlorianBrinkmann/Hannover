@@ -24,15 +24,20 @@ function hannover_customize_register( $wp_customize ) {
 	$wp_customize->register_control_type( 'Hannover_Customize_Categories_Control' );
 
 	$wp_customize->add_setting(
-		'portfolio_page[from_category]', array(
-			'sanitize_callback' => 'hannover_sanitize_checkbox',
+		'portfolio_page[id]', array(
+			'transport' => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting(
-		'portfolio_page[id]', array(
-			//'sanitize_callback' => 'hannover_sanitize_select',
+		'portfolio_page[active]', array(
 			'transport' => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'portfolio_page[from_category]', array(
+			'sanitize_callback' => 'hannover_sanitize_checkbox',
 		)
 	);
 
@@ -70,6 +75,12 @@ function hannover_customize_register( $wp_customize ) {
 		'portfolio_archive[id]', array(
 			'default'           => 'no_archive',
 			'sanitize_callback' => 'hannover_sanitize_select'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'portfolio_archive[active]', array(
+			'transport' => 'postMessage',
 		)
 	);
 
@@ -135,8 +146,24 @@ function hannover_customize_control_templates() { ?>
 			<p class="customize-control-description">
 				<?php _e( 'It looks like your site does not have a portfolio yet.', 'hannover' ); ?>
 			</p>
-			<button type="button" class="button">
+			<button type="button" class="button hannover-open-portfolio-page-section-button">
 				<?php _e( 'Create Portfolio', 'hannover' ); ?>
+			</button>
+		</div>
+	</script>
+
+	<script type="text/html" id="tmpl-hannover-deactivate-portfolio-button">
+		<div class="hannover-customize-control-text-wrapper">
+			<button type="button" class="button-link button-link-delete hannover-deactivate-portfolio-button">
+				<?php _e( 'Deactivate portfolio', 'hannover' ); ?>
+			</button>
+		</div>
+	</script>
+
+	<script type="text/html" id="tmpl-hannover-create-portfolio-button">
+		<div class="hannover-customize-control-text-wrapper create-portfolio">
+			<button type="button" class="button hannover-create-portfolio-button">
+				<?php _e( 'Create portfolio', 'hannover' ); ?>
 			</button>
 		</div>
 	</script>
@@ -152,8 +179,24 @@ function hannover_customize_control_templates() { ?>
 
 	<script type="text/html" id="tmpl-hannover-no-portfolio-archive-page-notice">
 		<div class="hannover-customize-control-text-wrapper">
-			<button type="button" class="button">
+			<button type="button" class="button hannover-open-portfolio-archive-section-button">
 				<?php _e( 'Create Archive', 'hannover' ); ?>
+			</button>
+		</div>
+	</script>
+
+	<script type="text/html" id="tmpl-hannover-deactivate-portfolio-archive-button">
+		<div class="hannover-customize-control-text-wrapper">
+			<button type="button" class="button-link button-link-delete hannover-deactivate-portfolio-archive-button">
+				<?php _e( 'Deactivate archive', 'hannover' ); ?>
+			</button>
+		</div>
+	</script>
+
+	<script type="text/html" id="tmpl-hannover-create-portfolio-archive-button">
+		<div class="hannover-customize-control-text-wrapper create-portfolio">
+			<button type="button" class="button hannover-create-portfolio-archive-button">
+				<?php _e( 'Create archive', 'hannover' ); ?>
 			</button>
 		</div>
 	</script>
@@ -178,8 +221,9 @@ function hannover_customize_control_templates() { ?>
 	<script type="text/html" id="tmpl-hannover-delete-portfolio-category-page-button">
 		<div class="hannover-customize-control-text-wrapper delete-portfolio-category-page">
 			<button type="button" class="button-link button-link-delete">
-				<?php _e( 'Delete category page (does not remove the page itself)', 'hannover' ); ?>
+				<?php _e( 'Delete category page', 'hannover' ); ?>
 			</button>
+			<p><?php _e( 'This does not remove the page itself.', 'hannover' ); ?></p>
 		</div>
 	</script>
 
@@ -209,12 +253,36 @@ function hannover_customize_control_templates() { ?>
 function hannover_filter_dynamic_setting_args( $setting_args, $setting_id ) {
 	// Create array of ID patterns.
 	$id_patterns = [
-		'portfolio_category_page_id'      => '/^portfolio_category_page\[\d+\]\[id]/',
-		'portfolio_category_page_deleted' => '/^portfolio_category_page\[(\d+)\]\[deleted\]/',
+		'portfolio_category_page_id'                => '/^portfolio_category_page\[\d+\]\[id]/',
+		'portfolio_category_page_category'          => '/^portfolio_category_page\[\d+\]\[category]/',
+		'portfolio_category_page_elements_per_page' => '/^portfolio_category_page\[\d+\]\[elements_per_page]/',
+		'portfolio_category_page_alt_layout'        => '/^portfolio_category_page\[\d+\]\[alt_layout]/',
+		'portfolio_category_page_deleted'           => '/^portfolio_category_page\[(\d+)\]\[deleted\]/',
 	];
 
 	// Match for the portfolio category page id setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_id'], $setting_id ) ) {
+		$setting_args = [
+			'type' => 'theme_mod',
+		];
+	}
+
+	// Match for the portfolio category page category setting.
+	if ( preg_match( $id_patterns['portfolio_category_page_category'], $setting_id ) ) {
+		$setting_args = [
+			'type' => 'theme_mod',
+		];
+	}
+
+	// Match for the portfolio category page elements per page setting.
+	if ( preg_match( $id_patterns['portfolio_category_page_elements_per_page'], $setting_id ) ) {
+		$setting_args = [
+			'type' => 'theme_mod',
+		];
+	}
+
+	// Match for the portfolio category page alt layout setting.
+	if ( preg_match( $id_patterns['portfolio_category_page_alt_layout'], $setting_id ) ) {
 		$setting_args = [
 			'type' => 'theme_mod',
 		];
