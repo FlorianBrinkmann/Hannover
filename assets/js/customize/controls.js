@@ -677,6 +677,27 @@ var hannoverCustomizeControls = (function (api, wp) {
 						// Add the page title to the toggle.
 						component.updateSectionTitle(id);
 
+						component.updateCategoryInSectionHead(id);
+
+						// Listen to changes of the page control value to update the page title in the section head and section title.
+						api.control('portfolio_category_page[' + id + '][id]', function (control) {
+							control.setting.bind(function (value) {
+								// Check if the value was changed to the default state.
+								if (0 !== parseInt(value) && Number.isInteger(parseInt(value))) {
+									// Redirect to the new URL.
+									api.previewer.previewUrl.set(api.settings.url.home + '?page_id=' + value);
+								}
+								component.updateSectionTitle(id);
+							});
+						});
+
+						// Listen to changes of the category control value to update the category title in the section head.
+						api.control('portfolio_category_page[' + id + '][category]', function (control) {
+							control.setting.bind(function () {
+								component.updateCategoryInSectionHead(id);
+							});
+						});
+
 						// Add event listener.
 						api.section('hannover_portfolio_category_page_section[' + id + ']').container.find('.accordion-section-title').on('click', function () {
 							api.section('hannover_portfolio_category_page_section[' + id + ']').expand();
