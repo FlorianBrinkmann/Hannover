@@ -63,10 +63,11 @@ var hannoverCustomizeControls = (function (api, wp) {
 	/**
 	 * Run when customizer is ready.
 	 */
-	component.ready = function ready() {
-		// Create the panel and sections.
+	component.ready = function () {
+		// Create the panel.
 		component.createPanel();
 
+		// Create the slider options.
 		component.createSliderOptions();
 
 		// Add section and controls for the main portfolio page options.
@@ -85,22 +86,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 		// Add section for the next new portfolio category page.
 		component.createPortfolioCategoryPageOptions(component.portfolioCategoryPagesNextId);
 
-		// Display the template for adding a portfolio page if no page exists.
-		component.displayAddPortfolioPageTemplate();
-
-		component.bindPortfolioPageSelect();
-
-		// Display the template for adding a portfolio archive page if no page exists.
-		component.displayAddPortfolioArchivePageTemplate();
-
-		component.bindPortfolioArchivePageSelect();
-
-		component.displayPortfolioSectionHeadDescription();
-
-		component.displayPortfolioArchiveSectionHeadDescription();
-
 		component.displayAddPortfolioCategoryPageTemplate();
-
 		component.displayPortfolioCategoryPagesSectionHeadDescription();
 
 		component.togglePortfolioSections();
@@ -121,7 +107,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 	/**
 	 * Creates the customize panel for the theme options.
 	 */
-	component.createPanel = function createPanel() {
+	component.createPanel = function () {
 		api.panel.add(
 			new api.Panel('hannover_theme_options', {
 				title: (component.l10n.panelTitle ? component.l10n.panelTitle : 'Theme Options'),
@@ -132,7 +118,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 	/**
 	 * Creates the needed customize things for the main portfolio page.
 	 */
-	component.createPortfolioPageOptions = function createSections() {
+	component.createPortfolioPageOptions = function () {
 		// Add the section.
 		api.section.add(
 			new api.Section('hannover_portfolio_page_section', {
@@ -252,6 +238,9 @@ var hannoverCustomizeControls = (function (api, wp) {
 		// Add event listeners to the buttons.
 		component.addPortfolioDeactivateButtonAction();
 		component.addPortfolioCreateButtonAction();
+		component.bindPortfolioPageSelect();
+		component.displayAddPortfolioPageTemplate();
+		component.displayPortfolioSectionHeadDescription();
 
 		// Remove unecessary button.
 		if (undefined !== component.themeMods.portfolio_page['active'] && 1 === component.themeMods.portfolio_page['active']) {
@@ -263,7 +252,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 		}
 	};
 
-	component.portfolioFromCategory = function portfolioFromCategory() {
+	component.portfolioFromCategory = function () {
 		// Get value of setting.
 		if (false === api.control('portfolio_from_category').setting.get() || '' === api.control('portfolio_from_category').setting.get()) {
 			return false;
@@ -275,7 +264,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 	/**
 	 * Adds event listener to the create portfolio button and runs the necessary actions.
 	 */
-	component.addPortfolioCreateButtonAction = function addPortfolioButtonAction() {
+	component.addPortfolioCreateButtonAction = function () {
 		var createButton = document.querySelector('button.hannover-create-portfolio-button');
 		if (createButton) {
 			createButton.addEventListener('click', function () {
@@ -314,7 +303,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 	/**
 	 * Adds event listener to the deactivate portfolio button and runs the necessary actions.
 	 */
-	component.addPortfolioDeactivateButtonAction = function addPortfolioDeactivateButtonAction() {
+	component.addPortfolioDeactivateButtonAction = function () {
 		var deactivateButton = document.querySelector('button.hannover-deactivate-portfolio-button');
 		if (deactivateButton) {
 			deactivateButton.addEventListener('click', function () {
@@ -346,9 +335,57 @@ var hannoverCustomizeControls = (function (api, wp) {
 	};
 
 	/**
+	 * Listen to changes of the portfolio page select and change the preview URL.
+	 */
+	component.bindPortfolioPageSelect = function () {
+		api.control('portfolio_page', function (control) {
+			control.setting.bind(function (value) {
+				// Check if the value was changed to the default state.
+				if (0 !== parseInt(value) && Number.isInteger(parseInt(value))) {
+					// Redirect to the new URL.
+					api.previewer.previewUrl.set(api.settings.url.home + '?page_id=' + value);
+				}
+			});
+		});
+	};
+
+	/**
+	 * Display hint that there is no portfolio page currently if needed.
+	 */
+	component.displayAddPortfolioPageTemplate = function () {
+		// Backup the markup of the original portfolio page section so we can restore it later.
+		component.portfolioPageSectionTitleMarkup = api.section('hannover_portfolio_page_section').headContainer[0].innerHTML;
+
+		// Check if we have no portfolio page theme mod.
+		if (undefined === component.themeMods.portfolio_page) {
+			api.section('hannover_portfolio_page_section').headContainer.find('.accordion-section-title').replaceWith(
+				wp.template('hannover-no-portfolio-page-notice')
+			);
+		} else {
+			// Check for a portfolio page ID in the theme mods.
+			if (undefined === component.themeMods.portfolio_page['active'] || 1 !== component.themeMods.portfolio_page['active']) {
+				api.section('hannover_portfolio_page_section').headContainer.find('.accordion-section-title').replaceWith(
+					wp.template('hannover-no-portfolio-page-notice')
+				);
+
+				// Remove the border top from the section.
+				api.section('hannover_portfolio_page_section').headContainer[0].classList.add('no-border-top');
+			}
+		}
+	};
+
+	component.displayPortfolioSectionHeadDescription = function () {
+		api.section('hannover_portfolio_page_section', function (section) {
+			section.headContainer.prepend(
+				wp.template('hannover-portfolio-section-title')
+			);
+		});
+	};
+
+	/**
 	 * Creates the needed customize things for the portfolio archive page.
 	 */
-	component.createPortfolioArchivePageOptions = function createSections() {
+	component.createPortfolioArchivePageOptions = function () {
 		// Add portfolio archive section.
 		api.section.add(
 			new api.Section('hannover_portfolio_archive_page_options', {
@@ -439,6 +476,9 @@ var hannoverCustomizeControls = (function (api, wp) {
 		// Add event listeners to the buttons.
 		component.addPortfolioArchiveDeactivateButtonAction();
 		component.addPortfolioArchiveCreateButtonAction();
+		component.bindPortfolioArchivePageSelect();
+		component.displayAddPortfolioArchivePageTemplate();
+		component.displayPortfolioArchiveSectionHeadDescription();
 
 		// Remove unecessary button.
 		if (undefined !== component.themeMods.portfolio_archive['active'] && 1 === component.themeMods.portfolio_archive['active']) {
@@ -453,7 +493,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 	/**
 	 * Adds event listener to the create portfolio archive button and runs the necessary actions.
 	 */
-	component.addPortfolioArchiveCreateButtonAction = function addPortfolioArchiveCreateButtonAction() {
+	component.addPortfolioArchiveCreateButtonAction = function () {
 		var createButton = document.querySelector('button.hannover-create-portfolio-archive-button');
 		if (createButton) {
 			createButton.addEventListener('click', function () {
@@ -490,7 +530,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 	/**
 	 * Adds event listener to the deactivate portfolio archive button and runs the necessary actions.
 	 */
-	component.addPortfolioArchiveDeactivateButtonAction = function addPortfolioArchiveDeactivateButtonAction() {
+	component.addPortfolioArchiveDeactivateButtonAction = function () {
 		var deactivateButton = document.querySelector('button.hannover-deactivate-portfolio-archive-button');
 		if (deactivateButton) {
 			deactivateButton.addEventListener('click', function () {
@@ -520,11 +560,61 @@ var hannoverCustomizeControls = (function (api, wp) {
 	};
 
 	/**
+	 * Listen to changes of the portfolio archive page select and change the preview URL.
+	 */
+	component.bindPortfolioArchivePageSelect = function () {
+		api.control('portfolio_archive', function (control) {
+			control.setting.bind(function (value) {
+				// Check if the value was changed to the default state.
+				if (0 !== parseInt(value) && Number.isInteger(parseInt(value))) {
+					// Redirect to the new URL.
+					api.previewer.previewUrl.set(api.settings.url.home + '?page_id=' + value);
+				}
+			});
+		});
+	};
+
+	/**
+	 * Display hint that there is no portfolio archive page currently if needed.
+	 */
+	component.displayAddPortfolioArchivePageTemplate = function () {
+		// Backup the markup of the original portfolio archive page section so we can restore it later.
+		component.portfolioArchivePageSectionTitleMarkup = api.section('hannover_portfolio_archive_page_options').headContainer[0].innerHTML;
+
+		console.log(component.themeMods);
+
+		// Check if we have no portfolio archive page theme mod.
+		if (undefined === component.themeMods.portfolio_archive) {
+			api.section('hannover_portfolio_archive_page_options').headContainer.find('.accordion-section-title').replaceWith(
+				wp.template('hannover-no-portfolio-archive-page-notice')
+			);
+		} else {
+			// Check for a portfolio archive page ID in the theme mods.
+			if (undefined === component.themeMods.portfolio_archive['active'] || 1 !== component.themeMods.portfolio_archive['active']) {
+				api.section('hannover_portfolio_archive_page_options').headContainer.find('.accordion-section-title').replaceWith(
+					wp.template('hannover-no-portfolio-archive-page-notice')
+				);
+
+				// Remove the border top from the section.
+				api.section('hannover_portfolio_archive_page_options').headContainer[0].classList.add('no-border-top');
+			}
+		}
+	};
+
+	component.displayPortfolioArchiveSectionHeadDescription = function () {
+		api.section('hannover_portfolio_archive_page_options', function (section) {
+			section.headContainer.prepend(
+				wp.template('hannover-portfolio-archive-notice')
+			);
+		});
+	};
+
+	/**
 	 * Creates the needed customize things for the portfolio category page(s).
 	 *
 	 * @param {int} id - ID of the category page options.
 	 */
-	component.createPortfolioCategoryPageOptions = function createSections(id) {
+	component.createPortfolioCategoryPageOptions = function (id) {
 		var portfolioCategoryPageIdDefault = '',
 			portfolioCategoryPageCategoryDefault = '',
 			portfolioCategoryPagePostsPerPageDefault = 10,
@@ -777,11 +867,47 @@ var hannoverCustomizeControls = (function (api, wp) {
 	};
 
 	/**
-	 * Toogls the sections for portfolio archive and category pages.
+	 * Display hint to add portfolio category page.
 	 */
-	component.togglePortfolioSections = function togglePortfolioSections() {
+	component.displayAddPortfolioCategoryPageTemplate = function () {
+		// Get the ID of the new section.
+		var sectionName = 'hannover_portfolio_category_page_section[' + component.portfolioCategoryPagesNextId + ']';
+
+		// Backup the markup of the original portfolio page section so we can restore it later.
+		component.portfolioCategoryPageSectionTitleMarkup = api.section(sectionName).headContainer[0].innerHTML;
+
+		api.section(sectionName).headContainer.find('.accordion-section-title').replaceWith(
+			wp.template('hannover-add-portfolio-category-page-button')
+		);
+
+		api.section(sectionName).headContainer.find('.hannover-customize-create-portfolio-category-page').on('click', function () {
+			api.section(sectionName).expand();
+		});
+	};
+
+	component.displayPortfolioCategoryPagesSectionHeadDescription = function () {
+		// Get the ID of the first visible category pages li node.
+		var firstPortfolioCategoryPagesSectionNode = component.getFirstVisiblePortfolioCategorySection();
+
+		// Check if the node already contains the section description.
+		// For that, we get the first child and check if it has the class hannover-category-pages-sections-description.
+		var firstChild = firstPortfolioCategoryPagesSectionNode.firstElementChild;
+		if (!firstChild.classList.contains('hannover-category-pages-sections-description')) {
+			var firstPortfolioCategoryPagesSectionNodeId = firstPortfolioCategoryPagesSectionNode.id;
+			var sectionName = firstPortfolioCategoryPagesSectionNodeId.replace('accordion-section-', '');
+			api.section(sectionName, function (section) {
+				section.headContainer.prepend(
+					wp.template('hannover-portfolio-category-pages-notice')
+				);
+			});
+		}
+	};
+
+	/**
+	 * Toggles the sections for portfolio archive and category pages.
+	 */
+	component.togglePortfolioSections = function () {
 		var active = false;
-		console.log(wp.customize.control('portfolio_page_active').setting.get());
 		if (1 === Number.parseInt(wp.customize.control('portfolio_page_active').setting.get()) && Number.isInteger(wp.customize.control('portfolio_page_active').setting.get())) {
 			// The portfolio feature is enabled, so we need to display the sections.
 			active = true;
@@ -813,7 +939,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 		}
 	};
 
-	component.updateSectionTitle = function updateSectionTitle(id) {
+	component.updateSectionTitle = function (id) {
 		var pageTitle = 'No page selected';
 
 		// Build the title for the section.
@@ -830,7 +956,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 		document.querySelector('#sub-accordion-section-hannover_portfolio_category_page_section\\[' + id + '\\] .customize-section-title h3').lastChild.textContent = pageTitle;
 	};
 
-	component.updateCategoryInSectionHead = function updateCategoryInSectionHead(id) {
+	component.updateCategoryInSectionHead = function (id) {
 		var categoryTitle = '(No category selected)';
 
 		// Build the category string.
@@ -846,39 +972,36 @@ var hannoverCustomizeControls = (function (api, wp) {
 	};
 
 	/**
-	 * Listen to changes of the portfolio page select and change the preview URL.
+	 * Get first visible portfolio category section.
+	 *
+	 * @returns {obj} Node obj of first visible portfolio category section.
 	 */
-	component.bindPortfolioPageSelect = function bindPortfolioPageSelect() {
-		api.control('portfolio_page', function (control) {
-			control.setting.bind(function (value) {
-				// Check if the value was changed to the default state.
-				if (0 !== parseInt(value) && Number.isInteger(parseInt(value))) {
-					// Redirect to the new URL.
-					api.previewer.previewUrl.set(api.settings.url.home + '?page_id=' + value);
-				}
-			});
-		});
-	};
+	component.getFirstVisiblePortfolioCategorySection = function () {
+		var elem = document.getElementById('accordion-section-hannover_portfolio_archive_page_options').nextSibling;
+		while (elem) {
+			// Check if this is a category page section toggle.
+			if (0 === elem.id.search(/accordion-section-hannover_portfolio_category_page_section\[\d\]/g)) {
+				// Get ID of section.
+				var sectionIndex = elem.id.match(/accordion-section-hannover_portfolio_category_page_section\[(\d)\]/);
 
-	/**
-	 * Listen to changes of the portfolio archive page select and change the preview URL.
-	 */
-	component.bindPortfolioArchivePageSelect = function bindPortfolioArchivePageSelect() {
-		api.control('portfolio_archive', function (control) {
-			control.setting.bind(function (value) {
-				// Check if the value was changed to the default state.
-				if (0 !== parseInt(value) && Number.isInteger(parseInt(value))) {
-					// Redirect to the new URL.
-					api.previewer.previewUrl.set(api.settings.url.home + '?page_id=' + value);
+				if (null !== sectionIndex) {
+					var id = sectionIndex[1];
+
+					// Check if ID does not exist in component.removedPortfolioCategorySections
+					if (false === component.removedPortfolioCategorySections.includes(id)) {
+						return elem;
+					}
 				}
-			});
-		});
+
+				elem = elem.nextSibling;
+			}
+		}
 	};
 
 	/**
 	 * Creates the needed customize things for the slider options.
 	 */
-	component.createSliderOptions = function createSliderOptions() {
+	component.createSliderOptions = function () {
 		// Add section for slider settings.
 		api.section.add(
 			new api.Section('hannover_slider_settings', {
@@ -920,109 +1043,6 @@ var hannoverCustomizeControls = (function (api, wp) {
 	};
 
 	/**
-	 * Display hint that there is no portfolio page currently if needed.
-	 */
-	component.displayAddPortfolioPageTemplate = function displayAddPortfolioPageTemplate() {
-		// Backup the markup of the original portfolio page section so we can restore it later.
-		component.portfolioPageSectionTitleMarkup = api.section('hannover_portfolio_page_section').headContainer[0].innerHTML;
-
-		// Check if we have no portfolio page theme mod.
-		if (undefined === component.themeMods.portfolio_page) {
-			api.section('hannover_portfolio_page_section').headContainer.find('.accordion-section-title').replaceWith(
-				wp.template('hannover-no-portfolio-page-notice')
-			);
-		} else {
-			// Check for a portfolio page ID in the theme mods.
-			if (undefined === component.themeMods.portfolio_page['active'] || 1 !== component.themeMods.portfolio_page['active']) {
-				api.section('hannover_portfolio_page_section').headContainer.find('.accordion-section-title').replaceWith(
-					wp.template('hannover-no-portfolio-page-notice')
-				);
-
-				// Remove the border top from the section.
-				api.section('hannover_portfolio_page_section').headContainer[0].classList.add('no-border-top');
-			}
-		}
-	};
-
-	/**
-	 * Display hint that there is no portfolio archive page currently if needed.
-	 */
-	component.displayAddPortfolioArchivePageTemplate = function displayAddPortfolioArchivePageTemplate() {
-		// Backup the markup of the original portfolio archive page section so we can restore it later.
-		component.portfolioArchivePageSectionTitleMarkup = api.section('hannover_portfolio_archive_page_options').headContainer[0].innerHTML;
-
-		// Check if we have no portfolio archive page theme mod.
-		if (undefined === component.themeMods.portfolio_archive) {
-			api.section('hannover_portfolio_archive_page_options').headContainer.find('.accordion-section-title').replaceWith(
-				wp.template('hannover-no-portfolio-archive-page-notice')
-			);
-		} else {
-			// Check for a portfolio archive page ID in the theme mods.
-			if (!component.themeMods.portfolio_archive.id || !Number.isInteger(parseInt(component.themeMods.portfolio_archive.id)) || 0 === parseInt(component.themeMods.portfolio_archive.id)) {
-				api.section('hannover_portfolio_archive_page_options').headContainer.find('.accordion-section-title').replaceWith(
-					wp.template('hannover-no-portfolio-archive-page-notice')
-				);
-
-				// Remove the border top from the section.
-				api.section('hannover_portfolio_archive_page_options').headContainer[0].classList.add('no-border-top');
-			}
-		}
-	};
-
-	/**
-	 * Display hint to add portfolio category page.
-	 */
-	component.displayAddPortfolioCategoryPageTemplate = function displayAddPortfolioCategoryPageTemplate() {
-		// Get the ID of the new section.
-		var sectionName = 'hannover_portfolio_category_page_section[' + component.portfolioCategoryPagesNextId + ']';
-
-		// Backup the markup of the original portfolio page section so we can restore it later.
-		component.portfolioCategoryPageSectionTitleMarkup = api.section(sectionName).headContainer[0].innerHTML;
-
-		api.section(sectionName).headContainer.find('.accordion-section-title').replaceWith(
-			wp.template('hannover-add-portfolio-category-page-button')
-		);
-
-		api.section(sectionName).headContainer.find('.hannover-customize-create-portfolio-category-page').on('click', function () {
-			api.section(sectionName).expand();
-		});
-	};
-
-	component.displayPortfolioSectionHeadDescription = function displayPortfolioSectionHeadDescription() {
-		api.section('hannover_portfolio_page_section', function (section) {
-			section.headContainer.prepend(
-				wp.template('hannover-portfolio-section-title')
-			);
-		});
-	};
-
-	component.displayPortfolioArchiveSectionHeadDescription = function displayPortfolioArchiveSectionHeadDescription() {
-		api.section('hannover_portfolio_archive_page_options', function (section) {
-			section.headContainer.prepend(
-				wp.template('hannover-portfolio-archive-notice')
-			);
-		});
-	};
-
-	component.displayPortfolioCategoryPagesSectionHeadDescription = function displayPortfolioCategoryPagesSectionHeadDescription() {
-		// Get the ID of the first visible category pages li node.
-		var firstPortfolioCategoryPagesSectionNode = component.getFirstVisiblePortfolioCategorySection();
-
-		// Check if the node already contains the section description.
-		// For that, we get the first child and check if it has the class hannover-category-pages-sections-description.
-		var firstChild = firstPortfolioCategoryPagesSectionNode.firstElementChild;
-		if (!firstChild.classList.contains('hannover-category-pages-sections-description')) {
-			var firstPortfolioCategoryPagesSectionNodeId = firstPortfolioCategoryPagesSectionNode.id;
-			var sectionName = firstPortfolioCategoryPagesSectionNodeId.replace('accordion-section-', '');
-			api.section(sectionName, function (section) {
-				section.headContainer.prepend(
-					wp.template('hannover-portfolio-category-pages-notice')
-				);
-			});
-		}
-	};
-
-	/**
 	 * Check if object is empty.
 	 *
 	 * @link https://stackoverflow.com/a/32108184/7774451
@@ -1030,40 +1050,13 @@ var hannoverCustomizeControls = (function (api, wp) {
 	 * @param {object} obj – Object to test.
 	 * @returns {boolean} true if empty, false otherwise.
 	 */
-	component.isEmptyObject = function isEmptyObject(obj) {
+	component.isEmptyObject = function (obj) {
 		for (var prop in obj) {
 			if (obj.hasOwnProperty(prop))
 				return false;
 		}
 
 		return JSON.stringify(obj) === JSON.stringify({});
-	};
-
-	/**
-	 * Get first visible portfolio category section.
-	 *
-	 * @returns {obj} Node obj of first visible portfolio category section.
-	 */
-	component.getFirstVisiblePortfolioCategorySection = function getFirstVisiblePortfolioCategorySection() {
-		var elem = document.getElementById('accordion-section-hannover_portfolio_archive_page_options').nextSibling;
-		while (elem) {
-			// Check if this is a category page section toggle.
-			if (0 === elem.id.search(/accordion-section-hannover_portfolio_category_page_section\[\d\]/g)) {
-				// Get ID of section.
-				var sectionIndex = elem.id.match(/accordion-section-hannover_portfolio_category_page_section\[(\d)\]/);
-
-				if (null !== sectionIndex) {
-					var id = sectionIndex[1];
-
-					// Check if ID does not exist in component.removedPortfolioCategorySections
-					if (false === component.removedPortfolioCategorySections.includes(id)) {
-						return elem;
-					}
-				}
-
-				elem = elem.nextSibling;
-			}
-		}
 	};
 
 	return component;
