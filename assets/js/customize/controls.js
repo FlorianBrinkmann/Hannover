@@ -51,8 +51,6 @@ var hannoverCustomizeControls = (function (api, wp) {
 						return component.themeMods.portfolio_category_page[a] > component.themeMods.portfolio_category_page[b] ? a : b
 					})) + 1;
 				}
-
-				console.log(data.themeMods);
 			}
 		}
 
@@ -580,9 +578,7 @@ var hannoverCustomizeControls = (function (api, wp) {
 	component.displayAddPortfolioArchivePageTemplate = function () {
 		// Backup the markup of the original portfolio archive page section so we can restore it later.
 		component.portfolioArchivePageSectionTitleMarkup = api.section('hannover_portfolio_archive_page_options').headContainer[0].innerHTML;
-
-		console.log(component.themeMods);
-
+		
 		// Check if we have no portfolio archive page theme mod.
 		if (undefined === component.themeMods.portfolio_archive) {
 			api.section('hannover_portfolio_archive_page_options').headContainer.find('.accordion-section-title').replaceWith(
