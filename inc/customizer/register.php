@@ -65,7 +65,7 @@ function hannover_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'portfolio_page[elements_per_page]', [
 			'default'           => 0,
-			'sanitize_callback' => 'absint',
+			'sanitize_callback' => 'hannover_sanitize_absint',
 		]
 	);
 
@@ -83,7 +83,7 @@ function hannover_customize_register( $wp_customize ) {
 
 	$wp_customize->add_setting(
 		'portfolio_archive[active]', [
-			'transport' => 'postMessage',
+			'transport'         => 'postMessage',
 			'sanitize_callback' => 'hannover_sanitize_checkbox',
 		]
 	);
@@ -103,7 +103,7 @@ function hannover_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'portfolio_archive[elements_per_page]', [
 			'default'           => 5,
-			'sanitize_callback' => 'absint',
+			'sanitize_callback' => 'hannover_sanitize_absint',
 		]
 	);
 
@@ -122,7 +122,7 @@ function hannover_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'slider_autoplay_time', [
 			'default'           => 3000,
-			'sanitize_callback' => 'absint',
+			'sanitize_callback' => 'hannover_sanitize_absint',
 		]
 	);
 
@@ -292,15 +292,15 @@ function hannover_filter_dynamic_setting_args( $setting_args, $setting_id ) {
 	// Match for the portfolio category page category setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_category'], $setting_id ) ) {
 		$setting_args = [
-			'sanitize_callback' => 'hannover_sanitize_select',
+			'sanitize_callback' => 'hannover_sanitize_categories_select',
 		];
 	}
 
 	// Match for the portfolio category page elements per page setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_elements_per_page'], $setting_id ) ) {
 		$setting_args = [
-			'sanitize_callback' => 'absint',
-			];
+			'sanitize_callback' => 'hannover_sanitize_absint',
+		];
 	}
 
 	// Match for the portfolio category page alt layout setting.
@@ -313,7 +313,6 @@ function hannover_filter_dynamic_setting_args( $setting_args, $setting_id ) {
 	// Match for the deleted portfolio category page setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_deleted'], $setting_id, $matches ) ) {
 		$setting_args = [
-			'sanitize_callback' => 'hannover_sanitize_checkbox',
 		];
 	}
 
