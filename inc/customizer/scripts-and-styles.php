@@ -12,9 +12,7 @@
  */
 function hannover_customizer_css() {
 	// Check if header text should be displayed. Otherwise hide it.
-	if ( display_header_text() ) {
-		return;
-	} else { ?>
+	if ( ! display_header_text() ) { ?>
 		<style type="text/css">
 			.site-title,
 			.site-description {
@@ -24,6 +22,14 @@ function hannover_customizer_css() {
 				position: absolute !important;
 				width: 1px;
 				word-wrap: normal !important;
+			}
+		</style>
+	<?php }
+	if ( get_theme_mod( 'header_textcolor' ) ) { ?>
+		<style type="text/css">
+			#header,
+			#header a {
+				color: <?php echo '#' . get_theme_mod('header_textcolor'); ?>;
 			}
 		</style>
 	<?php }
