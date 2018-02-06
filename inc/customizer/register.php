@@ -285,35 +285,35 @@ function hannover_filter_dynamic_setting_args( $setting_args, $setting_id ) {
 	// Match for the portfolio category page id setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_id'], $setting_id ) ) {
 		$setting_args = [
-			'type' => 'theme_mod',
+			'sanitize_callback' => 'hannover_sanitize_dropdown_pages',
 		];
 	}
 
 	// Match for the portfolio category page category setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_category'], $setting_id ) ) {
 		$setting_args = [
-			'type' => 'theme_mod',
+			'sanitize_callback' => 'hannover_sanitize_select',
 		];
 	}
 
 	// Match for the portfolio category page elements per page setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_elements_per_page'], $setting_id ) ) {
 		$setting_args = [
-			'type' => 'theme_mod',
-		];
+			'sanitize_callback' => 'absint',
+			];
 	}
 
 	// Match for the portfolio category page alt layout setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_alt_layout'], $setting_id ) ) {
 		$setting_args = [
-			'type' => 'theme_mod',
+			'sanitize_callback' => 'hannover_sanitize_checkbox',
 		];
 	}
 
 	// Match for the deleted portfolio category page setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_deleted'], $setting_id, $matches ) ) {
 		$setting_args = [
-			'type' => 'theme_mod',
+			'sanitize_callback' => 'hannover_sanitize_checkbox',
 		];
 	}
 
