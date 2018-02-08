@@ -56,9 +56,9 @@ function hannover_filter_category_widget( $cat_args ) {
 /**
  * Removes the page jump after clicking on a read more link.
  *
- * @param $link
+ * @param string $link Permalink to post.
  *
- * @return mixed
+ * @return string Link without #more hash.
  */
 function hannover_remove_more_link_scroll( $link ) {
 	$link = preg_replace( '/#more-[0-9]+/', '', $link );
