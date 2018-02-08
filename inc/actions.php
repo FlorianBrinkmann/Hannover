@@ -7,6 +7,27 @@
  * @package Hannover
  */
 
+// Load translation from W.org if available.
+add_action( 'after_setup_theme', 'hannover_load_translation' );
+
+// Set content width.
+add_action( 'after_setup_theme', 'hannover_set_content_width' );
+
+// Run add_theme_support() things.
+add_action( 'after_setup_theme', 'hannover_add_theme_support' );
+
+// Register menu locations.
+add_action( 'init', 'hannover_register_menus' );
+
+// Register widget area.
+add_action( 'widgets_init', 'hannover_register_sidebars' );
+
+// Enqueue scripts and styles.
+add_action( 'wp_enqueue_scripts', 'hannover_scripts_styles' );
+
+// Exclude portfolio elements from blog view.
+add_action( 'pre_get_posts', 'hannover_exlude_portfolio_elements_from_blog' );
+
 // Register customizer settings.
 add_action( 'customize_register', 'hannover_customize_register' );
 

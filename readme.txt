@@ -1,6 +1,6 @@
 === Hannover ===
 Contributors: FlorianBrinkmann
-Requires at least: 4.5
+Requires at least: 4.7.0
 Tested up to: 4.9.4
 Requires PHP: 5.4
 
@@ -15,13 +15,18 @@ Requires PHP: 5.4
 
 = 2.0.0 –  =
 
+**Added**
+
+* Theme support for custom logo feature.
+
 **Changed**
 
-* Moved the whole portfolio settings into the customizer – no more page templates.
+* Moved the whole portfolio settings into the customizer – no more page templates for that.
 
 **Removed**
 
 * Hannover Social Menu feature. This can be better done by a plugin (for example, https://wordpress.org/plugins/svg-social-menu/)
+* Theme support for custom header.
 
 = 1.1.3 – 05.09.2016 =
 * removed top margin from header image on home page
