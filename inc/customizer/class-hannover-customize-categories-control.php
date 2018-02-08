@@ -11,7 +11,6 @@
  * Class Hannover_Customize_Categories_Control
  */
 class Hannover_Customize_Categories_Control extends WP_Customize_Control {
-
 	/**
 	 * Control type.
 	 *
@@ -20,7 +19,7 @@ class Hannover_Customize_Categories_Control extends WP_Customize_Control {
 	public $type = 'hannover_categories_control';
 
 	/**
-	 * This is the comment
+	 * Refresh the parameters passed to the JavaScript via JSON.
 	 */
 	public function to_json() {
 		// Call parent to_json() method to get the core defaults like "label", "description", etc.
@@ -49,7 +48,8 @@ class Hannover_Customize_Categories_Control extends WP_Customize_Control {
 	 *
 	 * @since 4.9.0
 	 */
-	public function content_template() { ?>
+	public function content_template() {
+		?>
 		<# if ( ! data.choices ) {
 			return;
 		} #>

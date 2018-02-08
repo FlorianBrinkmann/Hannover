@@ -9,6 +9,8 @@
  * @link https://gist.github.com/westonruter/00c351830e0a15cef7672b748720a7ff
  * @link https://wordpress.stackexchange.com/q/286375
  *
+ * @version 2.0.0
+ *
  * @package Hannover
  */
 

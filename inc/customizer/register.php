@@ -10,7 +10,7 @@
 /**
  * Registers customizer settings, controls, panels and sections.
  *
- * @param $wp_customize
+ * @param WP_Customize_Manager $wp_customize Customize Manager object.
  */
 function hannover_customize_register( $wp_customize ) {
 
