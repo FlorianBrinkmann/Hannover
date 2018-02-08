@@ -25,6 +25,8 @@ function hannover_customizer_css() {
 			}
 		</style>
 	<?php }
+
+	// Check if we have a custom text color for the header.
 	if ( get_theme_mod( 'header_textcolor' ) ) { ?>
 		<style type="text/css">
 			#header,
