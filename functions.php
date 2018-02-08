@@ -12,9 +12,6 @@ require_once __DIR__ . '/inc/filters.php';
 // Include customizer register file.
 require_once __DIR__ . '/inc/customizer/register.php';
 
-// Include social nav walker.
-require_once __DIR__ . '/inc/class-hannover-social-menu-walker.php';
-
 /**
  * Load translation from translate.WordPress.org if available
  */
@@ -96,8 +93,6 @@ function hannover_register_menus() {
 			'primary' => __( 'Primary Menu', 'hannover' ),
 			/* translators: Name of menu position in the footer */
 			'footer'  => __( 'Footer Menu', 'hannover' ),
-			/* translators: Name of menu position for social media icons */
-			'social'  => __( 'Social Menu', 'hannover' ),
 		)
 	);
 }
