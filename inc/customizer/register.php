@@ -14,13 +14,11 @@
  */
 function hannover_customize_register( $wp_customize ) {
 
-	// Include class files for panel and controls.
-	require_once __DIR__ . '/class-hannover-customize-theme-options-panel.php';
+	// Include class files for controls.
 	require_once __DIR__ . '/class-hannover-customize-categories-control.php';
 	require_once __DIR__ . '/class-hannover-customize-dropdown-pages-control.php';
 
 	// Register panel and controls.
-	$wp_customize->register_panel_type( 'Hannover_Customize_Theme_Options_Panel' );
 	$wp_customize->register_control_type( 'Hannover_Customize_Categories_Control' );
 
 	// Register static settings (dynamic settings from the category pages
