@@ -23,6 +23,8 @@ function hannover_customize_register( $wp_customize ) {
 	$wp_customize->register_panel_type( 'Hannover_Customize_Theme_Options_Panel' );
 	$wp_customize->register_control_type( 'Hannover_Customize_Categories_Control' );
 
+	// Register static settings (dynamic settings from the category pages
+	// are registered in the controls.js.
 	$wp_customize->add_setting(
 		'portfolio_page[id]', [
 			'transport'         => 'postMessage',
@@ -134,7 +136,7 @@ function hannover_customize_register( $wp_customize ) {
 }
 
 /**
- * Prints control templates into the customizer.
+ * Prints templates into the customizer.
  */
 function hannover_customize_control_templates() { ?>
 	<script type="text/html" id="tmpl-hannover-portfolio-section-title">
@@ -257,7 +259,7 @@ function hannover_customize_control_templates() { ?>
 <?php }
 
 /**
- * Filters a dynamic setting's constructor args.
+ * Filters a dynamic setting’s constructor args.
  *
  * For a dynamic setting to be registered, this filter must be employed
  * to override the default false value with an array of args to pass to
@@ -287,40 +289,40 @@ function hannover_filter_dynamic_setting_args( $setting_args, $setting_id ) {
 		$setting_args = [
 			'sanitize_callback' => 'hannover_sanitize_dropdown_pages',
 		];
-	}
+	} // End if().
 
 	// Match for the portfolio category page category setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_category'], $setting_id ) ) {
 		$setting_args = [
 			'sanitize_callback' => 'hannover_sanitize_categories_select',
 		];
-	}
+	} // ENd if().
 
 	// Match for the portfolio category page elements per page setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_elements_per_page'], $setting_id ) ) {
 		$setting_args = [
 			'sanitize_callback' => 'hannover_sanitize_absint',
 		];
-	}
+	} // End if().
 
 	// Match for the portfolio category page alt layout setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_alt_layout'], $setting_id ) ) {
 		$setting_args = [
 			'sanitize_callback' => 'hannover_sanitize_checkbox',
 		];
-	}
+	} // End if().
 
 	// Match for the deleted portfolio category page setting.
 	if ( preg_match( $id_patterns['portfolio_category_page_deleted'], $setting_id, $matches ) ) {
-		$setting_args = [
-		];
-	}
+		$setting_args = [];
+	} // End if().
 
 	return $setting_args;
 }
 
 /**
  * Fires after customize settings are saved.
+ * Code inspired by the remove_theme_mod() function.
  *
  * @param WP_Customize_Manager $manager Instance of WP_Customize_Manager.
  */
@@ -329,13 +331,10 @@ function hannover_customize_save_after( $manager ) {
 	$theme_mods = get_theme_mods();
 
 	// Loop them.
-	foreach (
-		$theme_mods['portfolio_category_page'] as $id =>
-		$portfolio_category_page_theme_mod
-	) {
+	foreach ( $theme_mods['portfolio_category_page'] as $id => $portfolio_category_page_theme_mod ) {
 		// Check if the delete flag is set.
 		if ( isset( $portfolio_category_page_theme_mod['deleted'] ) && - 1 === $portfolio_category_page_theme_mod['deleted'] ) {
-			// Code inspired by the remove_theme_mod() function.
+			// Unset the theme mod.
 			unset( $theme_mods['portfolio_category_page'][ $id ] );
 
 			// Check if we have no more portfolio category pages and if so, unset the array index.
@@ -344,7 +343,7 @@ function hannover_customize_save_after( $manager ) {
 			} // End if().
 
 			// Check if that was the last theme mod and if so, remove the entry from the database.
-			if ( empty ( $theme_mods ) ) {
+			if ( empty( $theme_mods ) ) {
 				remove_theme_mods();
 			} else {
 				// Get theme slug and update the theme mod option.
