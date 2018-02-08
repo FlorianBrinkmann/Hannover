@@ -11,29 +11,44 @@
  * Removes the archive and portfolio category from the category widget if
  * selected in the customizer
  *
- * @param $cat_args
+ * @param array $cat_args Array with category args.
  *
  * @return array
  */
 function hannover_filter_category_widget( $cat_args ) {
-	$use_portfolio_category            = get_theme_mod( 'portfolio_from_category' );
-	$archive_type                      = get_theme_mod( 'portfolio_archive' );
-	$exclude_portfolio_cat_from_widget = get_theme_mod( 'portfolio_remove_category_from_cat_widget' );
-	$exclude_archive_cat_from_widget   = get_theme_mod( 'portfolio_archive_remove_category_from_cat_widget' );
-	$exclude                           = '';
-	if ( $exclude_portfolio_cat_from_widget == 'checked' && $use_portfolio_category == 'checked' ) {
-		$portfolio_category = get_theme_mod( 'portfolio_category' );
-		$exclude            = $portfolio_category;
-	}
-	if ( $exclude_archive_cat_from_widget == 'checked' && $archive_type == 'archive_category' ) {
-		$archive_category = get_theme_mod( 'portfolio_archive_category' );
-		if ( $exclude != '' ) {
-			$exclude .= ', ' . $archive_category;
-		} else {
-			$exclude = $archive_category;
+	// Get the theme mods.
+	$theme_mods                        = get_theme_mods();
+	$use_portfolio                     = $theme_mods['portfolio_page']['active'];
+	$use_portfolio_category            = $theme_mods['portfolio_page']['from_category'];
+	$use_archive                       = $theme_mods['portfolio_archive']['active'];
+	$exclude_portfolio_cat_from_widget = $theme_mods['portfolio_page']['remove_category_from_cat_list'];
+	$exclude_archive_cat_from_widget   = $theme_mods['portfolio_archive']['remove_category_from_cat_widget'];
+	$exclude                           = [];
+
+	// Check if the portfolio feature is active.
+	if ( 1 === absint( $use_portfolio ) ) {
+		// Check if we should exclude the portfolio category.
+		if ( true === $use_portfolio_category && true === $exclude_portfolio_cat_from_widget ) {
+			// Get category and add to exclude array.
+			$portfolio_category = $theme_mods['portfolio_page']['category'];
+			if ( '' !== $portfolio_category ) {
+				array_push( $exclude, $portfolio_category );
+			}
+		}
+
+		// Check if we should exclude the archive category.
+		if ( true === $use_archive && true === $exclude_archive_cat_from_widget ) {
+			$archive_category = $theme_mods['portfolio_archive']['category'];
+			if ( '' !== $archive_category ) {
+				array_push( $exclude, $archive_category );
+			}
+		}
+
+		// Check if the array is not empty.
+		if ( ! empty( $exclude ) ) {
+			$cat_args['exclude'] = $exclude;
 		}
 	}
-	$cat_args['exclude'] = $exclude;
 
 	return $cat_args;
 }
