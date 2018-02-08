@@ -33,7 +33,7 @@ function hannover_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'portfolio_page[active]', [
 			'transport'         => 'postMessage',
-			'sanitize_callback' => 'hannover_sanitize_checkbox',
+			'sanitize_callback' => 'absint',
 		]
 	);
 
