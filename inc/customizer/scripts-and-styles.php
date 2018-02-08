@@ -72,7 +72,7 @@ function hannover_customize_controls_styles() { ?>
 /**
  * Prints styles inside the customizer view.
  */
-function hannover_customizer_controls_script() {
+function hannover_customize_controls_script() {
 	// Add script control section.
 	wp_enqueue_script( 'hannover-customize-controls', get_theme_file_uri( 'assets/js/customize/controls.js' ), [], null, true );
 
