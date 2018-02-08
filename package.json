@@ -1,10 +1,10 @@
 {
-	"name": "nordby",
-	"version": "1.1.0",
-	"description": "Nordby WordPress theme",
+	"name": "hannover",
+	"version": "2.0.0",
+	"description": "Hannover WordPress theme",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/FlorianBrinkmann/nordby.git"
+		"url": "https://github.com/FlorianBrinkmann/hannover.git"
 	},
 	"scripts": {
 		"build:production": "webpack -p --env.production && npm run css:rtl && npm run minify-css",
@@ -21,8 +21,5 @@
 		"css-flip": "^0.5.0",
 		"csso-cli": "^1.0.0",
 		"webpack": "^3.5.6"
-	},
-	"dependencies": {
-		"ally.js": "^1.4.1"
 	}
 }
