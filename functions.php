@@ -9,6 +9,9 @@ require_once locate_template( '/inc/actions.php' );
 // Include file with add_filter() calls.
 require_once locate_template( '/inc/filters.php' );
 
+// Include file with add_filter() calls.
+require_once locate_template( '/inc/filter-functions.php' );
+
 // Include customizer register file.
 require_once locate_template( '/inc/customizer/register.php' );
 
