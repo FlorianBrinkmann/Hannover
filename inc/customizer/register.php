@@ -46,7 +46,7 @@ function hannover_customize_register( $wp_customize ) {
 
 	$wp_customize->add_setting(
 		'portfolio_page[category]', [
-			'sanitize_callback' => 'hannover_sanitize_select',
+			'sanitize_callback' => 'hannover_sanitize_categories_select',
 		]
 	);
 
@@ -90,7 +90,7 @@ function hannover_customize_register( $wp_customize ) {
 
 	$wp_customize->add_setting(
 		'portfolio_archive[category]', [
-			'sanitize_callback' => 'hannover_sanitize_select',
+			'sanitize_callback' => 'hannover_sanitize_categories_select',
 		]
 	);
 

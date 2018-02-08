@@ -70,24 +70,21 @@ function hannover_sanitize_dropdown_pages( $page_id, $setting ) {
 	$post_status = get_post_status( $page_id );
 
 	// If $page_id is an ID of a published page, return it; otherwise, return the default.
-	return ( 'publish' === get_post_status( $page_id ) || 'auto-draft' === get_post_status( $page_id ) ? $page_id : $setting->default );
+	return ( 'publish' === $post_status || 'auto-draft' === $post_status ? $page_id : $setting->default );
 }
 
 
 /**
  * Select sanitization callback for categories select control.
  */
-function hannover_sanitize_categories_select( $input, $setting ) {
+function hannover_sanitize_categories_select( $input ) {
+	$can_validate = method_exists( 'WP_Customize_Setting', 'validate' );
 
-	// Ensure input is a slug.
-	$input = sanitize_key( $input );
+	$term = get_term( $input );
 
-	$manager = $setting->manager;
-	$control = $setting->manager->get_control( $setting->id );
+	if ( 'category' !== $term->taxonomy ||  is_wp_error( $term ) || null === $term ) {
+		return $can_validate ? new WP_Error( 'nan', __( 'The ID does not match a category.', 'hannover' ) ) : null;
+	}
 
-	// Get list of choices from the control associated with the setting.
-	$choices = $setting->manager->get_control( $setting->id )->choices;
-
-	// If the input is a valid key, return it; otherwise, return the default.
-	return ( array_key_exists( $input, $choices ) ? $input : $setting->default );
+	return $input;
 }
