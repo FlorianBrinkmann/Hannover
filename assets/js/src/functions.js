@@ -111,7 +111,7 @@ require('babel-polyfill');
 		if (window.innerWidth >= 910) {
 			document.body.addEventListener('touchstart', function (e) {
 				// Check if that was not a click on a menu item with dropdown toggle.
-				if (e.target.nodeType !== 1 || false === e.target.firstElementChild.classList.contains('dropdown-toggle')) {
+				if (e.target.firstElementChild !== null && (e.target.nodeType !== 1 || false === e.target.firstElementChild.classList.contains('dropdown-toggle'))) {
 					for (let subMenuLink of subMenuLinks) {
 						subMenuLink.parentElement.classList.remove('focus');
 					}
@@ -197,6 +197,7 @@ require('babel-polyfill');
 	 *
 	 * @link https://gist.github.com/ziggi/2f15832b57398649ee9b
 	 *
+	 * @param {NodeSelector} element - The element we search the parents of.
 	 * @param {string} selector - The selector.
 	 *
 	 * @return {Array}
@@ -229,15 +230,15 @@ require('babel-polyfill');
 	 * @returns {Array}
 	 */
 	function getChildren(n, skipMe) {
-		var r = [];
+		let r = [];
 		for (; n; n = n.nextSibling)
-			if (n.nodeType == 1 && n != skipMe)
+			if (n.nodeType === 1 && n !== skipMe)
 				r.push(n);
 		return r;
 	}
 
 	/**
-	 * Function to get silblings of element n.
+	 * Function to get siblings of element n.
 	 *
 	 * @param {Object} n – Element to get siblings for.
 	 * @returns {Array}
