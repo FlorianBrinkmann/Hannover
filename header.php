@@ -52,7 +52,7 @@
 	</div>
 	<?php if ( has_nav_menu( 'primary' ) ) { ?>
 		<button id="menu-toggle" class="menu-toggle"><?php _e( 'Menu', 'hannover' ); ?></button>
-		<nav>
+		<nav id="main-menu-container">
 			<h2 class="screen-reader-text">
 				<?php /* translators: hidden screen reader headline for the main navigation */
 				_e( 'Main navigation', 'hannover' ); ?>

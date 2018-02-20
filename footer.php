@@ -35,6 +35,9 @@
 	<?php } ?>
 	<p class="theme-author"><?php _e( 'Theme: Hannover by <a rel="nofollow" href="https://florianbrinkmann.de">Florian Brinkmann</a>', 'hannover' ) ?></p>
 </footer>
-<?php wp_footer(); ?>
+<?php
+// Include the SVG sprite.
+include locate_template('assets/img/svg-sprite.svg.php');
+wp_footer(); ?>
 </body>
 </html>

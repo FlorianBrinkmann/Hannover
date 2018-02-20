@@ -76,6 +76,10 @@ function hannover_sanitize_dropdown_pages( $page_id, $setting ) {
 
 /**
  * Select sanitization callback for categories select control.
+ *
+ * @param string $input Value of select field.
+ *
+ * @return string
  */
 function hannover_sanitize_categories_select( $input ) {
 	$can_validate = method_exists( 'WP_Customize_Setting', 'validate' );

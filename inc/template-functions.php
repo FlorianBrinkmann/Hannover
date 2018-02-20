@@ -54,8 +54,8 @@ function hannover_set_content_width() {
 }
 
 /**
- * Adds theme support for feed links, custom logo, html5, post formats, post
- * thumbnails and the title tag
+ * Adds theme support for feed links, custom logo, html5, post formats,
+ * post thumbnails and the title tag
  */
 function hannover_add_theme_support() {
 	add_theme_support( 'automatic-feed-links' );
@@ -117,7 +117,7 @@ function hannover_register_sidebars() {
 }
 
 /**
- * Adds the scripts and styles to the header.
+ * Adds the scripts and styles.
  */
 function hannover_scripts_styles() {
 	// Check if we need the comment reply script and include it.
@@ -125,11 +125,10 @@ function hannover_scripts_styles() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 
-	wp_enqueue_script( 'hannover-lightbox', get_theme_file_uri( 'assets/js/lightbox.js' ), [ 'jquery' ], false, true );
+	// Include lightbox script.
+	wp_enqueue_script( 'hannover-script', get_theme_file_uri( 'assets/js/bundle.js' ), [], false, true );
 
-	wp_enqueue_script( 'hannover-menu', get_theme_file_uri( 'assets/js/menu.js' ), [ 'jquery' ], false, true );
-
-	wp_localize_script( 'hannover-menu', 'screenReaderText', [
+	wp_localize_script( 'hannover-script', 'screenReaderText', [
 		'expand'   => __( 'expand child menu', 'hannover' ),
 		'collapse' => __( 'collapse child menu', 'hannover' ),
 	] );
@@ -145,7 +144,7 @@ function hannover_scripts_styles() {
 		$page_template       = get_page_template_slug( $post->ID );
 		if ( 'page-templates/slider-front-page.php' === $page_template || 'checked' === $galleries_as_slider ) {
 			wp_enqueue_style( 'owl-carousel', get_theme_file_uri( 'assets/css/owl-carousel.css' ) );
-			wp_enqueue_script( 'owl-carousel', get_theme_file_uri( 'assets/js/owl-carousel.js' ), [ 'jquery' ], false, true );
+			wp_enqueue_script( 'owl-carousel', get_theme_file_uri( 'assets/js/owl-carousel.js' ), false, true );
 			$slider_autoplay      = get_theme_mod( 'slider_autoplay' );
 			$slider_autoplay_time = get_theme_mod( 'slider_autoplay_time', 3000 );
 			$params               = [
@@ -159,7 +158,21 @@ function hannover_scripts_styles() {
 		} // End if().
 	} // End if().
 
-	wp_enqueue_style( 'hannover-style', get_parent_theme_file_uri( 'assets/css/hannover.css' ), [], null );
+	// Check if SCRIPT_DEBUG is defined and enabled.
+	if ( defined( 'SCRIPT_DEBUG' ) && true === SCRIPT_DEBUG ) {
+		$suffix = '.css';
+	} else {
+		$suffix = '.min.css';
+	}
+
+	// Check if RTL.
+	if ( is_rtl() ) {
+		// Enqueue RTL stylesheet.
+		wp_enqueue_style( 'hannover-style', get_theme_file_uri( "assets/css/hannover-rtl$suffix" ) );
+	} else {
+		// Enqueue default stylesheet.
+		wp_enqueue_style( 'hannover-style', get_theme_file_uri( "assets/css/hannover$suffix" ) );
+	} // End if().
 
 	wp_enqueue_style( 'hannover-fonts', '//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic', [], null );
 }

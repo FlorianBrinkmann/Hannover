@@ -31,7 +31,7 @@ module.exports = (env = {}) => {
 		},
 		plugins: [
 			new webpack.BannerPlugin({
-				banner: "Want to take a look at the JS before bundled by Webpack? Check out https://github.com/FlorianBrinkmann/nordby",
+				banner: "Want to take a look at the JS before bundled by Webpack? Check out https://github.com/florianbrinkmann/hannover",
 				entryOnly: true
 			})
 		],
