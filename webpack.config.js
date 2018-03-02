@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path = require('path');
 
 /**
  * Parts from https://blog.flennik.com/the-fine-art-of-the-webpack-2-config-dc4d19d7f172
@@ -10,7 +11,8 @@ module.exports = (env = {}) => {
 	return {
 		entry: ['./assets/js/src/functions.js'],
 		output: {
-			filename: 'assets/js/bundle.js',
+			path: path.resolve(__dirname, 'assets/js'),
+			filename: 'bundle.js',
 		},
 		module: {
 			rules: [
