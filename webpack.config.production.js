@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-	mode: 'development',
+	mode: 'production',
 	entry: ['./assets/js/src/functions.js'],
 	output: {
 		path: path.resolve(__dirname, 'assets/js'),
@@ -24,5 +24,10 @@ module.exports = {
 				}
 			},
 		]
-	}
+	},
+	plugins: [
+		new webpack.BannerPlugin({
+			banner: "hash:[hash], chunkhash:[chunkhash], name:[name], filebase:[filebase], query:[query], file:[file]"
+		})
+	]
 };
