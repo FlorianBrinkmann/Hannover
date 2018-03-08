@@ -27,7 +27,7 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.BannerPlugin({
-			banner: "hash:[hash], chunkhash:[chunkhash], name:[name], filebase:[filebase], query:[query], file:[file]"
+			banner: "Want to take a look at the JS before bundled by Webpack? Check out https://github.com/florianbrinkmann/hannover"
 		})
 	]
 };
