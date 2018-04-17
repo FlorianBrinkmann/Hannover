@@ -8,109 +8,150 @@
  */
 
 /**
- * Displays date and time of a post.
+ * Displays the entry header.
  *
- * @return void
+ * @param string  $thumbnail_size  Size of the post thumbnail.
+ * @param string  $headline_elem   Element for the headline.
+ * @param boolean $linked_headline If the headline should link to the single
+ *                                 view.
  */
-function hannover_the_date() {
-	/* translators: 1=date, 2=time */
-	printf( __( '%1$s @ %2$s', 'hannover' ),
-		get_the_date(),
-		get_the_time()
+function hannover_the_entry_header( $thumbnail_size = 'large', $headline_elem = 'h2', $linked_headline = true ) {
+	// Build the markup for the single components.
+	$pre_headline_post_thumbnail_markup  = hannover_get_pre_headline_post_thumbnail_markup( $thumbnail_size, $linked_headline );
+	$screen_reader_post_thumbnail_markup = hannover_get_screen_reader_post_thumbnail_markup( $thumbnail_size );
+
+	printf(
+		'%1$s %2$s %3$s %4$s',
+		$pre_headline_post_thumbnail_markup,
+		'' !== get_the_title() ? hannover_get_the_title( $headline_elem, $linked_headline ) : '',
+		$screen_reader_post_thumbnail_markup,
+		! is_page() ? hannover_get_entry_meta() : ''
 	);
 }
 
 /**
- * Displays the title of a post.
+ * Displays post thumbnail markup for display before headline.
  *
- * @param $heading , $link
+ * @param string $thumbnail_size  The thumbnail size.
+ * @param bool   $linked_headline If the headline should link to the single
+ *                                view.
  *
- * @return void
+ * @return string Post thumbnail markup for pre headline output.
  */
-function hannover_the_title( $heading, $link ) {
-	if ( $link ) {
-		the_title( sprintf(
-			'<%1$s class="entry-title"><a href="%2$s" rel="bookmark">',
-			$heading, esc_url( get_permalink() )
-		), sprintf( '</a></%s>', $heading ) );
+function hannover_get_pre_headline_post_thumbnail_markup( $thumbnail_size, $linked_headline = true ) {
+	if ( has_post_thumbnail() ) {
+		return sprintf(
+			'%s<figure class="feature-image" aria-hidden="true">%s</figure>%s',
+			true === $linked_headline ? sprintf(
+				'<a href="%s" tabindex="-1">',
+				get_the_permalink()
+			) : '',
+			get_the_post_thumbnail( get_the_ID(), $thumbnail_size ),
+			true === $linked_headline ? '</a>' : ''
+		);
 	} else {
-		the_title( sprintf(
-			'<%1$s class="entry-title">',
-			$heading, esc_url( get_permalink() )
-		), sprintf( '</%s>', $heading ) );
+		return '';
+	} // End if().
+}
+
+/**
+ * Displays post thumbnail markup for display after headline.
+ *
+ * @param string $thumbnail_size The thumbnail size.
+ *
+ * @return string Post thumbnail markup for post headline output.
+ */
+function hannover_get_screen_reader_post_thumbnail_markup( $thumbnail_size ) {
+	if ( has_post_thumbnail() ) {
+		return sprintf(
+			'<figure class="screen-reader-text">%s</figure>',
+			get_the_post_thumbnail( get_the_ID(), $thumbnail_size )
+		);
+	} else {
+		return '';
+	} // End if().
+}
+
+/**
+ * Returns the title of a post.
+ *
+ * @param string  $heading The heading element to use for wrapping the title.
+ * @param boolean $link    True if title should link to the single view,
+ *                         othwise false.
+ *
+ * @return string The formatted HTML string with the title.
+ */
+function hannover_get_the_title( $heading = 'h2', $link = true ) {
+	if ( $link ) {
+		return sprintf(
+			'<%1$s class="entry-title"><a href="%2$s" rel="bookmark">%3$s</a></%1$s>',
+			$heading,
+			get_permalink(),
+			esc_html( get_the_title() )
+		);
+	} else {
+		return sprintf(
+			'<%1$s class="entry-title">%3$s</%1$s>',
+			$heading,
+			get_permalink(),
+			esc_html( get_the_title() )
+		);
 	}
 }
 
 /**
- * Displays the_content with a more accessible more tag.
+ * Returns unordered list of entry meta data.
  *
- * @return void
+ * @return string The entry meta string.
  */
-function hannover_the_content() {
-	/* translators: text for the more tag. s= title */
-	the_content(
-		sprintf(
-			__( 'Continue reading "%s"', 'hannover' ),
-			esc_html( get_the_title() )
-		)
+function hannover_get_entry_meta() {
+	// Save the meta information.
+	$date              = hannover_get_the_date();
+	$author            = get_the_author();
+	$categories_string = hannover_get_categories_list();
+	$tags_string       = hannover_get_tag_list();
+
+	return sprintf(
+		'<ul>
+<li>%s</li>
+%s
+%s
+</ul>',
+		sprintf( /* translators: 1=date; 2=author name*/
+			__( '%1$s by %2$s', 'hannover' ),
+			$date,
+			$author
+		),
+		'' !== $categories_string ? "<li>$categories_string</li>" : '',
+		'' !== $tags_string ? "<li>$tags_string</li>" : ''
 	);
 }
 
 /**
- * Displays the author, categories, tags and number for comments and trackbacks.
- *
- * @return void
+ * Displays the_content() or the_excerpt() with a more accessible more tag.
  */
-function hannover_entry_meta() { ?>
-	<span
-		class="author"><?php /* translators: name of the author in entry footer. s=author name */
-		printf( __( 'Author %s', 'hannover' ),
-			'<span>' . get_the_author() . '</span>' ) ?></span>
-	<?php if ( get_the_category() ) { ?>
-		<span
-			class="categories"><?php /* translators: Label for category list in entry footer. s=categories */
-			printf( _n(
-				'Category %s',
-				'Categories %s',
-				count( get_the_category() ),
-				'hannover'
-			), /* translators: term delimiter */
-				'<span>' . get_the_category_list( __( ', ', 'hannover' ) ) . '</span>' ) ?></span>
-	<?php }
-	if ( get_the_tags() ) { ?>
-		<span
-			class="tags"><?php /* translators: Label for tag list in entry footer. s=tags */
-			printf( _n(
-				'Tag %s',
-				'Tags %s',
-				count( get_the_tags() ),
-				'hannover'
-			), /* translators: term delimiter */
-				'<span>' . get_the_tag_list( '', __( ', ', 'hannover' ) ) . '</span>' ) ?></span>
-	<?php }
-	$comments_by_type = hannover_get_comments_by_type();
-	if ( $comments_by_type['comment'] ) {
-		$comment_number = count( $comments_by_type['comment'] ); ?>
-		<span
-			class="comments"><?php /* translators: Label for comment number in entry footer. s=comment number */
-			printf( _n(
-				'%s Comment',
-				'%s Comments',
-				$comment_number,
-				'hannover'
-			), '<span>' . number_format_i18n( $comment_number ) . '</span>' ) ?></span>
-	<?php }
-	if ( $comments_by_type['pings'] ) {
-		$trackback_number = count( $comments_by_type['pings'] ); ?>
-		<span
-			class="trackbacks"><?php /* translators: Label for trackback number in entry footer. s=trackback number */
-			printf( _n(
-				'%s Trackback',
-				'%s Trackbacks',
-				$trackback_number,
-				'hannover'
-			), '<span>' . number_format_i18n( $trackback_number ) . '</span>' ) ?></span>
-	<?php };
+function hannover_the_content() {
+	// Check if we have an excerpt and display it.
+	if ( has_excerpt() ) {
+		the_excerpt();
+	} else {
+		/*
+		 * Display the content with an accessible read more link
+		 * (if on archive page and more tag is used).
+		 */
+		the_content(
+			sprintf(
+				'<span class="screen-reader-text">%s</span><span aria-hidden="true">%s</span>',
+				sprintf( /* translators: %s: Title of current post */
+					__( 'Continue reading %s', 'hannover' ),
+					the_title_attribute( [
+						'echo' => false,
+					] )
+				),
+				__( 'Continue reading', 'hannover' )
+			)
+		);
+	} // End if().
 }
 
 /**
@@ -177,42 +218,46 @@ function hannover_trackbacks( $comment ) { ?>
 }
 
 /**
- * Returns the first image from the post content for a image post
- * and the first image from the gallery for a gallery post.
+ * Displays post thumbnail or:
+ * - first image from gallery if gallery post format.
+ * - first image from content if image post format.
  *
- * @param $size , $post
+ * @param string $size Image size.
  *
- * @return void
+ * @return string Img markup or empty string.
  */
-function hannover_image_from_gallery_or_image_post( $size, $post ) {
+function hannover_image_from_gallery_or_image_post( $size ) {
+	// Check if we have a post thumbnail and return it.
 	if ( has_post_thumbnail() ) {
-		the_post_thumbnail( $size );
+		return get_the_post_thumbnail( $size );
 	} else {
-		$post_format = get_post_format( $post );
-		if ( $post_format == 'gallery' ) {
-			$images  = hannover_get_gallery_images( $post->ID );
-			$image   = array_shift( $images );
+		$img_tag     = '';
+		$post_format = get_post_format( get_the_ID() );
+
+		// Check if we have a gallery post.
+		if ( 'gallery' === $post_format ) {
+			// Get its first image.
+			$image   = hannover_get_fist_gallery_image( get_the_ID() );
 			$img_tag = wp_get_attachment_image( $image->ID, $size );
-		} elseif ( $post_format == 'image' ) {
+		} elseif ( 'image' === $post_format ) {
 			$first_img_url = hannover_get_first_image_from_post_content();
 			$pattern       = '/-\d+x\d+(\.\w{3,4}$)/i';
 			$first_img_url = preg_replace( $pattern, '${1}', $first_img_url );
 			$first_img_id  = attachment_url_to_postid( $first_img_url );
-			if ( $first_img_id == 0 ) {
-				$attachments = get_children( [
-					'post_parent'    => $post->ID,
-					'post_status'    => 'inherit',
-					'post_type'      => 'attachment',
-					'post_mime_type' => 'image',
-					'order'          => 'ASC',
-					'orderby'        => 'menu_order',
-				] );
-				$first_img   = array_shift( $attachments );
-				$img_tag     = wp_get_attachment_image( $first_img->ID, $size );
+			if ( 0 === $first_img_id ) {
+				$attachments = hannover_get_post_image_attachments( get_the_ID() );
+				if ( empty( $attachments ) ) {
+					return '';
+				}
+				$first_img = array_shift( $attachments );
+				$img_tag   = wp_get_attachment_image( $first_img->ID, $size );
 			} else {
 				$img_tag = wp_get_attachment_image( $first_img_id, $size );
 			}
-		}
-		echo $img_tag;
+		} else {
+			return $img_tag;
+		} // End if().
+
+		return $img_tag;
 	}
 }

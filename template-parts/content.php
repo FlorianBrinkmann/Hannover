@@ -1,22 +1,19 @@
 <?php
 /**
- * Template part for normal posts
+ * Template part for normal posts.
  *
- * @version 1.0
+ * @version 2.0.0
+ *
+ * @package Hannover
  */
+
 ?>
 <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 	<header class="entry-header">
-		<?php the_post_thumbnail( 'large' );
-		hannover_the_title( 'h2', true ); ?>
-		<a href="<?php the_permalink(); ?>" class="entry-date">
-			<?php hannover_the_date(); ?>
-		</a>
+		<?php hannover_the_entry_header(); ?>
 	</header>
 	<div class="entry-content">
-		<?php hannover_the_content(); ?>
+		<?php hannover_the_content();
+		wp_link_pages(); ?>
 	</div>
-	<footer>
-		<p><?php hannover_entry_meta() ?></p>
-	</footer>
 </article>

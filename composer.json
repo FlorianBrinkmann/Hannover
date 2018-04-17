@@ -1,0 +1,13 @@
+{
+    "name": "florianbrinkmann/hannover",
+    "description": "Hannover WordPress theme",
+    "type": "wordpress-plugin",
+    "license": "GPL-v2",
+    "authors": [
+        {
+            "name": "Florian Brinkmann",
+            "email": "kontakt@florianbrinkmann.com"
+        }
+    ],
+    "require": {}
+}

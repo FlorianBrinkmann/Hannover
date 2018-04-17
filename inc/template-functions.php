@@ -178,6 +178,82 @@ function hannover_scripts_styles() {
 }
 
 /**
+ * Returns date and time of a post.
+ *
+ * @return string The date.
+ */
+function hannover_get_the_date() {
+	/* translators: 1=date */
+	return sprintf( '<a href="%s" %s>%s</a>',
+		get_the_permalink(),
+		'' !== get_the_title() ? 'tabindex="-1"' : '',
+		get_the_date()
+	);
+}
+
+/**
+ * Returns list of categories for a post.
+ *
+ * @return string Categories list or empty string.
+ */
+function hannover_get_categories_list() {
+	// Get array of post categories.
+	$categories = get_the_category();
+
+	// Check if we have categories in the array. Otherwise return empty string.
+	if ( ! empty( $categories ) ) {
+		// Build the markup.
+		$categories_markup = sprintf( /* translators: 1=category label; 2=category list */
+			__( '%1$s: %2$s', 'hannover' ),
+
+			// Display singular or plural label based on the category count.
+			_n(
+				'Category',
+				'Categories',
+				count( $categories ),
+				'hannover'
+			), /* translators: term delimiter */
+			get_the_category_list( __( ', ', 'hannover' ) )
+		);
+
+		return $categories_markup;
+	} else {
+		return '';
+	} // End if().
+}
+
+/**
+ * Returns list of tags for a post.
+ *
+ * @return string Tag list or empty string.
+ */
+function hannover_get_tag_list() {
+	// Get tag array.
+	$tags = get_the_tags();
+
+	// Check if we have a tag array, otherwise return empty string.
+	if ( is_array( $tags ) ) {
+		// Build the markup.
+		$tags_markup = sprintf( /* translators: 1=tag label; 2=tag list */
+			__( '%1$s: %2$s', 'hannover' ),
+
+			// Display singular or plural label based on tag count.
+			_n(
+				'Tag',
+				'Tags',
+				count( $tags ),
+				'hannover'
+			), /* translators: term delimiter */
+			get_the_tag_list( '', __( ', ', 'hannover' ) )
+		);
+
+		return $tags_markup;
+	} else {
+		return '';
+	}
+}
+
+/**
  * Function to exclude the portfolio elements from the main query if chosen in
  * the customizer
  *
@@ -208,6 +284,7 @@ function hannover_exlude_portfolio_elements_from_blog( $query ) {
 		}
 	}
 }
+
 /**
  * Gets the comments seperated by type
  *
@@ -229,62 +306,72 @@ function hannover_get_comments_by_type() {
 }
 
 /**
- * Fetch image post objects for all gallery images in a post.
+ * Fetch first gallery image post object from a post.
  *
- * @param $post_id
+ * @param int $post_id ID of the post.
  *
  * @return array
  */
-function hannover_get_gallery_images( $post_id ) {
-
+function hannover_get_fist_gallery_image( $post_id ) {
 	$post = get_post( $post_id );
 
-	// Den Beitrag gibt es nicht, oder er ist leer.
-	if ( ! $post || empty ( $post->post_content ) ) {
+	// That is no post or the post is empty.
+	if ( ! $post || empty( $post->post_content ) ) {
 		return [];
 	}
 
 	$galleries = get_post_galleries( $post, false );
-	if ( empty ( $galleries ) ) {
+	if ( empty( $galleries ) ) {
 		return [];
 	}
+
 	$ids = [];
 	foreach ( $galleries as $gallery ) {
-		if ( ! empty ( $gallery['ids'] ) ) {
+		if ( ! empty( $gallery['ids'] ) ) {
 			$ids = array_merge( $ids, explode( ',', $gallery['ids'] ) );
 		}
 	}
+
 	$ids = array_unique( $ids );
-	if ( empty ( $ids ) ) {
-		$attachments = get_children( [
-			'post_parent'    => $post_id,
-			'post_status'    => 'inherit',
-			'post_type'      => 'attachment',
-			'post_mime_type' => 'image',
-			'order'          => 'ASC',
-			'orderby'        => 'menu_order',
-		] );
-		if ( empty ( $attachments ) ) {
-			return [];
+	if ( empty( $ids ) ) {
+		$attachments = hannover_get_post_image_attachments( $post_id );
+		if ( ! empty( $attachments ) ) {
+			return array_shift( $attachments );
 		}
+
+		return [];
 	}
 
-	$images = get_posts(
-		[
-			'post_type'      => 'attachment',
-			'post_mime_type' => 'image',
-			'orderby'        => 'post__in',
-			'numberposts'    => 999,
-			'include'        => $ids,
-		]
-	);
-	if ( ! $images && ! $attachments ) {
+	$images = get_post( array_shift( $ids ) );
+
+	if ( null === $images ) {
 		return [];
-	} elseif ( ! $images ) {
-		$images = $attachments;
 	}
 
 	return $images;
+}
+
+/**
+ * Returns the image attachments of a post.
+ *
+ * @param int $post_id ID of the post.
+ *
+ * @return array
+ */
+function hannover_get_post_image_attachments( $post_id ) {
+	$attachments = get_children( [
+		'post_parent'    => $post_id,
+		'post_status'    => 'inherit',
+		'post_type'      => 'attachment',
+		'post_mime_type' => 'image',
+		'order'          => 'ASC',
+		'orderby'        => 'menu_order',
+	] );
+	if ( empty( $attachments ) ) {
+		return [];
+	}
+
+	return $attachments;
 }
 
 /**
