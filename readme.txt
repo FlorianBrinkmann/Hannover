@@ -49,6 +49,11 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
+Version 1.1.4 – 17.04.2018
+---
+- Bundle Noto Sans font instead of loading it from Google Fonts.
+
+
 Version 1.1.3 – 05.09.2016
 ---
 - removed top margin from header image on home page
@@ -157,8 +162,8 @@ Version 1.0 – 27.12.2015
 == Copyright ==
 
 Noto Sans
-Licence: Apache License, version 2.0
-Source: https://www.google.com/fonts/specimen/Noto+Sans
+Licence: SIL OPEN FONT LICENSE Version 1.1
+Source: https://www.google.com/get/noto/
 
 Owl Carousel
 Licence: MIT License
