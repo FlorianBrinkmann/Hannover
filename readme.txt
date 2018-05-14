@@ -49,6 +49,10 @@ The header image from the customizer will be shown instead of the title, so you 
 
 == Changelog ==
 
+Version 1.1.5 – 14.05.2018
+---
+- Fix styling of new comment cookie consent checkbox.
+
 Version 1.1.4 – 17.04.2018
 ---
 - Bundle Noto Sans font instead of loading it from Google Fonts.
