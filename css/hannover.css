@@ -1206,6 +1206,19 @@ article.comment {
   display: block;
 }
 
+.comment-form-cookies-consent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+}
+
+.comment-form-cookies-consent label {
+  margin-left: .5em;
+}
+
 input,
 textarea {
   border: thin solid;
